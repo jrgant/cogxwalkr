@@ -6,6 +6,8 @@ library(data.table)
 library(nnet)
 library(rms, include.only = "rcs")
 
+options(datatable.auto.index = FALSE)
+
 # ADNI data is private, so the ADNI_PATH environment variable points to a
 # local directory that needs to be set by the user.
 adnimerge <-

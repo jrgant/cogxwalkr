@@ -84,8 +84,9 @@ cogsim[, moca := {
     type = "probs"
   )
   sample(as.integer(names(PROBS)), size = 1, prob = PROBS)
-}, keyby = subid]
+}, keyby = subid] # does the operation rowwise
 
+## compare the original and simulated data
 par(mfrow = c(1, 2))
 adni_bl[, plot(moca ~ mmse,
                main = "ADNIMERGE",
@@ -96,5 +97,5 @@ cogsim[, plot(moca ~ mmse,
               col = fcase(dementia == 0, "red",
                           dementia == 1, "blue"))]
 
-## write simulated dataset to data/
+# Write simulated dataset to data/
 usethis::use_data(cogsim, overwrite = TRUE)

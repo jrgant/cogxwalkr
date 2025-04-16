@@ -90,14 +90,16 @@ cogsim[, moca := {
 
 ## compare the original and simulated data
 par(mfrow = c(1, 2))
-adni_bl[, plot(moca ~ mmse,
-               main = "ADNIMERGE",
-               col = fcase(dementia == 0, "red",
-                           dementia == 1, "blue"))]
-cogsim[, plot(moca ~ mmse,
-              main = "Simulated Data",
-              col = fcase(dementia == 0, "red",
-                          dementia == 1, "blue"))]
+adni_bl[, {
+  plot(moca ~ mmse,
+       main = "ADNIMERGE",
+       col = fcase(dementia == 0, "red", dementia == 1, "blue"))
+}]
+cogsim[, {
+  plot(moca ~ mmse,
+       main = "Simulated Data",
+       col = fcase(dementia == 0, "red", dementia == 1, "blue"))
+}]
 
 # Write simulated dataset to data/
 usethis::use_data(cogsim, overwrite = TRUE)

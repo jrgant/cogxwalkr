@@ -23,11 +23,11 @@ analyze_splits <- function(cog1, cog2, data, num_iter,
   }
 
   N_INPUT <- nrow(data)
+  SPLIT_POINT <- floor(N_INPUT / 2)
 
   ## create a dataset of num_iter stacked replicates
   tmp <- data[sample(seq_len(N_INPUT), size = N_INPUT * num_iter, replace = TRUE)]
 
-  SPLIT_POINT <- floor(N_INPUT / 2)
   tmp[, `:=`(
     split = rep(
       c(rep(1, SPLIT_POINT), rep(2, N_INPUT - SPLIT_POINT)),

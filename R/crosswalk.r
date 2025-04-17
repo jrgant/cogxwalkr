@@ -59,6 +59,7 @@ analyze_splits <- function(cog1, cog2, data, num_iter,
 #' @param num_boot Number of bootstrap replicates to generate
 #' @param num_cores Number of cores to use in parallel processing
 #' @param rng_seed Seed used by doRNG to generate reproducible parallel computations
+#'
 #' @import data.table
 #' @import doParallel
 #' @import doRNG

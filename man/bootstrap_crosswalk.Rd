@@ -7,9 +7,9 @@
 bootstrap_crosswalk(
   ...,
   num_boot,
-  num_cores,
+  num_cores = 1,
   rng_seed,
-  alpha,
+  alpha = 0.05,
   sample_est = NULL
 )
 }

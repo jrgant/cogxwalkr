@@ -12,8 +12,8 @@
 #' @import doRNG
 #' @import foreach
 #' @export
-bootstrap_crosswalk <- function(..., num_boot, num_cores, rng_seed,
-                                alpha, sample_est = NULL) {
+bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed,
+                                alpha = 0.05, sample_est = NULL) {
   registerDoParallel(num_cores)
   split_data <- foreach(i = seq_len(num_boot),
                         .inorder = FALSE,

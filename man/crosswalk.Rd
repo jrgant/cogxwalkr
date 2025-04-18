@@ -11,7 +11,8 @@ crosswalk(
   num_iter,
   type = "unconditional",
   condition_by = NULL,
-  boot_ci = FALSE
+  boot_ci = FALSE,
+  boot_control = list(...)
 )
 }
 \arguments{

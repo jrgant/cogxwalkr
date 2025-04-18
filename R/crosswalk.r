@@ -8,12 +8,14 @@
 #'   the splits independently within levels of an auxiliary variable (see `condition_by`).
 #' @param condition_by The name of a conditioning variable by which splits will be
 #'   conducted when type="conditional"
+#' @param boot_ci Boolean indicating whether to generate bootstrap confidence intervals
+#' @param boot_control A list of settings passed to `bootstrap_crosswalk()`
 #'
 #' @import data.table
 #' @export
 crosswalk <- function(cog1, cog2, data, num_iter,
                       type = "unconditional", condition_by = NULL,
-                      boot_ci = FALSE) {
+                      boot_ci = FALSE, boot_control = list(...)) {
 
   if (type == "unconditional" && !is.null(condition_by)) {
     warning(
@@ -48,6 +50,17 @@ crosswalk <- function(cog1, cog2, data, num_iter,
   fml <- paste(cog2, "~", cog1, "- 1")
   fit <- lm(as.formula(fml), data = diffs)
 
+  ## store model fit and mean differences
   out <- list(fit = fit, diffs = diffs)
+
+  if (boot_ci == TRUE) {
+    arglist <- as.list(match.call())[-1]
+    # force boot_ci=FALSE b/c crosswalk() is called by the bootstrap function
+    arglist[["boot_ci"]] <- FALSE
+    control <- as.list(arglist[["boot_control"]])[-1]
+    arglist <- c(arglist, control)
+    out[["ci"]] <- do.call("bootstrap_crosswalk", args = arglist)
+  }
+
   out
 }

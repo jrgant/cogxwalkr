@@ -51,32 +51,3 @@ analyze_splits <- function(cog1, cog2, data, num_iter,
   out <- list(fit = fit, diffs = diffs)
   out
 }
-
-
-#' Bootstrap a split routine
-#'
-#' @param ... Pass arguments to `analyze_splits()`
-#' @param num_boot Number of bootstrap replicates to generate
-#' @param num_cores Number of cores to use in parallel processing
-#' @param rng_seed Seed used by doRNG to generate reproducible parallel computations
-#'
-#' @import data.table
-#' @import doParallel
-#' @import doRNG
-#' @import foreach
-#' @export
-bootstrap_splits <- function(..., num_boot, num_cores, rng_seed) {
-  registerDoParallel(num_cores)
-  split_data <- foreach(i = seq_len(num_boot),
-                        .inorder = FALSE,
-                        .combine = c,
-                        .options.RNG = rng_seed) %dorng% {
-    tmp <- analyze_splits(...)
-    coef(tmp$fit)
-  }
-  stopImplicitCluster()
-
-  out <- data.table(split_data)
-  setnames(out, old = names(out), new = names(split_data)[1])
-  out
-}

@@ -11,9 +11,9 @@
 #'
 #' @import data.table
 #' @export
-analyze_splits <- function(cog1, cog2, data, num_iter,
-                           type = "unconditional",
-                           condition_by = NULL) {
+crosswalk <- function(cog1, cog2, data, num_iter,
+                      type = "unconditional", condition_by = NULL,
+                      boot_ci = FALSE) {
 
   if (type == "unconditional" && !is.null(condition_by)) {
     warning(

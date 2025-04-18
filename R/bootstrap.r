@@ -19,7 +19,7 @@ bootstrap_crosswalk <- function(..., num_boot, num_cores, rng_seed,
                         .inorder = FALSE,
                         .combine = c,
                         .options.RNG = rng_seed) %dorng% {
-    tmp <- analyze_splits(...)
+    tmp <- crosswalk(...)
     coef(tmp$fit)
   }
   stopImplicitCluster()

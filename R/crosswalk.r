@@ -24,6 +24,12 @@ crosswalk <- function(cog1, cog2, data, num_iter,
     )
   }
 
+  if (boot_ci == TRUE && missing("boot_control")) {
+    stop("When requesting bootstrap confidence intervals, `boot_control` requires ",
+         "a list setting the following arguments at a minimum: num_boot, rng_seed. ",
+         "We also recommend setting num_cores to enable parallel processing.")
+  }
+
   N_INPUT <- nrow(data)
   SPLIT_POINT <- floor(N_INPUT / 2)
 

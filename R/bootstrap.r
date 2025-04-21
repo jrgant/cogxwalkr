@@ -24,9 +24,9 @@ bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed,
   }
   stopImplicitCluster()
 
-  .percentile_bootstrap_ci(split_data,
-                           alpha = alpha,
-                           sample_est = sample_est)
+  percentile_bootstrap_ci(split_data,
+                          alpha = alpha,
+                          sample_est = sample_est)
 }
 
 
@@ -37,7 +37,7 @@ bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed,
 #'   sample
 #'
 #' @rdname bootstrap_ci_methods
-.percentile_bootstrap_ci <- function(bootdist, alpha = 0.05, sample_est = NULL) {
+percentile_bootstrap_ci <- function(bootdist, alpha = 0.05, sample_est = NULL) {
   ql <- quantile(bootdist, c(alpha / 2, 1 - (alpha / 2)))
   citab <- data.table(method = "percentile", ci_alpha = alpha, ll = ql[1], ul = ql[2])
   if (!is.null(sample_est)) {

@@ -2,7 +2,7 @@
 #'
 #' @param num_iter Number of split iterations to conduct
 #' @param data Input dataset
-
+#'
 #' @noRd
 make_unconditional_splits <- function(data, num_iter) {
   N_INPUT <- nrow(data)

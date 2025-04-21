@@ -25,6 +25,7 @@ make_unconditional_splits <- function(data, num_iter) {
 #' @param split_var Auxiliary variable by which to stratify splits
 #'
 #' @inheritParams make_unconditional_split
+#' @import foreach
 #' @noRd
 make_splits <- function(split_var = NULL, data, num_iter) {
   if (is.null(split_var)) {

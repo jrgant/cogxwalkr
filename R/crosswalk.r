@@ -4,25 +4,16 @@
 #' @param cog2 The name of the second cognitive measure column
 #' @param data A data.table or data.frame containing the cognitive measure data
 #' @param num_iter Number of split iterations to conduct
-#' @param type One of "unconditional" or "conditional". A conditional split will conduct
-#'   the splits independently within levels of an auxiliary variable (see `condition_by`).
 #' @param condition_by The name of a conditioning variable by which splits will be
-#'   conducted when type="conditional"
+#'   conducted. If not conducted, the function will use unconditional splits.
 #' @param boot_ci Boolean indicating whether to generate bootstrap confidence intervals
 #' @param boot_control A list of settings passed to `bootstrap_crosswalk()`
 #'
 #' @import data.table
 #' @export
 crosswalk <- function(cog1, cog2, data, num_iter,
-                      type = "unconditional", condition_by = NULL,
+                      condition_by = NULL,
                       boot_ci = FALSE, boot_control = list(...)) {
-
-  if (type == "unconditional" && !is.null(condition_by)) {
-    warning(
-      "Unconditional split requested, but a conditioning variable is indicated in ",
-      "`condition_by`."
-    )
-  }
 
   if (boot_ci == TRUE && missing("boot_control")) {
     stop("When requesting bootstrap confidence intervals, `boot_control` requires ",
@@ -30,20 +21,7 @@ crosswalk <- function(cog1, cog2, data, num_iter,
          "We also recommend setting num_cores to enable parallel processing.")
   }
 
-  N_INPUT <- nrow(data)
-  SPLIT_POINT <- floor(N_INPUT / 2)
-
-  ## create a dataset of num_iter stacked replicates
-  tmp <- data[sample(seq_len(N_INPUT), size = N_INPUT * num_iter, replace = TRUE)]
-
-  tmp[, `:=`(
-    split = rep(
-      c(rep(1, SPLIT_POINT), rep(2, N_INPUT - SPLIT_POINT)),
-      times = num_iter
-    ),
-    iteration = rep(seq_len(num_iter), each = N_INPUT)
-  )]
-  tmp[]
+  tmp <- make_splits(split_var = condition_by, data = data, num_iter = num_iter)
 
   ## calculate the mean difference in the cognitive measures by split
   diffs <- tmp[, .(

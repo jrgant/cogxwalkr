@@ -9,7 +9,6 @@ crosswalk(
   cog2,
   data,
   num_iter,
-  type = "unconditional",
   condition_by = NULL,
   boot_ci = FALSE,
   boot_control = list(...)
@@ -24,11 +23,8 @@ crosswalk(
 
 \item{num_iter}{Number of split iterations to conduct}
 
-\item{type}{One of "unconditional" or "conditional". A conditional split will conduct
-the splits independently within levels of an auxiliary variable (see \code{condition_by}).}
-
 \item{condition_by}{The name of a conditioning variable by which splits will be
-conducted when type="conditional"}
+conducted. If not conducted, the function will use unconditional splits.}
 
 \item{boot_ci}{Boolean indicating whether to generate bootstrap confidence intervals}
 

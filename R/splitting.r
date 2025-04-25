@@ -9,7 +9,8 @@ make_unconditional_splits <- function(data, num_iter) {
   SPLIT_POINT <- floor(N_INPUT / 2)
 
   ## create a dataset of num_iter stacked replicates
-  tmp <- data[sample(seq_len(N_INPUT), size = N_INPUT * num_iter, replace = TRUE)]
+  rowlist <- unlist(replicate(num_iter, sample(seq_len(N_INPUT)), simplify = FALSE))
+  tmp <- data[rowlist]
 
   tmp[, `:=`(
     split_id = rep(

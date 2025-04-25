@@ -93,12 +93,12 @@ par(mfrow = c(1, 2))
 adni_bl[, {
   plot(moca ~ mmse,
        main = "ADNIMERGE",
-       col = fcase(dementia == 0, "red", dementia == 1, "blue"))
+       col = fcase(dementia == 0, "green", dementia == 1, "red"))
 }]
 cogsim[, {
   plot(moca ~ mmse,
        main = "Simulated Data",
-       col = fcase(dementia == 0, "red", dementia == 1, "blue"))
+       col = fcase(dementia == 0, "green", dementia == 1, "red"))
 }]
 
 # Write simulated dataset to data/

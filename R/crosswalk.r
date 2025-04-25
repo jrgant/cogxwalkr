@@ -25,7 +25,7 @@ crosswalk <- function(cog1, cog2, data, num_iter,
 
   ## calculate the mean difference in the cognitive measures by split
   diffs <- tmp[, .(
-    cog1 = mean(get(cog1)[split == 1]) - mean(get(cog2)[split == 2]),
+    cog1 = mean(get(cog1)[split == 1]) - mean(get(cog1)[split == 2]),
     cog2 = mean(get(cog2)[split == 1]) - mean(get(cog2)[split == 2])
   ), keyby = iteration]
   setnames(diffs, old = c("cog1", "cog2"), new = c(cog1, cog2))

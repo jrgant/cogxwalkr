@@ -1,6 +1,6 @@
 #' Bootstrap a split routine
 #'
-#' @param ... Pass arguments to `analyze_splits()`
+#' @param ... Pass arguments to `crosswalk()`
 #' @param num_boot Number of bootstrap replicates to generate
 #' @param num_cores Number of cores to use in parallel processing
 #' @param rng_seed Seed used by doRNG to generate reproducible parallel computations

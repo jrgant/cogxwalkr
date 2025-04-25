@@ -14,7 +14,7 @@ bootstrap_crosswalk(
 )
 }
 \arguments{
-\item{...}{Pass arguments to \code{analyze_splits()}}
+\item{...}{Pass arguments to \code{crosswalk()}}
 
 \item{num_boot}{Number of bootstrap replicates to generate}
 

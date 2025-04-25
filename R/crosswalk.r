@@ -21,7 +21,7 @@ crosswalk <- function(cog1, cog2, data, num_iter,
          "We also recommend setting num_cores to enable parallel processing.")
   }
 
-  tmp <- make_splits(split_var = condition_by, data = data, num_iter = num_iter)
+  tmp <- make_splits(cdvar = condition_by, data = data, num_iter = num_iter)
 
   ## calculate the mean difference in the cognitive measures by split
   diffs <- tmp[, .(

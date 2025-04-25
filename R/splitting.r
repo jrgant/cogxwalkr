@@ -12,7 +12,7 @@ make_unconditional_splits <- function(data, num_iter) {
   tmp <- data[sample(seq_len(N_INPUT), size = N_INPUT * num_iter, replace = TRUE)]
 
   tmp[, `:=`(
-    split = rep(
+    split_id = rep(
       c(rep(1, SPLIT_POINT), rep(2, N_INPUT - SPLIT_POINT)),
       times = num_iter
     ),

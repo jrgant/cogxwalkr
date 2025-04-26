@@ -5,6 +5,11 @@
 #'
 #' @noRd
 make_unconditional_splits <- function(data, num_iter) {
+  ## TODO: [2026-04-26] : add test
+  if (is.null(num_iter)) {
+    stop("The parameter `num_iter` must be set in order to do unconditional splits.")
+  }
+
   N_INPUT <- nrow(data)
   SPLIT_POINT <- floor(N_INPUT / 2)
 
@@ -33,17 +38,37 @@ make_conditional_splits <- function(cdvar = NULL, data) {
     stop("To conduct conditional splitting, a conditioning variable must be specified.")
   }
 
-  CLEVELS <- sort(unique(data[, get(cdvar)]), decreasing = TRUE)
+  ## TODO: [2025-04-25] : add test
+  CLEVELS <- sort(unique(data[, get(cdvar)]))
   if (length(CLEVELS) != 2) {
-    stop("Conditioning variable must be binary.") ## TODO add test
+    stop("Conditioning variable must be binary.")
   }
 
-  NUM_ITER <- data[, sum(get(cdvar))]
-  spec <- data.table(num = c(seq(NUM_ITER, 1), seq(1, NUM_ITER)),
-                     level = c(rep(CLEVELS[1], NUM_ITER), rep(CLEVELS[2], NUM_ITER)))
+  ## TODO: [2025-04-25] : add test for spec formatting
+  NUM_DATA <- nrow(data)
+  SPLIT1_SIZE <- floor(NUM_DATA / 2)
+  SPLIT2_SIZE <- NUM_DATA - SPLIT1_SIZE
+  L1_SIZES <- seq_len(data[, sum(get(cdvar) == CLEVELS[2]) - 1])
 
+  spec <- data.table(sl_11_size = L1_SIZES)
+  spec[, sl_10_size := SPLIT1_SIZE - sl_11_size]
 
+  ## TODO: [2025-04-26] : speed up, will take awhile w/ bootstrapping
+  ## sample rows from original data according to spec
+  tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
+    shuffle <- spec[i, {
+      lrows1 <- data[get(cdvar) == CLEVELS[2]][sample(seq_len(.N))]
+      lrows1[, split_id := rep(c(1, 2), times = c(sl_11_size, .N - sl_11_size))]
+      lrows0 <- data[get(cdvar) == CLEVELS[1]][sample(seq_len(.N))]
+      lrows0[, split_id := rep(c(1, 2), times = c(sl_10_size, .N - sl_10_size))]
+      rbind(lrows1, lrows0)[, iteration := i][]
+    }]
+    shuffle
+  }
+
+  tmp[]
 }
+
 
 #' Make a split dataset
 # '
@@ -56,15 +81,13 @@ make_splits <- function(cdvar = NULL, data, num_iter) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, num_iter = num_iter)
   } else {
-    tmpc <- copy(data)
-    CLEVELS <- unique(tmpc[, get(cdvar)])
-    ## BUG This should be implemented so that in a dataset of 1000 people:
-    ##    1) Split 1: we go from 1 dementia / 999 no dementia in the first iteration
-    ##       to 999 dementia / 1 no dementia in the last iteration
-    ##    2) Split 2 is the reverse
-    ##    3) N = number of rows in the base dataset
-    tmpout <- foreach(i = CLEVELS, .combine = rbind) %do% {
-      make_unconditional_splits(data = tmpc[get(cdvar) == i], num_iter = num_iter)}
+    ## TODO: [2025-04-26] : add test for this message
+    if (!is.null(num_iter)) {
+      message("Ignoring `num_iter`, because the number of iterations will be determined ",
+              "by the number of rows in the second level of the binary conditioning ",
+              "variable.")
+    }
+    tmpout <- make_conditional_splits(cdvar = cdvar, data = data)
   }
   tmpout
 }

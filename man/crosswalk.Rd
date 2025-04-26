@@ -8,7 +8,7 @@ crosswalk(
   cog1,
   cog2,
   data,
-  num_iter,
+  num_iter = NULL,
   condition_by = NULL,
   boot_ci = FALSE,
   boot_control = list(...)

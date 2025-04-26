@@ -11,7 +11,7 @@
 #'
 #' @import data.table
 #' @export
-crosswalk <- function(cog1, cog2, data, num_iter,
+crosswalk <- function(cog1, cog2, data, num_iter = NULL,
                       condition_by = NULL,
                       boot_ci = FALSE, boot_control = list(...)) {
 

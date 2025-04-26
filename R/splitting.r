@@ -53,7 +53,7 @@ make_conditional_splits <- function(cdvar = NULL, data) {
   spec <- data.table(sl_11_size = L1_SIZES)
   spec[, sl_10_size := SPLIT1_SIZE - sl_11_size]
 
-  ## TODO: [2025-04-26] : speed up, will take awhile w/ bootstrapping
+  ## TODO: [2025-04-26] : speed up, will take ~ 30 min. w/ 1000 bootstraps
   ## sample rows from original data according to spec
   tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
     shuffle <- spec[i, {

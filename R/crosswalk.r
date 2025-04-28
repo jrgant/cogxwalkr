@@ -6,22 +6,29 @@
 #' @param num_iter Number of split iterations to conduct
 #' @param condition_by The name of a conditioning variable by which splits will be
 #'   conducted. If not conducted, the function will use unconditional splits.
+#' @param condition_loop Whether to conduct conditional splitting sequentially. Defaults
+#'   to FALSE to maximize speed. Unused if `condition_by` is NULL. See documentation
+#'   for `make_conditional_splits()` for details.
 #' @param boot_ci Boolean indicating whether to generate bootstrap confidence intervals
 #' @param boot_control A list of settings passed to `bootstrap_crosswalk()`
 #'
 #' @import data.table
 #' @export
 crosswalk <- function(cog1, cog2, data, num_iter = NULL,
-                      condition_by = NULL,
+                      condition_by = NULL, condition_loop = FALSE,
                       boot_ci = FALSE, boot_control = list(...)) {
 
+  ## TODO: [2025-04-28] : add tests for initial checks
   if (boot_ci == TRUE && missing("boot_control")) {
     stop("When requesting bootstrap confidence intervals, `boot_control` requires ",
          "a list setting the following arguments at a minimum: num_boot, rng_seed. ",
          "We also recommend setting num_cores to enable parallel processing.")
   }
 
-  tmp <- make_splits(cdvar = condition_by, data = data, num_iter = num_iter)
+  tmp <- make_splits(cdvar = condition_by,
+                     condition_loop = condition_loop,
+                     data = data,
+                     num_iter = num_iter)
 
   ## calculate the mean difference in the cognitive measures by split
   diffs <- tmp[, .(

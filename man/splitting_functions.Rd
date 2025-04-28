@@ -10,7 +10,7 @@ make_unconditional_splits(data, num_iter)
 
 make_conditional_splits(cdvar = NULL, loop = FALSE, data)
 
-make_splits(cdvar = NULL, condition_loop = FALSE, data, num_iter)
+make_splits(cdvar = NULL, cdloop = FALSE, data, num_iter)
 }
 \arguments{
 \item{data}{Input dataset}
@@ -23,6 +23,9 @@ make_splits(cdvar = NULL, condition_loop = FALSE, data, num_iter)
 generate splits and operate on an expanded data.table in-memory. If your machine has
 limited memory, set this argument to TRUE in order to process splits sequentially.
 The default option should be much faster.}
+
+\item{cdloop}{Boolean passed to \code{loop} argument of \code{make_conditional_splits()}. Ignored
+when conducting unconditional splits.}
 }
 \description{
 Make an unconditional split dataset

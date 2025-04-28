@@ -26,7 +26,7 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
   }
 
   tmp <- make_splits(cdvar = condition_by,
-                     condition_loop = condition_loop,
+                     cdloop = condition_loop,
                      data = data,
                      num_iter = num_iter)
 

@@ -95,13 +95,13 @@ make_conditional_splits <- function(cdvar = NULL, loop = FALSE, data) {
 #' Make a split dataset
 # '
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
-#'
-#' @inheritParams make_unconditional_splits
+#' @param cdloop Boolean passed to `loop` argument of `make_conditional_splits()`. Ignored
+#'   when conducting unconditional splits.
 #' @import foreach
 #'
 #' @rdname splitting_functions
 #' @export
-make_splits <- function(cdvar = NULL, condition_loop = FALSE, data, num_iter) {
+make_splits <- function(cdvar = NULL, cdloop = FALSE, data, num_iter) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, num_iter = num_iter)
   } else {
@@ -112,7 +112,7 @@ make_splits <- function(cdvar = NULL, condition_loop = FALSE, data, num_iter) {
               "variable.")
     }
     tmpout <- make_conditional_splits(cdvar = cdvar,
-                                      condition_loop = condition_loop,
+                                      loop = condition_loop,
                                       data = data)
   }
   tmpout

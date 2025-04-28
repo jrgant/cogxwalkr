@@ -3,7 +3,7 @@
 #' @param num_iter Number of split iterations to conduct
 #' @param data Input dataset
 #'
-#' @noRd
+#' @rdname splitting_functions
 make_unconditional_splits <- function(data, num_iter) {
   ## TODO: [2026-04-26] : add test
   if (is.null(num_iter)) {
@@ -29,41 +29,58 @@ make_unconditional_splits <- function(data, num_iter) {
 
 #' Make a conditional split dataset
 #'
-#' @param data Input dataset
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
+#' @param loop Boolean declaring whether to use a for loop. The default FALSE will
+#'   generate splits and operate on an expanded data.table in-memory. If your machine has
+#'   limited memory, set this argument to TRUE in order to process splits sequentially.
+#'   The default option should be much faster.
+#' @param data Input dataset
 #'
-#' @noRd
-make_conditional_splits <- function(cdvar = NULL, data) {
+#' @rdname splitting_functions
+make_conditional_splits <- function(cdvar = NULL, loop = FALSE, data) {
   if (is.null(cdvar)) {
     stop("To conduct conditional splitting, a conditioning variable must be specified.")
   }
 
   ## TODO: [2025-04-25] : add test
+  ## TODO: [2025-04-26] : need to standardize ordering of the conditioning variable
+  ##    levels; does level 1 always need to be the smaller group?
   CLEVELS <- sort(unique(data[, get(cdvar)]))
   if (length(CLEVELS) != 2) {
     stop("Conditioning variable must be binary.")
   }
 
-  ## TODO: [2025-04-25] : add test for spec formatting
+  ## TODO: [2025-04-25] : add tests for conditional splitting routines
   NUM_DATA <- nrow(data)
   SPLIT1_SIZE <- floor(NUM_DATA / 2)
-  SPLIT2_SIZE <- NUM_DATA - SPLIT1_SIZE
-  L1_SIZES <- seq_len(data[, sum(get(cdvar) == CLEVELS[2]) - 1])
+  L1_SIZE <- data[, sum(get(cdvar) == CLEVELS[2])]
+  L0_SIZE <- data[, sum(get(cdvar) == CLEVELS[1])]
+  SL11_SIZES <- seq_len(L1_SIZE - 1)
+  SL10_SIZES <- sort(SPLIT1_SIZE - SL11_SIZES, decreasing = TRUE)
 
-  spec <- data.table(sl_11_size = L1_SIZES)
-  spec[, sl_10_size := SPLIT1_SIZE - sl_11_size]
-
-  ## TODO: [2025-04-26] : speed up, will take ~ 30 min. w/ 1000 bootstraps on 1 core
-  ## sample rows from original data according to spec
-  tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
-    shuffle <- spec[i, {
-      lrows1 <- data[get(cdvar) == CLEVELS[2]][sample(seq_len(.N))]
-      lrows1[, split_id := rep(c(1, 2), times = c(sl_11_size, .N - sl_11_size))]
-      lrows0 <- data[get(cdvar) == CLEVELS[1]][sample(seq_len(.N))]
-      lrows0[, split_id := rep(c(1, 2), times = c(sl_10_size, .N - sl_10_size))]
-      rbind(lrows1, lrows0)[, iteration := i][]
-    }]
-    shuffle
+  if (loop == TRUE) {
+    ## sample rows from original data according to spec
+    spec <- data.table(sl_11_size = SL11_SIZES)
+    spec[, sl_10_size := SPLIT1_SIZE - sl_11_size]
+    tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
+      shuffle <- spec[i, {
+        lrows1 <- data[get(cdvar) == CLEVELS[2]][sample(seq_len(.N))]
+        lrows1[, split_id := rep(c(1, 2), times = c(sl_11_size, .N - sl_11_size))]
+        lrows0 <- data[get(cdvar) == CLEVELS[1]][sample(seq_len(.N))]
+        lrows0[, split_id := rep(c(1, 2), times = c(sl_10_size, .N - sl_10_size))]
+        rbind(lrows1, lrows0)[, iteration := i][]
+      }]
+      shuffle
+    }
+  } else {
+    tmp <- data[rep(seq_len(.N), L1_SIZE - 1)]
+    tmp[, iteration := rep(seq_len(L1_SIZE - 1), each = NUM_DATA)]
+    tmp <- tmp[, .SD[sample(seq_len(.N))], keyby = .(iteration, dementia)]
+    tmp[, split_id := unlist(lapply(SL11_SIZES, \(i) {
+      splits0 <- rep(c(1, 2), c(SL10_SIZES[i], L0_SIZE - SL10_SIZES[i]))
+      splits1 <- rep(c(1, 2), c(SL11_SIZES[i], L1_SIZE - SL11_SIZES[i]))
+      c(splits0, splits1)
+    }))]
   }
 
   tmp[]
@@ -74,10 +91,11 @@ make_conditional_splits <- function(cdvar = NULL, data) {
 # '
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
 #'
-#' @inheritParams make_unconditional_split
+#' @inheritParams make_unconditional_splits
 #' @import foreach
-#' @noRd
-make_splits <- function(cdvar = NULL, data, num_iter) {
+#'
+#' @rdname splitting_functions
+make_splits <- function(cdvar = NULL, condition_loop = FALSE, data, num_iter) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, num_iter = num_iter)
   } else {
@@ -87,7 +105,9 @@ make_splits <- function(cdvar = NULL, data, num_iter) {
               "by the number of rows in the second level of the binary conditioning ",
               "variable.")
     }
-    tmpout <- make_conditional_splits(cdvar = cdvar, data = data)
+    tmpout <- make_conditional_splits(cdvar = cdvar,
+                                      condition_loop = condition_loop,
+                                      data = data)
   }
   tmpout
 }

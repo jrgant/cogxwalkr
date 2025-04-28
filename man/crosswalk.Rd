@@ -10,6 +10,7 @@ crosswalk(
   data,
   num_iter = NULL,
   condition_by = NULL,
+  condition_loop = FALSE,
   boot_ci = FALSE,
   boot_control = list(...)
 )
@@ -25,6 +26,10 @@ crosswalk(
 
 \item{condition_by}{The name of a conditioning variable by which splits will be
 conducted. If not conducted, the function will use unconditional splits.}
+
+\item{condition_loop}{Whether to conduct conditional splitting sequentially. Defaults
+to FALSE to maximize speed. Unused if \code{condition_by} is NULL. See documentation
+for \code{make_conditional_splits()} for details.}
 
 \item{boot_ci}{Boolean indicating whether to generate bootstrap confidence intervals}
 

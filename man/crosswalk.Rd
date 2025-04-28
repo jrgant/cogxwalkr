@@ -2,7 +2,7 @@
 % Please edit documentation in R/crosswalk.r
 \name{crosswalk}
 \alias{crosswalk}
-\title{Generate data splits}
+\title{Crosswalk cognitive measures}
 \usage{
 crosswalk(
   cog1,
@@ -36,5 +36,5 @@ for \code{make_conditional_splits()} for details.}
 \item{boot_control}{A list of settings passed to \code{bootstrap_crosswalk()}}
 }
 \description{
-Generate data splits
+Crosswalk cognitive measures
 }

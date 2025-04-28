@@ -4,6 +4,8 @@
 #' @param data Input dataset
 #'
 #' @rdname splitting_functions
+#' @import data.table
+#' @export
 make_unconditional_splits <- function(data, num_iter) {
   ## TODO: [2026-04-26] : add test
   if (is.null(num_iter)) {
@@ -37,6 +39,9 @@ make_unconditional_splits <- function(data, num_iter) {
 #' @param data Input dataset
 #'
 #' @rdname splitting_functions
+#' @import data.table
+#' @import foreach
+#' @export
 make_conditional_splits <- function(cdvar = NULL, loop = FALSE, data) {
   if (is.null(cdvar)) {
     stop("To conduct conditional splitting, a conditioning variable must be specified.")
@@ -95,6 +100,7 @@ make_conditional_splits <- function(cdvar = NULL, loop = FALSE, data) {
 #' @import foreach
 #'
 #' @rdname splitting_functions
+#' @export
 make_splits <- function(cdvar = NULL, condition_loop = FALSE, data, num_iter) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, num_iter = num_iter)

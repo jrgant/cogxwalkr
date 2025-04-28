@@ -1,4 +1,4 @@
-#' Generate data splits
+#' Crosswalk cognitive measures
 #'
 #' @param cog1 The name of the first cognitive measure column
 #' @param cog2 The name of the second cognitive measure column

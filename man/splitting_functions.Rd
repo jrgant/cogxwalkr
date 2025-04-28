@@ -8,9 +8,9 @@
 \usage{
 make_unconditional_splits(data, num_iter)
 
-make_conditional_splits(cdvar = NULL, loop = FALSE, data)
+make_conditional_splits(cdvar = NULL, data, loop = FALSE)
 
-make_splits(cdvar = NULL, cdloop = FALSE, data, num_iter)
+make_splits(cdvar = NULL, data, cdloop = FALSE, num_iter)
 }
 \arguments{
 \item{data}{Input dataset}

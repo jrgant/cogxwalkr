@@ -32,17 +32,17 @@ make_unconditional_splits <- function(data, num_iter) {
 #' Make a conditional split dataset
 #'
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
+#' @param data Input dataset
 #' @param loop Boolean declaring whether to use a for loop. The default FALSE will
 #'   generate splits and operate on an expanded data.table in-memory. If your machine has
 #'   limited memory, set this argument to TRUE in order to process splits sequentially.
 #'   The default option should be much faster.
-#' @param data Input dataset
 #'
 #' @rdname splitting_functions
 #' @import data.table
 #' @import foreach
 #' @export
-make_conditional_splits <- function(cdvar = NULL, loop = FALSE, data) {
+make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   if (is.null(cdvar)) {
     stop("To conduct conditional splitting, a conditioning variable must be specified.")
   }
@@ -103,7 +103,7 @@ make_conditional_splits <- function(cdvar = NULL, loop = FALSE, data) {
 #'
 #' @rdname splitting_functions
 #' @export
-make_splits <- function(cdvar = NULL, cdloop = FALSE, data, num_iter) {
+make_splits <- function(cdvar = NULL, data, cdloop = FALSE, num_iter) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, num_iter = num_iter)
   } else {

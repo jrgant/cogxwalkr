@@ -18,14 +18,12 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
                       condition_by = NULL, condition_loop = FALSE,
                       boot_ci = FALSE, boot_control = list(...)) {
 
-  ## TODO: [2025-04-28] : add tests for initial checks
   if (boot_ci == TRUE && missing("boot_control")) {
     stop("When requesting bootstrap confidence intervals, `boot_control` requires ",
          "a list setting the following arguments at a minimum: num_boot, rng_seed. ",
          "We also recommend setting num_cores to enable parallel processing.")
   }
 
-  ## TODO: [2025-05-02] : add test
   if (is.data.frame(data) == FALSE || is.matrix(data)) {
     stop("The argument to `data` must be a data.frame, data.table, or matrix.")
   }

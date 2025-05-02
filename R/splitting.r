@@ -7,7 +7,6 @@
 #' @import data.table
 #' @export
 make_unconditional_splits <- function(data, num_iter) {
-  ## TODO: [2026-04-26] : add test
   if (is.null(num_iter)) {
     stop("The parameter `num_iter` must be set in order to do unconditional splits.")
   }

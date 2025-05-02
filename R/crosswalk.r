@@ -25,9 +25,14 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
          "We also recommend setting num_cores to enable parallel processing.")
   }
 
+  ## TODO: [2025-05-02] : add test
+  if (is.data.frame(data) == FALSE || is.matrix(data)) {
+    stop("The argument to `data` must be a data.frame, data.table, or matrix.")
+  }
+
   tmp <- make_splits(cdvar = condition_by,
                      cdloop = condition_loop,
-                     data = data,
+                     data = as.data.table(data),
                      num_iter = num_iter)
 
   ## calculate the mean difference in the cognitive measures by split

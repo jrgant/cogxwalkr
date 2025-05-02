@@ -12,15 +12,19 @@ options(datatable.auto.index = FALSE)
 # local directory that needs to be set by the user.
 adnimerge <-
   fread(file.path(Sys.getenv("ADNI_PATH"), "ADNIMERGE_01Nov2024.csv")) |>
-  _[, .(RID, DX, mmse = MMSE_bl, moca = MOCA_bl)] |> # select/rename variables
+  _[, .(RID, EXAMDATE, DX,
+        mmse = MMSE_bl, moca = MOCA_bl)] |> # select/rename variables
   _[DX != ""] |> # drop missing diagnoses
   na.omit()
+
+setkeyv(adnimerge, c("RID", "EXAMDATE"))
 
 # Retrieve baseline observation for each individual
 adni_bl <- adnimerge[rowid(RID) == 1]
 
 # Collapse CN/MCI into a binary indicator of a dementia diagnosis
 adni_bl[, dementia := as.numeric(DX == "Dementia")]
+adni_bl[, EXAMDATE := NULL]
 
 
 ################################################################################

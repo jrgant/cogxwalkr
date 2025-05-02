@@ -12,13 +12,18 @@
 #' @import doRNG
 #' @import foreach
 #' @export
+
+## FIXME: [2025-04-28] : conditional bootstrapping appears to give more precise
+##   results than Sarah's paper
 bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed,
                                 alpha = 0.05, sample_est = NULL) {
+  dcopy <- eval(match.call()$data)
   registerDoParallel(num_cores)
   split_data <- foreach(i = seq_len(num_boot),
                         .inorder = FALSE,
                         .combine = c,
                         .options.RNG = rng_seed) %dorng% {
+    data <- dcopy[sample(seq_len(.N), replace = TRUE)]
     tmp <- crosswalk(...)
     coef(tmp$fit)
   }

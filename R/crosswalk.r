@@ -53,7 +53,7 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
     arglist[["boot_ci"]] <- FALSE
     control <- as.list(arglist[["boot_control"]])[-1]
     arglist <- c(arglist, control)
-    out[["ci"]] <- do.call("bootstrap_crosswalk", args = arglist)
+    out[["boot"]] <- do.call("bootstrap_crosswalk", args = arglist)
   }
 
   out

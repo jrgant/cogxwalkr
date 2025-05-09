@@ -50,5 +50,5 @@ percentile_bootstrap_ci <- function(bootdist, alpha = 0.05, sample_est = NULL) {
     citab[, estimate := sample_est]
     setcolorder(out, c("method", "estimate"))
   }
-  citab
+  list(dist = as.vector(bootdist), ci = citab)
 }

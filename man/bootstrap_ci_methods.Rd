@@ -4,15 +4,12 @@
 \alias{percentile_bootstrap_ci}
 \title{Percentile method}
 \usage{
-percentile_bootstrap_ci(bootdist, alpha = 0.05, sample_est = NULL)
+percentile_bootstrap_ci(bootdist, alpha = 0.05)
 }
 \arguments{
 \item{bootdist}{A vector containing the bootstrap distribution}
 
 \item{alpha}{Alpha level to use for confidence interval calculation}
-
-\item{sample_est}{The coefficient from a split procedure conducted in the original
-sample}
 }
 \description{
 Percentile method

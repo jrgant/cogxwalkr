@@ -4,14 +4,7 @@
 \alias{bootstrap_crosswalk}
 \title{Bootstrap a split routine}
 \usage{
-bootstrap_crosswalk(
-  ...,
-  num_boot,
-  num_cores = 1,
-  rng_seed,
-  alpha = 0.05,
-  sample_est = NULL
-)
+bootstrap_crosswalk(..., num_boot, num_cores = 1, rng_seed, alpha = 0.05)
 }
 \arguments{
 \item{...}{Pass arguments to \code{crosswalk()}}
@@ -23,8 +16,6 @@ bootstrap_crosswalk(
 \item{rng_seed}{Seed used by doRNG to generate reproducible parallel computations}
 
 \item{alpha}{Alpha level for bootstrap confidence intervals}
-
-\item{sample_est}{The coefficient from a split procedure conducted in the original}
 }
 \description{
 Bootstrap a split routine

@@ -14,21 +14,23 @@
 
 ## FIXME: [2025-04-28] : conditional bootstrapping appears to give more precise
 ##   results than Sarah's paper
-bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed, alpha = 0.05) {
+bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed) {
   dcopy <- eval(match.call()$data)
+  if (num_cores == 1) {
+    message("`num_cores` is set to 1. Parallel processing will not be used.")
+  }
 
   registerDoParallel(num_cores)
   split_data <- foreach(i = seq_len(num_boot),
                         .inorder = FALSE,
-                        .combine = c,
                         .options.RNG = rng_seed) %dorng% {
     data <- dcopy[sample(seq_len(.N), replace = TRUE)]
     tmp <- crosswalk(...)
-    coef(tmp$fit)
+    tmp
   }
   stopImplicitCluster()
 
-  percentile_bootstrap_ci(split_data, alpha = alpha)
+  split_data
 }
 
 
@@ -38,12 +40,13 @@ bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed, alpha = 
 #'
 #' @rdname bootstrap_ci_methods
 percentile_bootstrap_ci <- function(bootdist, alpha = 0.05) {
-  ql <- quantile(bootdist, c(alpha / 2, 1 - (alpha / 2)))
+  coefs <- unname(sapply(bootdist, \(x) coef(x$fit)))
+  ql <- quantile(coefs, c(alpha / 2, 1 - (alpha / 2)))
   citab <- data.table(method = "percentile",
                       ci_alpha = alpha,
                       ll = ql[1],
                       ul = ql[2],
-                      se = sd(bootdist))
-
-  list(dist = as.vector(bootdist), ci = citab)
+                      se = sd(coefs))
+  bstats <- list(dist = coefs, ci = citab)
+  bstats
 }

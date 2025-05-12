@@ -4,7 +4,7 @@
 \alias{bootstrap_crosswalk}
 \title{Bootstrap a split routine}
 \usage{
-bootstrap_crosswalk(..., num_boot, num_cores = 1, rng_seed, alpha = 0.05)
+bootstrap_crosswalk(..., num_boot, num_cores = 1, rng_seed)
 }
 \arguments{
 \item{...}{Pass arguments to \code{crosswalk()}}

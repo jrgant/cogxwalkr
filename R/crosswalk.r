@@ -9,20 +9,15 @@
 #' @param condition_loop Whether to conduct conditional splitting sequentially. Defaults
 #'   to FALSE to maximize speed. Unused if `condition_by` is NULL. See documentation
 #'   for `make_conditional_splits()` for details.
-#' @param boot_ci Boolean indicating whether to generate bootstrap confidence intervals
-#' @param boot_control A list of settings passed to `bootstrap_crosswalk()`
+#' @param boot_control A list of settings passed to `bootstrap_crosswalk()` and functions
+#'   that handle bootstrap confidence interval estimation. Also allows for some control
+#'   of final output.
 #'
 #' @import data.table
 #' @export
 crosswalk <- function(cog1, cog2, data, num_iter = NULL,
                       condition_by = NULL, condition_loop = FALSE,
-                      boot_ci = FALSE, boot_control = list(...)) {
-
-  if (boot_ci == TRUE && missing("boot_control")) {
-    stop("When requesting bootstrap confidence intervals, `boot_control` requires ",
-         "a list setting the following arguments at a minimum: num_boot, rng_seed. ",
-         "We also recommend setting num_cores to enable parallel processing.")
-  }
+                      boot_control = list(...)) {
 
   if (is.data.frame(data) == FALSE || is.matrix(data)) {
     stop("The argument to `data` must be a data.frame, data.table, or matrix.")
@@ -47,13 +42,20 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
   ## store model fit and mean differences
   out <- list(fit = fit, diffs = diffs)
 
-  if (boot_ci == TRUE) {
+  if (!missing("boot_control")) {
     arglist <- as.list(match.call())[-1]
-    # force boot_ci=FALSE b/c crosswalk() is called by the bootstrap function
-    arglist[["boot_ci"]] <- FALSE
     control <- as.list(arglist[["boot_control"]])[-1]
-    arglist <- c(arglist, control)
-    out[["boot"]] <- do.call("bootstrap_crosswalk", args = arglist)
+    control[["alpha"]] <- NULL
+    # drop boot_control so that we don't re-enter this loop during the bootstraps
+    argsboot <- c(arglist[-which(names(arglist) %in% "boot_control")], control)
+    out[["boot"]][["fits"]] <- do.call("bootstrap_crosswalk", args = argsboot)
+    # calculate stats
+    ALPHA <- ifelse(!is.null(boot_control$alpha), boot_control$alpha, 0.05)
+    out[["boot"]] <- percentile_bootstrap_ci(out[["boot"]][["fits"]], ALPHA)
+    # save bootstrap models or not
+    if (is.null(boot_control$keep_fits) || boot_control$keep_fits == FALSE) {
+      out[["boot"]][["fits"]] <- NULL
+    }
   }
 
   out

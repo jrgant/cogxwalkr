@@ -48,9 +48,7 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
     control[["alpha"]] <- NULL
     # drop boot_control so that we don't re-enter this loop during the bootstraps
     argsboot <- c(arglist[-which(names(arglist) %in% "boot_control")], control)
-    ## TODO: [2025-05-12] : changes to bootstrap to make keep_fits work ends up borking bootstrapping (output is way too big)
     out[["boot"]][["dist"]] <- do.call("bootstrap_crosswalk", args = argsboot)
-    browser()
     # calculate stats
     ALPHA <- ifelse(!is.null(boot_control$alpha), boot_control$alpha, 0.05)
     out[["boot"]][["stats"]] <- percentile_bootstrap_ci(out[["boot"]][["dist"]], ALPHA)

@@ -54,5 +54,22 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
     out[["boot"]][["stats"]] <- percentile_bootstrap_ci(out[["boot"]][["dist"]], ALPHA)
   }
 
+  class(out) <- c("cogxwalkr", "list")
   out
+}
+
+
+#' Summarize a cogxwalkr list
+#'
+#' @import data.table
+#' @export
+summary.cogxwalkr <- function(object) {
+  est <- coef(object$fit)
+  out <- data.table(sample_est = unname(est))
+  if (!is.null(object$boot)) {
+    out <- cbind(out, object$boot$stats)
+    out[, boot_est := mean(object$boot$dist)]
+    setcolorder(out, c("sample_est", "boot_est"))
+  }
+  out[]
 }

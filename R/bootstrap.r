@@ -43,7 +43,7 @@ bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed) {
 percentile_bootstrap_ci <- function(bootdist, alpha = 0.05) {
   ql <- quantile(bootdist, c(alpha / 2, 1 - (alpha / 2)))
   citab <- data.table(method = "percentile",
-                      ci_alpha = alpha,
+                      alpha = alpha,
                       ll = ql[1],
                       ul = ql[2],
                       se = sd(bootdist))

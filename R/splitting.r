@@ -11,6 +11,7 @@ make_unconditional_splits <- function(data, num_iter) {
     stop("The parameter `num_iter` must be set in order to do unconditional splits.")
   }
 
+  data <- as.data.table(data)
   N_INPUT <- nrow(data)
   SPLIT_POINT <- floor(N_INPUT / 2)
 

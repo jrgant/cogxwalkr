@@ -25,8 +25,10 @@ bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed) {
                         .inorder = FALSE,
                         .combine = c,
                         .options.RNG = rng_seed) %dorng% {
-    data <- dcopy[sample(seq_len(.N), replace = TRUE)]
-    tmp <- crosswalk(...)
+    datarep <- dcopy[sample(seq_len(.N), replace = TRUE)]
+    cwargs <- list(...)
+    cwargs$data <- datarep
+    tmp <- do.call("crosswalk", cwargs)
     coef(tmp$fit)
   }
   stopImplicitCluster()

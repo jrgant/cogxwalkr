@@ -12,9 +12,6 @@
 #' @import foreach
 #' @export
 
-## FIXME: [2025-04-28] : conditional bootstrapping appears to give more precise
-##   results than Sarah's paper
-bootstrap_crosswalk <- function(..., num_boot, num_cores = 1, rng_seed) {
 bootstrap_crosswalk <- function(..., num_boot, num_cores = 1L, rng_seed) {
   dcopy <- as.data.table(eval(match.call()$data))
   if (num_cores == 1) {

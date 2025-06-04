@@ -19,7 +19,8 @@ crosswalk(
 
 \item{cog2}{The name of the second cognitive measure column}
 
-\item{data}{A data.table or data.frame containing the cognitive measure data}
+\item{data}{A data.table, data.frame, matrix, or list containing the
+cognitive measure data}
 
 \item{niter}{Number of split iterations to conduct}
 

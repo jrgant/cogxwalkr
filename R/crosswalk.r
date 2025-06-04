@@ -2,7 +2,8 @@
 #'
 #' @param cog1 The name of the first cognitive measure column
 #' @param cog2 The name of the second cognitive measure column
-#' @param data A data.table or data.frame containing the cognitive measure data
+#' @param data A data.table, data.frame, matrix, or list containing the
+#'   cognitive measure data
 #' @param niter Number of split iterations to conduct
 #' @param condition_by The name of a conditioning variable by which splits will be
 #'   conducted. If not conducted, the function will use unconditional splits.
@@ -19,7 +20,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
                       condition_by = NULL, condition_loop = FALSE,
                       control = list(...)) {
 
-  if (is.data.frame(data) == FALSE || is.matrix(data)) {
+  if (is.data.frame(data) == FALSE || is.matrix(data) || is.list(data) == FALSE) {
     stop("The argument to `data` must be a data.frame, data.table, or matrix.")
   }
 

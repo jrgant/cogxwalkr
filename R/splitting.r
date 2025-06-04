@@ -103,6 +103,10 @@ make_splits <- function(cdvar = NULL, data, cdloop = FALSE, niter = NULL) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, niter = niter)
   } else {
+    ## TODO: [2025-06-04] : add test for this error
+    stopifnot(
+      "Conditioning variable must be binary." = length(unique(data[[cdvar]])) == 2
+    )
     ## TODO: [2025-06-04] : add test for this warning
     if (!is.null(niter)) {
       warning("Ignoring `niter`, which is used only for unconditional splits. ",

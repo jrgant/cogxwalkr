@@ -99,15 +99,15 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
 #'
 #' @rdname splitting_functions
 #' @export
-make_splits <- function(cdvar = NULL, data, cdloop = FALSE, niter) {
+make_splits <- function(cdvar = NULL, data, cdloop = FALSE, niter = NULL) {
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, niter = niter)
   } else {
-    ## TODO: [2025-04-26] : add test for this message
+    ## TODO: [2025-06-04] : add test for this warning
     if (!is.null(niter)) {
-      message("Ignoring `niter`, because the number of iterations will be determined ",
-              "by the number of rows in the second level of the binary conditioning ",
-              "variable.")
+      warning("Ignoring `niter`, which is used only for unconditional splits. ",
+              "The number of iterations will be determined by the number of rows ",
+              "in the second level of the conditioning variable (", cdvar, ").")
     }
     tmpout <- make_conditional_splits(cdvar = cdvar,
                                       loop = cdloop,

@@ -10,7 +10,7 @@ make_unconditional_splits(data, niter)
 
 make_conditional_splits(cdvar = NULL, data, loop = FALSE)
 
-make_splits(cdvar = NULL, data, cdloop = FALSE, niter)
+make_splits(cdvar = NULL, data, cdloop = FALSE, niter = NULL)
 }
 \arguments{
 \item{data}{Input dataset}

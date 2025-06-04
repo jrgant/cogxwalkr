@@ -47,6 +47,8 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
     stop("To conduct conditional splitting, a conditioning variable must be specified.")
   }
 
+  data <- as.data.table(data)
+
   ## TODO: [2025-04-25] : add test
   CLEVELS <- sort(unique(data[, get(cdvar)]))
   if (length(CLEVELS) != 2) {
@@ -100,6 +102,7 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
 #' @rdname splitting_functions
 #' @export
 make_splits <- function(cdvar = NULL, data, cdloop = FALSE, niter = NULL) {
+  data <- as.data.table(data)
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, niter = niter)
   } else {

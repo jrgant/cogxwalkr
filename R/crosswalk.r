@@ -102,6 +102,7 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
     tmp <- x[["ci"]][[.x]]
     cat(indent, paste0("(", fd(tmp$ll), ", ", fd(tmp$ul), ")"), "-", .x, "\n")
   })
+  cat("\n", indent, "SE: ", fd(x$ci$se), "\n", sep = "")
   cat("\n--------------------------------------------------\n")
   cat("Number of boostrap replicates:", x$num_boot, "\n")
   cat("Number of iterations:", x$num_iter, "\n")

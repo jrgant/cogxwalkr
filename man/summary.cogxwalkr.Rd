@@ -4,7 +4,7 @@
 \alias{summary.cogxwalkr}
 \title{Summarize a cogxwalkr list}
 \usage{
-\method{summary}{cogxwalkr}(cx, alpha = 0.05, bci_type)
+\method{summary}{cogxwalkr}(cx, alpha = 0.05, bci_type = c("percentile", "normal"))
 }
 \arguments{
 \item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{crosswalk()}.}
@@ -12,7 +12,7 @@
 \item{alpha}{Alpha to use for confidence interval calculation. Defaults to 0.05.}
 
 \item{bci_type}{Type of bootstrapped confidence interval to calculate. Currently
-only "percentile" is supported.}
+accepts "percentile" (or "perc") and/or "normal." Both are included by default.}
 }
 \description{
 Summarize a cogxwalkr list

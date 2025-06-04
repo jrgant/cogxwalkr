@@ -4,16 +4,16 @@
 \alias{bootstrap_crosswalk}
 \title{Bootstrap a split routine}
 \usage{
-bootstrap_crosswalk(..., num_boot, num_cores = 1L, rng_seed)
+bootstrap_crosswalk(..., nboot, ncores = 1L, seed)
 }
 \arguments{
 \item{...}{Pass arguments to \code{crosswalk()}}
 
-\item{num_boot}{Number of bootstrap replicates to generate}
+\item{nboot}{Number of bootstrap replicates to generate}
 
-\item{num_cores}{Number of cores to use in parallel processing}
+\item{ncores}{Number of cores to use in parallel processing}
 
-\item{rng_seed}{Seed used by doRNG to generate reproducible parallel computations}
+\item{seed}{Seed used by doRNG to generate reproducible parallel computations}
 
 \item{alpha}{Alpha level for bootstrap confidence intervals}
 }

@@ -8,7 +8,7 @@ crosswalk(
   cog1,
   cog2,
   data,
-  num_iter = NULL,
+  niter = NULL,
   condition_by = NULL,
   condition_loop = FALSE,
   boot_control = list(...)
@@ -21,7 +21,7 @@ crosswalk(
 
 \item{data}{A data.table or data.frame containing the cognitive measure data}
 
-\item{num_iter}{Number of split iterations to conduct}
+\item{niter}{Number of split iterations to conduct}
 
 \item{condition_by}{The name of a conditioning variable by which splits will be
 conducted. If not conducted, the function will use unconditional splits.}

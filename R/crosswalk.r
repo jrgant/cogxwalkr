@@ -3,7 +3,7 @@
 #' @param cog1 The name of the first cognitive measure column
 #' @param cog2 The name of the second cognitive measure column
 #' @param data A data.table or data.frame containing the cognitive measure data
-#' @param num_iter Number of split iterations to conduct
+#' @param niter Number of split iterations to conduct
 #' @param condition_by The name of a conditioning variable by which splits will be
 #'   conducted. If not conducted, the function will use unconditional splits.
 #' @param condition_loop Whether to conduct conditional splitting sequentially. Defaults
@@ -15,7 +15,7 @@
 #'
 #' @import data.table
 #' @export
-crosswalk <- function(cog1, cog2, data, num_iter = NULL,
+crosswalk <- function(cog1, cog2, data, niter = NULL,
                       condition_by = NULL, condition_loop = FALSE,
                       boot_control = list(...)) {
 
@@ -26,7 +26,7 @@ crosswalk <- function(cog1, cog2, data, num_iter = NULL,
   tmp <- make_splits(cdvar = condition_by,
                      cdloop = condition_loop,
                      data = as.data.table(data),
-                     num_iter = num_iter)
+                     niter = niter)
 
   ## calculate the mean difference in the cognitive measures by split
   diffs <- tmp[, .(
@@ -71,10 +71,10 @@ summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "norm
     fml = paste(c(terms(cx$fit)[[2]], "~", terms(cx$fit)[[3]]), collapse = " "),
     sample_est = unname(coef(cx$fit)),
     condition_var = ifelse(cx$condition_var == "", "none", cx$condition_var),
-    num_iter = nrow(cx$diffs)
+    niter = nrow(cx$diffs)
   )
   if (!is.null(cx$boot)) {
-    out$num_boot <- length(cx$boot$dist)
+    out$nboot <- length(cx$boot$dist)
     out$boot_est  <-  mean(cx$boot$dist)
     out$ci <- bootstrap_ci(cx, alpha, type = bci_type)
   }
@@ -106,12 +106,12 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
     cat(indent, paste0("(", fd(tmp$ll), ", ", fd(tmp$ul), ")"), " - ", .x, "\n", sep = "")
   })
   cat("\n")
-  cat(indent, "Based on ", x$num_boot, " bootstrap replicates\n",
+  cat(indent, "Based on ", x$nboot, " bootstrap replicates\n",
       indent, "SE = ", fd(x$ci$se),
       sep = "")
 
   cat(hr,
-      "Number of iterations: ", x$num_iter, "\n",
+      "Number of iterations: ", x$niter, "\n",
       "Conditioning variable: ", x$condition_var, "\n\n",
       sep = "")
 }

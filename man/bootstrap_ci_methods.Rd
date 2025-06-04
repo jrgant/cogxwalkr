@@ -2,15 +2,18 @@
 % Please edit documentation in R/bootstrap.r
 \name{bootstrap_ci}
 \alias{bootstrap_ci}
-\title{Percentile method}
+\title{Calculate bootstrapped confidence limits}
 \usage{
-bootstrap_ci(cx, alpha = 0.05, type = c("percentile", "normal"))
+bootstrap_ci(cx, alpha = 0.05, type = "percentile")
 }
 \arguments{
-\item{cx}{An object of class \code{cogxwalkr}}
+\item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{crosswalk()}.}
 
 \item{alpha}{Alpha level to use for confidence interval calculation}
+
+\item{type}{Type of confidence limits to calculate. Currently supported:
+percentile, normal.}
 }
 \description{
-Percentile method
+Calculate bootstrapped confidence limits
 }

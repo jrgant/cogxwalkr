@@ -6,16 +6,16 @@
 \alias{make_splits}
 \title{Make an unconditional split dataset}
 \usage{
-make_unconditional_splits(data, num_iter)
+make_unconditional_splits(data, niter)
 
 make_conditional_splits(cdvar = NULL, data, loop = FALSE)
 
-make_splits(cdvar = NULL, data, cdloop = FALSE, num_iter)
+make_splits(cdvar = NULL, data, cdloop = FALSE, niter)
 }
 \arguments{
 \item{data}{Input dataset}
 
-\item{num_iter}{Number of split iterations to conduct}
+\item{niter}{Number of split iterations to conduct}
 
 \item{cdvar}{Character string naming auxiliary variable by which to condition splits}
 

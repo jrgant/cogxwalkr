@@ -1,9 +1,9 @@
 #' Bootstrap a split routine
 #'
 #' @param ... Pass arguments to `crosswalk()`
-#' @param num_boot Number of bootstrap replicates to generate
-#' @param num_cores Number of cores to use in parallel processing
-#' @param rng_seed Seed used by doRNG to generate reproducible parallel computations
+#' @param nboot Number of bootstrap replicates to generate
+#' @param ncores Number of cores to use in parallel processing
+#' @param seed Seed used by doRNG to generate reproducible parallel computations
 #' @param alpha Alpha level for bootstrap confidence intervals
 #'
 #' @import data.table
@@ -12,17 +12,17 @@
 #' @import foreach
 #' @export
 
-bootstrap_crosswalk <- function(..., num_boot, num_cores = 1L, rng_seed) {
+bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
   dcopy <- as.data.table(eval(match.call()$data))
-  if (num_cores == 1) {
-    message("`num_cores` is set to 1. Parallel processing will not be used.")
+  if (ncores == 1) {
+    message("`ncores` is set to 1. Parallel processing will not be used.")
   }
 
-  registerDoParallel(num_cores)
-  split_data <- foreach(i = seq_len(num_boot),
+  registerDoParallel(ncores)
+  split_data <- foreach(i = seq_len(nboot),
                         .inorder = FALSE,
                         .combine = c,
-                        .options.RNG = rng_seed) %dorng% {
+                        .options.RNG = seed) %dorng% {
     datarep <- dcopy[sample(seq_len(.N), replace = TRUE)]
     cwargs <- list(...)
     cwargs$data <- datarep

@@ -91,20 +91,26 @@ summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "norm
 print.summary.cogxwalkr <- function(x, digits = 3L) {
   fd <- function(num) round(num, digits = digits)
   indent <- paste(rep(" ", 2), collapse = "")
+  hr <- paste0("\n", paste(rep("-", 50), collapse = ""), "\n")
 
-  cat("\n")
-  cat("[Crosswalk formula]", "\n", indent, x$fml, "\n\n")
-  cat("[Coefficient]", "\n", indent, fd(x$sample_est), "\n\n")
-  cat(paste0("[", (1 - x$ci$alpha) * 100, "% confidence limits]"), "\n")
+  cat(hr,
+      "Crosswalk Summary", hr,
+      "Formula:         ", x$fml, "\n",
+      "Coefficient:     ", fd(x$sample_est), "\n\n",
+      paste0((1 - x$ci$alpha) * 100, "% confidence limits:"), "\n",
+      sep = "")
 
   ci_types <- names(x$ci)[!names(x$ci) %in% c("alpha", "se")]
   sapply(ci_types, \(.x) {
     tmp <- x[["ci"]][[.x]]
-    cat(indent, paste0("(", fd(tmp$ll), ", ", fd(tmp$ul), ")"), "-", .x, "\n")
+    cat(indent, paste0("(", fd(tmp$ll), ", ", fd(tmp$ul), ")"), " - ", .x, "\n", sep = "")
   })
-  cat("\n", indent, "SE: ", fd(x$ci$se), "\n", sep = "")
-  cat("\n--------------------------------------------------\n")
-  cat("Number of boostrap replicates:", x$num_boot, "\n")
-  cat("Number of iterations:", x$num_iter, "\n")
-  cat("Conditioning variable:", x$condition_var, "\n\n")
+  cat("\n")
+  cat(indent, "Based on ", x$num_boot, " bootstrap replicates\n",
+      indent, "SE = ", fd(x$ci$se),
+      sep = "")
+  cat(hr,
+      "Number of iterations: ", x$num_iter, "\n",
+      "Conditioning variable: ", x$condition_var, "\n\n",
+      sep = "")
 }

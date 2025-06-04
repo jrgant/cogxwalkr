@@ -10,9 +10,8 @@
 #' @param condition_loop Whether to conduct conditional splitting sequentially. Defaults
 #'   to FALSE to maximize speed. Unused if `condition_by` is NULL. See documentation
 #'   for `make_conditional_splits()` for details.
-#' @param control A list of settings passed to `bootstrap_crosswalk()` and functions
-#'   that handle bootstrap confidence interval estimation. Also allows for some control
-#'   of final output.
+#' @param control A list of settings passed to `bootstrap_crosswalk()`. See
+#'   `boot_control()` for more information.
 #'
 #' @import data.table
 #' @export
@@ -46,10 +45,9 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 
   if (!missing("control")) {
     arglist <- as.list(match.call())[-1]
-    ctrl <- as.list(arglist[["control"]])[-1]
-    ctrl[["alpha"]] <- NULL
+    control <- do.call("boot_control", control)
     # drop control so that we don't re-enter this loop during the bootstraps
-    argsboot <- c(arglist[-which(names(arglist) %in% "control")], ctrl)
+    argsboot <- c(arglist[-which(names(arglist) %in% "control")], control)
     out[["boot"]][["dist"]] <- unname(do.call("bootstrap_crosswalk", args = argsboot))
     attr(out[["boot"]][["dist"]], "coef") <- cog1
   }

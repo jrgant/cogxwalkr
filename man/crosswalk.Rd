@@ -31,9 +31,8 @@ conducted. If not conducted, the function will use unconditional splits.}
 to FALSE to maximize speed. Unused if \code{condition_by} is NULL. See documentation
 for \code{make_conditional_splits()} for details.}
 
-\item{control}{A list of settings passed to \code{bootstrap_crosswalk()} and functions
-that handle bootstrap confidence interval estimation. Also allows for some control
-of final output.}
+\item{control}{A list of settings passed to \code{bootstrap_crosswalk()}. See
+\code{boot_control()} for more information.}
 }
 \description{
 Crosswalk cognitive measures

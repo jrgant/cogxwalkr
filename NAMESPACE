@@ -2,6 +2,7 @@
 
 S3method(print,summary.cogxwalkr)
 S3method(summary,cogxwalkr)
+export(boot_control)
 export(bootstrap_crosswalk)
 export(crosswalk)
 export(make_conditional_splits)

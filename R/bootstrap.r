@@ -59,3 +59,24 @@ bootstrap_ci <- function(cx, alpha = 0.05, type = "percentile") {
   }
   out
 }
+
+
+#' Bootstrap control list
+#'
+#' @details Can be used as an argument to the `control` argument in `crosswalk()`,
+#'   but intended primarily to validate the list provided by that argument.
+#' @param nboot Number of bootstrap replicates to produce.
+#' @param seed Seed used to initialize parallel processing-safe random number
+#'   generation.
+#' @param ncores  Number of cores to use in parallel processing. Defaults to 1.
+#'
+#' @export
+boot_control <- function(nboot = NULL, seed = NULL, ncores = 1L) {
+  if (is.null(nboot) || !is.numeric(nboot)) {
+    stop("`nboot` cannot be NULL and must be > 0")
+  }
+  if (is.null(seed) || !is.numeric(seed)) {
+    stop("`seed` cannot be NULL")
+  }
+  list(nboot = nboot, seed = seed, ncores = ncores)
+}

@@ -109,6 +109,7 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
   cat(indent, "Based on ", x$num_boot, " bootstrap replicates\n",
       indent, "SE = ", fd(x$ci$se),
       sep = "")
+
   cat(hr,
       "Number of iterations: ", x$num_iter, "\n",
       "Conditioning variable: ", x$condition_var, "\n\n",

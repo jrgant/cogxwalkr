@@ -48,10 +48,6 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   }
 
   ## TODO: [2025-04-25] : add test
-  ## TODO: [2025-04-26] : need to standardize ordering of the conditioning variable
-  ##    levels; does level 1 always need to be the smaller group?
-  ##       - not necessarily, we set the minimum number of itereations to smallest
-  ##         group size - 1; add factor to allow for additional iterations
   CLEVELS <- sort(unique(data[, get(cdvar)]))
   if (length(CLEVELS) != 2) {
     stop("Conditioning variable must be binary.")

@@ -86,7 +86,7 @@ summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "norm
 
 #' Print a cogxwalkr summary
 #'
-#' @param digits Number of digits to show. Passed to `round()`.
+#' @param digits Number of digits to print. Passed to `round()`.
 #'
 #' @export
 print.summary.cogxwalkr <- function(x, digits = 3L) {

@@ -1,5 +1,8 @@
 # cogxwalkr
 
+![Static Badge](https://img.shields.io/badge/Status-In_development-FF0000?style=for-the-badge)
+
+
 R package for crosswalking measures of cognition.
 
 Methods described in:

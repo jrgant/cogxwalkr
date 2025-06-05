@@ -118,11 +118,12 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 #' Plot information about the bootstrap distribution
 #'
 #' @param breaks Used by [graphics::hist()], with the same default.
-#' @param sarg List of parameters passed to the `abline()` that plots the sample
+#' @param sarg List of parameters passed to the [graphics::abline()] that plots the sample
 #'   coefficient estimate
-#' @param barg List of parameters passed to the `abline()` that plots the mean
+#' @param barg List of parameters passed to the [graphics::abline()] that plots the mean
 #'   coefficient estimate across bootstrap replicates
 #' @inheritParams summary.cogxwalkr
+#'
 #' @export
 plot.cogxwalkr <- function(cx, breaks = "Sturges",
                            sarg = list(col = "black", lty = 1, lwd = 2),

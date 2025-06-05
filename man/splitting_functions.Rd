@@ -13,9 +13,10 @@ make_conditional_splits(cdvar = NULL, data, loop = FALSE)
 make_splits(cdvar = NULL, data, cdloop = FALSE, niter = NULL)
 }
 \arguments{
-\item{data}{Input dataset}
+\item{data}{A data.table, data.frame, matrix, or list containing the
+cognitive measure data}
 
-\item{niter}{Number of split iterations to conduct}
+\item{niter}{Number of iterations to conduct for an unconditional split routine}
 
 \item{cdvar}{Character string naming auxiliary variable by which to condition splits}
 

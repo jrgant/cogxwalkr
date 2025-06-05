@@ -7,7 +7,7 @@
 bootstrap_ci(cx, alpha = 0.05, type = "percentile")
 }
 \arguments{
-\item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{crosswalk()}.}
+\item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{\link[=crosswalk]{crosswalk()}}.}
 
 \item{alpha}{Alpha level to use for confidence interval calculation}
 

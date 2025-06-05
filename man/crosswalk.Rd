@@ -22,17 +22,17 @@ crosswalk(
 \item{data}{A data.table, data.frame, matrix, or list containing the
 cognitive measure data}
 
-\item{niter}{Number of split iterations to conduct}
+\item{niter}{Number of iterations to conduct for an unconditional split routine}
 
 \item{condition_by}{The name of a conditioning variable by which splits will be
 conducted. If not conducted, the function will use unconditional splits.}
 
 \item{condition_loop}{Whether to conduct conditional splitting sequentially. Defaults
 to FALSE to maximize speed. Unused if \code{condition_by} is NULL. See documentation
-for \code{make_conditional_splits()} for details.}
+for \code{\link[=make_conditional_splits]{make_conditional_splits()}} for details.}
 
-\item{control}{A list of settings passed to \code{bootstrap_crosswalk()}. See
-\code{boot_control()} for more information.}
+\item{control}{A list of settings passed to \code{\link[=bootstrap_crosswalk]{bootstrap_crosswalk()}}. See
+\code{\link[=boot_control]{boot_control()}} for more information.}
 }
 \description{
 Crosswalk cognitive measures

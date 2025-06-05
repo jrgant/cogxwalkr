@@ -18,6 +18,6 @@ generation.}
 Bootstrap control list
 }
 \details{
-Can be used as an argument to the \code{control} argument in \code{crosswalk()},
+Can be used as an argument to the \code{control} argument in \code{\link[=crosswalk]{crosswalk()}},
 but intended primarily to validate the list provided by that argument.
 }

@@ -4,14 +4,14 @@
 #' @param cog2 The name of the second cognitive measure column
 #' @param data A data.table, data.frame, matrix, or list containing the
 #'   cognitive measure data
-#' @param niter Number of split iterations to conduct
+#' @param niter Number of iterations to conduct for an unconditional split routine
 #' @param condition_by The name of a conditioning variable by which splits will be
 #'   conducted. If not conducted, the function will use unconditional splits.
 #' @param condition_loop Whether to conduct conditional splitting sequentially. Defaults
 #'   to FALSE to maximize speed. Unused if `condition_by` is NULL. See documentation
-#'   for `make_conditional_splits()` for details.
-#' @param control A list of settings passed to `bootstrap_crosswalk()`. See
-#'   `boot_control()` for more information.
+#'   for [make_conditional_splits()] for details.
+#' @param control A list of settings passed to [bootstrap_crosswalk()]. See
+#'   [boot_control()] for more information.
 #'
 #' @import data.table
 #' @export
@@ -59,7 +59,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 
 #' Summarize a cogxwalkr list
 #'
-#' @param cx An object of class "cogxwalkr", i.e., an object returned by `crosswalk()`.
+#' @param cx An object of class "cogxwalkr", i.e., an object returned by [crosswalk()].
 #' @param alpha Alpha to use for confidence interval calculation. Defaults to 0.05.
 #' @param bci_type Type of bootstrapped confidence interval to calculate. Currently
 #'   accepts "percentile" (or "perc") and/or "normal." Both are included by default.
@@ -84,7 +84,7 @@ summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "norm
 
 #' Print a cogxwalkr summary
 #'
-#' @param digits Number of digits to print. Passed to `round()`.
+#' @param digits Number of digits to print. Passed to [base::round()].
 #'
 #' @export
 print.summary.cogxwalkr <- function(x, digits = 3L) {
@@ -113,4 +113,29 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
       "Number of iterations: ", x$niter, "\n",
       "Conditioning variable: ", x$condition_var, "\n\n",
       sep = "")
+}
+
+
+#' Plot information about the bootstrap distribution
+#'
+#' @param breaks Used by [graphics::hist()], with the same default.
+#' @param sarg List of parameters passed to the `abline()` that plots the sample
+#'   coefficient estimate
+#' @param barg List of parameters passed to the `abline()` that plots the mean
+#'   coefficient estimate across bootstrap replicates
+#' @inheritParams summary.cogxwalkr
+#' @export
+plot.cogxwalkr <- function(cx, breaks = "Sturges",
+                           sarg = list(col = "black", lty = 1, lwd = 2),
+                           barg = list(col = "red", lty = 2, lwd = 2)) {
+  COEF <- coef(cx$fit)
+  hist(cx$boot$dist, breaks = breaks, xlab = "Coefficient")
+  do.call("abline", args = c(list(v = COEF), sarg))
+  do.call("abline", args = c(list(v = mean(cx$boot$dist)), barg))
+  legend("topright",
+         legend = c("Sample coef.", "Bootstrap coef."),
+         col = c(sarg$col, barg$col),
+         lty = c(sarg$lty, barg$lty),
+         lwd = c(sarg$lwd, barg$lwd),
+         bty = "n")
 }

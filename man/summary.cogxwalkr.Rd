@@ -7,7 +7,7 @@
 \method{summary}{cogxwalkr}(cx, alpha = 0.05, bci_type = c("percentile", "normal"))
 }
 \arguments{
-\item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{crosswalk()}.}
+\item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{\link[=crosswalk]{crosswalk()}}.}
 
 \item{alpha}{Alpha to use for confidence interval calculation. Defaults to 0.05.}
 

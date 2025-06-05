@@ -1,6 +1,6 @@
 #' Bootstrap a split routine
 #'
-#' @param ... Pass arguments to `crosswalk()`
+#' @param ... Pass arguments to [crosswalk()]
 #' @param nboot Number of bootstrap replicates to generate
 #' @param ncores Number of cores to use in parallel processing
 #' @param seed Seed used by doRNG to generate reproducible parallel computations
@@ -37,7 +37,7 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
 
 #' Calculate bootstrapped confidence limits
 #'
-#' @param cx An object of class "cogxwalkr", i.e., an object returned by `crosswalk()`.
+#' @param cx An object of class "cogxwalkr", i.e., an object returned by [crosswalk()].
 #' @param alpha Alpha level to use for confidence interval calculation
 #' @param type Type of confidence limits to calculate. Currently supported:
 #'   percentile, normal.
@@ -63,7 +63,7 @@ bootstrap_ci <- function(cx, alpha = 0.05, type = "percentile") {
 
 #' Bootstrap control list
 #'
-#' @details Can be used as an argument to the `control` argument in `crosswalk()`,
+#' @details Can be used as an argument to the `control` argument in [crosswalk()],
 #'   but intended primarily to validate the list provided by that argument.
 #' @param nboot Number of bootstrap replicates to produce.
 #' @param seed Seed used to initialize parallel processing-safe random number
@@ -71,6 +71,7 @@ bootstrap_ci <- function(cx, alpha = 0.05, type = "percentile") {
 #' @param ncores  Number of cores to use in parallel processing. Defaults to 1.
 #'
 #' @export
+# TODO [2025-06-05] : add test
 boot_control <- function(nboot = NULL, seed = NULL, ncores = 1L) {
   if (is.null(nboot) || !is.numeric(nboot)) {
     stop("`nboot` cannot be NULL and must be > 0")

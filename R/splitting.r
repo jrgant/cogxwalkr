@@ -1,7 +1,6 @@
 #' Make an unconditional split dataset
 #'
-#' @param niter Number of split iterations to conduct
-#' @param data Input dataset
+#' @inheritParams crosswalk
 #'
 #' @rdname splitting_functions
 #' @import data.table
@@ -32,12 +31,10 @@ make_unconditional_splits <- function(data, niter) {
 #' Make a conditional split dataset
 #'
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
-#' @param data Input dataset
 #' @param loop Boolean declaring whether to use a for loop. The default FALSE will
 #'   generate splits and operate on an expanded data.table in-memory. If your machine has
 #'   limited memory, set this argument to TRUE in order to process splits sequentially.
 #'   The default option should be much faster.
-#'
 #' @rdname splitting_functions
 #' @import data.table
 #' @import foreach
@@ -97,6 +94,7 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
 #' @param cdloop Boolean passed to `loop` argument of `make_conditional_splits()`. Ignored
 #'   when conducting unconditional splits.
+#'
 #' @import foreach
 #'
 #' @rdname splitting_functions

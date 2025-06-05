@@ -7,7 +7,7 @@
 bootstrap_crosswalk(..., nboot, ncores = 1L, seed)
 }
 \arguments{
-\item{...}{Pass arguments to \code{crosswalk()}}
+\item{...}{Pass arguments to \code{\link[=crosswalk]{crosswalk()}}}
 
 \item{nboot}{Number of bootstrap replicates to generate}
 

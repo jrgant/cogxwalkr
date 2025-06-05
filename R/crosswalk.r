@@ -117,7 +117,8 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 
 #' Plot information about the bootstrap distribution
 #'
-#' @param breaks Used by [graphics::hist()], with the same default.
+#' @param breaks Passed to [graphics::hist()], overriding the default method with "FD"
+#'   ([grDevices::nclass.FD()]).
 #' @param sarg List of parameters passed to the [graphics::abline()] that plots the sample
 #'   coefficient estimate
 #' @param barg List of parameters passed to the [graphics::abline()] that plots the mean
@@ -125,17 +126,22 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 #' @inheritParams summary.cogxwalkr
 #'
 #' @export
-plot.cogxwalkr <- function(cx, breaks = "Sturges",
+plot.cogxwalkr <- function(cx, which = c("boot", "slope"),
+                           breaks = "FD",
                            sarg = list(col = "black", lty = 1, lwd = 2),
                            barg = list(col = "red", lty = 2, lwd = 2)) {
   COEF <- coef(cx$fit)
-  hist(cx$boot$dist, breaks = breaks, xlab = "Coefficient")
-  do.call("abline", args = c(list(v = COEF), sarg))
-  do.call("abline", args = c(list(v = mean(cx$boot$dist)), barg))
-  legend("topright",
-         legend = c("Sample coef.", "Bootstrap coef."),
-         col = c(sarg$col, barg$col),
-         lty = c(sarg$lty, barg$lty),
-         lwd = c(sarg$lwd, barg$lwd),
-         bty = "n")
+  if ("boot" %in% which) {
+    hist(cx$boot$dist, breaks = breaks,
+         xlab = sprintf("Bootstrap distribution of the %s coefficient", names(COEF)),
+         main = sprintf("R = %d", length(cx$boot$dist)))
+    do.call("abline", args = c(list(v = COEF), sarg))
+    do.call("abline", args = c(list(v = mean(cx$boot$dist)), barg))
+    legend("topright",
+           legend = c("Sample coef.", "Bootstrap coef."),
+           col = c(sarg$col, barg$col),
+           lty = c(sarg$lty, barg$lty),
+           lwd = c(sarg$lwd, barg$lwd),
+           bty = "n")
+  }
 }

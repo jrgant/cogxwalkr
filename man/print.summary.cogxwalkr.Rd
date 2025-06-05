@@ -7,7 +7,7 @@
 \method{print}{summary.cogxwalkr}(x, digits = 3L)
 }
 \arguments{
-\item{digits}{Number of digits to print. Passed to \code{round()}.}
+\item{digits}{Number of digits to print. Passed to \code{\link[base:Round]{base::round()}}.}
 }
 \description{
 Print a cogxwalkr summary

@@ -36,8 +36,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
   setnames(diffs, old = c("cog1", "cog2"), new = c(cog1, cog2))
 
   ## estimate correlation between the cognitive measure differences
-  fml <- paste(cog2, "~", cog1, "- 1")
-  fit <- lm(as.formula(fml), data = diffs)
+  fit <- diffs[, lm(cog2 ~ cog1 - 1), env = list(cog1 = cog1, cog2 = cog2)]
   condition_var <- ifelse(!is.null(condition_by), condition_by, "")
 
   ## store model fit and mean differences
@@ -67,7 +66,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 #' @export
 summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "normal")) {
   out <- list(
-    fml = paste(c(terms(cx$fit)[[2]], "~", terms(cx$fit)[[3]]), collapse = " "),
+    fml = deparse(cx$fit$call$formula),
     sample_est = unname(coef(cx$fit)),
     condition_var = ifelse(cx$condition_var == "", "none", cx$condition_var),
     niter = nrow(cx$diffs)

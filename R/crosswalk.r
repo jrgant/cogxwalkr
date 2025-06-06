@@ -193,3 +193,22 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
   }
 
 }
+
+
+#' @details Unlike [crosswalk()], which uses splitting to estimate the sample coefficient,
+#'   [cw()] calculates the coefficient based on summary statistics from the input
+#'   data: cov(cog1, cog2) / var(cog1).
+#'
+#' @inheritParams crosswalk
+#'
+#' @import data.table
+#' @rdname crosswalk
+#' @export
+cw <- function(cog1, cog2, cogsim) {
+  out <- cogsim[, list(
+    cov = cov(m1, m2),
+    var = var(m1),
+    coef = cov(m1, m2) / var(m1)
+  ), env = list(m1 = cog1, m2 = cog2)]
+  out
+}

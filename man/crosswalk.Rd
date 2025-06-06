@@ -2,6 +2,7 @@
 % Please edit documentation in R/crosswalk.r
 \name{crosswalk}
 \alias{crosswalk}
+\alias{cw}
 \title{Crosswalk cognitive measures}
 \usage{
 crosswalk(
@@ -13,6 +14,8 @@ crosswalk(
   condition_loop = FALSE,
   control = list(...)
 )
+
+cw(cog1, cog2, cogsim)
 }
 \arguments{
 \item{cog1}{The name of the first cognitive measure column}
@@ -36,4 +39,9 @@ for \code{\link[=make_conditional_splits]{make_conditional_splits()}} for detail
 }
 \description{
 Crosswalk cognitive measures
+}
+\details{
+Unlike \code{\link[=crosswalk]{crosswalk()}}, which uses splitting to estimate the sample coefficient,
+\code{\link[=cw]{cw()}} calculates the coefficient based on summary statistics from the input
+data: cov(cog1, cog2) / var(cog1).
 }

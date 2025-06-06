@@ -2,9 +2,13 @@ Package: cogxwalkr
 Title: Crosswalk Cognitive Measures
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Sarah", "Ackley", , "sarah_ackley@brown.edu", role = c("aut", "cre"),
+    person("Sarah", "Ackley",
+           email = "sarah_ackley@brown.edu",
+           role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0181-6063")),
-    person("Jason", "Gantenberg", , "jrgant@brown.edu", role = c("aut"),
+    person("Jason", "Gantenberg",
+           email = "jrgant@brown.edu",
+           role = c("aut"),
            comment = c(ORCID = "0000-0002-8144-4273"))
   )
 Description: This package conducts a crosswalk between two cognitive measures. Funded by the National Insitute on Aging (R00AG073454 and P01AG082653).

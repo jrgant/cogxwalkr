@@ -6,8 +6,11 @@
 \usage{
 \method{plot}{cogxwalkr}(
   cx,
-  which = c("boot", "slope"),
+  cxsum = NULL,
+  types = c("boot", "slope"),
   breaks = "FD",
+  citype = "percentile",
+  layout = c(1, length(types)),
   sarg = list(col = "black", lty = 1, lwd = 2),
   barg = list(col = "red", lty = 2, lwd = 2)
 )
@@ -15,8 +18,20 @@
 \arguments{
 \item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{\link[=crosswalk]{crosswalk()}}.}
 
+\item{cxsum}{The output of \code{summary(cx)}}
+
+\item{types}{The types of crosswalk plots to produce. By default, both a plot of the
+bootstrap distribution of coefficients and a plot of the data with the estimated
+slope. For the plotted sloped, (1-alpha)\% confidence intervals will appear if the
+user provides the output of \code{\link[=summary.cogxwalkr]{summary.cogxwalkr()}}.}
+
 \item{breaks}{Passed to \code{\link[graphics:hist]{graphics::hist()}}, overriding the default method with "FD"
 (\code{\link[grDevices:nclass]{grDevices::nclass.FD()}}).}
+
+\item{citype}{Choose confidence intervals to plot. Ignored if \code{cxsum} is NULL.}
+
+\item{layout}{Passed to the \code{mfrow} argument of \code{\link[graphics:par]{graphics::par()}}. Defaults to
+\code{c(1, length(types))}.}
 
 \item{sarg}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} that plots the sample
 coefficient estimate}

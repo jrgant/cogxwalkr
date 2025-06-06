@@ -117,21 +117,38 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 
 #' Plot information about the bootstrap distribution
 #'
+#' @param cxsum The output of `summary(cx)`
+#' @param types The types of crosswalk plots to produce. By default, both a plot of the
+#'   bootstrap distribution of coefficients and a plot of the data with the estimated
+#'   slope. For the plotted sloped, (1-alpha)% confidence intervals will appear if the
+#'   user provides the output of [summary.cogxwalkr()].
 #' @param breaks Passed to [graphics::hist()], overriding the default method with "FD"
 #'   ([grDevices::nclass.FD()]).
+#' @param citype Choose confidence intervals to plot. Ignored if `cxsum` is NULL.
+#' @param layout Passed to the `mfrow` argument of [graphics::par()]. Defaults to
+#'   `c(1, length(types))`.
 #' @param sarg List of parameters passed to the [graphics::abline()] that plots the sample
 #'   coefficient estimate
 #' @param barg List of parameters passed to the [graphics::abline()] that plots the mean
 #'   coefficient estimate across bootstrap replicates
 #' @inheritParams summary.cogxwalkr
 #'
+#' @import data.table
 #' @export
-plot.cogxwalkr <- function(cx, which = c("boot", "slope"),
-                           breaks = "FD",
+plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
+                           breaks = "FD", citype = "percentile",
+                           layout = c(1, length(types)),
                            sarg = list(col = "black", lty = 1, lwd = 2),
                            barg = list(col = "red", lty = 2, lwd = 2)) {
   COEF <- coef(cx$fit)
-  if ("boot" %in% which) {
+
+  par(mfrow = layout)
+  if ("boot" %in% types) {
+    ## TODO: [2025-06-05] : write test
+    if (is.null(cx$boot)) {
+      stop("No bootstrap data provided. To see only the scatterplot of differences and",
+           "the slope estimated in the sample, set `types` to 'slope'.")
+    }
     hist(cx$boot$dist, breaks = breaks,
          xlab = sprintf("Bootstrap distribution of the %s coefficient", names(COEF)),
          main = sprintf("R = %d", length(cx$boot$dist)))
@@ -144,4 +161,20 @@ plot.cogxwalkr <- function(cx, which = c("boot", "slope"),
            lwd = c(sarg$lwd, barg$lwd),
            bty = "n")
   }
+
+  if ("slope" %in% types) {
+    fdat <- as.data.table(cx$fit$model)
+    plot(fdat$mmse, fdat$moca, pch = 19, col = scales::alpha("black", 0.2),
+         main = "Crosswalk")
+    abline(0, COEF, col = "red", lwd = 2)
+    ## TODO: [2025-06-06] : write test for detection of cxsum and citype
+    if (!is.null(cxsum)) {
+      if (length(citype) > 1) {
+        stop("length of `citype` must be 1")
+      }
+      abline(0, cxsum$ci[[citype]]$ll, col = "red", lty = 2)
+      abline(0, cxsum$ci[[citype]]$ul, col = "red", lty = 2)
+    }
+  }
+
 }

@@ -11,7 +11,8 @@ bootstrap_crosswalk(..., nboot, ncores = 1L, seed)
 
 \item{nboot}{Number of bootstrap replicates to generate}
 
-\item{ncores}{Number of cores to use in parallel processing}
+\item{ncores}{Number of cores to use in parallel processing. If set to 999,
+\code{\link[parallelly:availableCores]{parallelly::availableCores()}} will use the maximum available}
 
 \item{seed}{Seed used by doRNG to generate reproducible parallel computations}
 

@@ -2,14 +2,16 @@
 #'
 #' @param ... Pass arguments to [crosswalk()]
 #' @param nboot Number of bootstrap replicates to generate
-#' @param ncores Number of cores to use in parallel processing
+#' @param ncores Number of cores to use in parallel processing. If set to 999,
+#'   [parallelly::availableCores()] will use the maximum available
 #' @param seed Seed used by doRNG to generate reproducible parallel computations
 #' @param alpha Alpha level for bootstrap confidence intervals
 #'
 #' @import data.table
-#' @import doParallel
-#' @import doRNG
 #' @import foreach
+#' @import future
+#' @import doFuture
+#' @importFrom parallelly availableCores
 #' @export
 
 bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
@@ -18,18 +20,29 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
     message("`ncores` is set to 1. Parallel processing will not be used.")
   }
 
-  registerDoParallel(ncores)
-  split_data <- foreach(i = seq_len(nboot),
-                        .inorder = FALSE,
-                        .combine = c,
-                        .options.RNG = seed) %dorng% {
+  ## TODO: [2025-06-05] : Need to devise some tests for doFuture
+  if (ncores < availableCores()) {
+    message(sprintf("Running bootstraps over %d cores ...", ncores))
+    plan(multisession, workers = ncores)
+  } else {
+    message(sprintf("Running bootstraps over %d cores ...", availableCores()))
+    plan(multisession)
+  }
+  split_data <- foreach(
+    verbose = TRUE,
+    i = seq_len(nboot),
+    .inorder = FALSE,
+    .combine = c,
+    .options.future = list(seed = seed, packages = "cogxwalkr")
+  ) %dofuture% {
     datarep <- dcopy[sample(seq_len(.N), replace = TRUE)]
     cwargs <- list(...)
     cwargs$data <- datarep
     tmp <- do.call("crosswalk", cwargs)
     coef(tmp$fit)
   }
-  stopImplicitCluster()
+
+  plan(sequential) # closes the workers opened by plan(multisession)
 
   split_data
 }

@@ -47,7 +47,7 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   data <- as.data.table(data)
 
   ## TODO: [2025-04-25] : add test
-  CLEVELS <- sort(unique(data[, get(cdvar)]))
+  CLEVELS <- sort(unique(data[, var, env = list(var = cdvar)]))
   if (length(CLEVELS) != 2) {
     stop("Conditioning variable must be binary.")
   }
@@ -55,8 +55,8 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   ## TODO: [2025-04-25] : add tests for conditional splitting routines
   NUM_DATA <- nrow(data)
   SPLIT1_SIZE <- floor(NUM_DATA / 2)
-  L1_SIZE <- data[, sum(get(cdvar) == CLEVELS[2])]
-  L0_SIZE <- data[, sum(get(cdvar) == CLEVELS[1])]
+  L1_SIZE <- data[, sum(var == CLEVELS[2]), env = list(var = cdvar)]
+  L0_SIZE <- data[, sum(var == CLEVELS[1]), env = list(var = cdvar)]
   SL11_SIZES <- seq_len(L1_SIZE - 1)
   SL10_SIZES <- sort(SPLIT1_SIZE - SL11_SIZES, decreasing = TRUE)
 
@@ -66,9 +66,9 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
     spec[, sl_10_size := SPLIT1_SIZE - sl_11_size]
     tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
       shuffle <- spec[i, {
-        lrows1 <- data[get(cdvar) == CLEVELS[2]][sample(seq_len(.N))]
+        lrows1 <- data[var == CLEVELS[2]][sample(seq_len(.N)), env = list(var = cdvar)]
         lrows1[, split_id := rep(c(1, 2), times = c(sl_11_size, .N - sl_11_size))]
-        lrows0 <- data[get(cdvar) == CLEVELS[1]][sample(seq_len(.N))]
+        lrows0 <- data[cdvar == CLEVELS[1]][sample(seq_len(.N)), env = list(var = cdvar)]
         lrows0[, split_id := rep(c(1, 2), times = c(sl_10_size, .N - sl_10_size))]
         rbind(lrows1, lrows0)[, iteration := i][]
       }]

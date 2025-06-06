@@ -29,10 +29,10 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
                      niter = niter)
 
   ## calculate the mean difference in the cognitive measures by split
-  diffs <- tmp[, .(
-    cog1 = mean(get(cog1)[split_id == 1]) - mean(get(cog1)[split_id == 2]),
-    cog2 = mean(get(cog2)[split_id == 1]) - mean(get(cog2)[split_id == 2])
-  ), keyby = iteration]
+  diffs <- tmp[, .(cog1 = mean(m1[split_id == 1]) - mean(m1[split_id == 2]),
+                   cog2 = mean(m2[split_id == 1]) - mean(m2[split_id == 2])),
+               keyby = iteration,
+               env = list(m1 = cog1, m2 = cog2)]
   setnames(diffs, old = c("cog1", "cog2"), new = c(cog1, cog2))
 
   ## estimate correlation between the cognitive measure differences

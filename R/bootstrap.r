@@ -29,7 +29,6 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
     plan(multisession)
   }
   split_data <- foreach(
-    verbose = TRUE,
     i = seq_len(nboot),
     .inorder = FALSE,
     .combine = c,

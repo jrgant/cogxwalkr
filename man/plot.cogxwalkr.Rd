@@ -11,8 +11,14 @@
   breaks = "FD",
   citype = "percentile",
   layout = c(1, length(types)),
-  sarg = list(col = "black", lty = 1, lwd = 2),
-  barg = list(col = "red", lty = 2, lwd = 2)
+  sargs = list(col = "black", lwd = 2),
+  bargs = list(col = "red", lty = 2, lwd = 2),
+  slargs = list(col = "red", lwd = 2),
+  clargs = list(col = "red", lty = 2),
+  ptshape = 19,
+  ptsize = 0.8,
+  ptcol = "black",
+  ptalpha = 0.2
 )
 }
 \arguments{
@@ -33,11 +39,26 @@ user provides the output of \code{\link[=summary.cogxwalkr]{summary.cogxwalkr()}
 \item{layout}{Passed to the \code{mfrow} argument of \code{\link[graphics:par]{graphics::par()}}. Defaults to
 \code{c(1, length(types))}.}
 
-\item{sarg}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} that plots the sample
-coefficient estimate}
+\item{sargs}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} that plots the
+sample coefficient estimate}
 
-\item{barg}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} that plots the mean
+\item{bargs}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} that plots the mean
 coefficient estimate across bootstrap replicates}
+
+\item{slargs}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} that plots the
+sample slope in the crosswalk panel}
+
+\item{clargs}{List of parameters passed to the \code{\link[graphics:abline]{graphics::abline()}} calls that plot
+the confidence limits for the slope.}
+
+\item{ptshape}{Shape of points in crosswalk scatterplot (passed to \code{\link[base:plot]{base::plot()}})}
+
+\item{ptsize}{Size of points in crosswalk scatterplot (passed to \code{\link[base:plot]{base::plot()}})}
+
+\item{ptcol}{Color of points in crosswalk scatterplot (passed to \code{\link[base:plot]{base::plot()}})}
+
+\item{ptalpha}{Alpha (transparency) of points in crosswalk scatterplot
+(passed to \code{\link[base:plot]{base::plot()}})}
 }
 \description{
 Plot information about the bootstrap distribution

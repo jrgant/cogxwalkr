@@ -127,10 +127,19 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 #' @param citype Choose confidence intervals to plot. Ignored if `cxsum` is NULL.
 #' @param layout Passed to the `mfrow` argument of [graphics::par()]. Defaults to
 #'   `c(1, length(types))`.
-#' @param sarg List of parameters passed to the [graphics::abline()] that plots the sample
-#'   coefficient estimate
-#' @param barg List of parameters passed to the [graphics::abline()] that plots the mean
+#' @param sargs List of parameters passed to the [graphics::abline()] that plots the
+#'   sample coefficient estimate
+#' @param bargs List of parameters passed to the [graphics::abline()] that plots the mean
 #'   coefficient estimate across bootstrap replicates
+#' @param slargs List of parameters passed to the [graphics::abline()] that plots the
+#'   sample slope in the crosswalk panel
+#' @param clargs List of parameters passed to the [graphics::abline()] calls that plot
+#'   the confidence limits for the slope.
+#' @param ptsize Size of points in crosswalk scatterplot (passed to [base::plot()])
+#' @param ptshape Shape of points in crosswalk scatterplot (passed to [base::plot()])
+#' @param ptcol Color of points in crosswalk scatterplot (passed to [base::plot()])
+#' @param ptalpha Alpha (transparency) of points in crosswalk scatterplot
+#'   (passed to [base::plot()])
 #' @inheritParams summary.cogxwalkr
 #'
 #' @import data.table
@@ -138,8 +147,11 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
                            breaks = "FD", citype = "percentile",
                            layout = c(1, length(types)),
-                           sarg = list(col = "black", lty = 1, lwd = 2),
-                           barg = list(col = "red", lty = 2, lwd = 2)) {
+                           sargs = list(col = "black", lwd = 2),
+                           bargs = list(col = "red", lty = 2, lwd = 2),
+                           slargs = list(col = "red", lwd = 2),
+                           clargs = list(col = "red", lty = 2),
+                           ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2) {
   COEF <- coef(cx$fit)
 
   par(mfrow = layout)
@@ -152,28 +164,31 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
     hist(cx$boot$dist, breaks = breaks,
          xlab = sprintf("Bootstrap distribution of the %s coefficient", names(COEF)),
          main = sprintf("R = %d", length(cx$boot$dist)))
-    do.call("abline", args = c(list(v = COEF), sarg))
-    do.call("abline", args = c(list(v = mean(cx$boot$dist)), barg))
+    do.call("abline", args = c(list(v = COEF), sargs))
+    do.call("abline", args = c(list(v = mean(cx$boot$dist)), bargs))
     legend("topright",
            legend = c("Sample coef.", "Bootstrap coef."),
-           col = c(sarg$col, barg$col),
-           lty = c(sarg$lty, barg$lty),
-           lwd = c(sarg$lwd, barg$lwd),
+           col = c(sargs$col, bargs$col),
+           lty = c(sargs$lty, bargs$lty),
+           lwd = c(sargs$lwd, bargs$lwd),
            bty = "n")
   }
 
   if ("slope" %in% types) {
     fdat <- as.data.table(cx$fit$model)
-    plot(fdat$mmse, fdat$moca, pch = 19, col = scales::alpha("black", 0.2),
-         main = "Crosswalk")
-    abline(0, COEF, col = "red", lwd = 2)
+    plot(fdat$moca ~ fdat$mmse,
+         cex = ptsize,
+         pch = ptshape,
+         col = scales::alpha(ptcol, ptalpha),
+         main = deparse(cx$fit$call$formula))
+    do.call("abline", args = c(list(a = 0, b = COEF), slargs))
     ## TODO: [2025-06-06] : write test for detection of cxsum and citype
     if (!is.null(cxsum)) {
       if (length(citype) > 1) {
         stop("length of `citype` must be 1")
       }
-      abline(0, cxsum$ci[[citype]]$ll, col = "red", lty = 2)
-      abline(0, cxsum$ci[[citype]]$ul, col = "red", lty = 2)
+      do.call("abline", args = c(list(a = 0, b = cxsum$ci[[citype]]$ll), clargs))
+      do.call("abline", args = c(list(a = 0, b = cxsum$ci[[citype]]$ul), clargs))
     }
   }
 

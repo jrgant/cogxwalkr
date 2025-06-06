@@ -147,7 +147,7 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
                            breaks = "FD", citype = "percentile",
                            layout = c(1, length(types)),
-                           sargs = list(col = "black", lwd = 2),
+                           sargs = list(col = "black", lty = 1, lwd = 2),
                            bargs = list(col = "red", lty = 2, lwd = 2),
                            slargs = list(col = "red", lwd = 2),
                            clargs = list(col = "red", lty = 2),

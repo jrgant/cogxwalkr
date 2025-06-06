@@ -7,7 +7,7 @@ Authors@R: c(
     person("Jason", "Gantenberg", , "jrgant@brown.edu", role = c("aut"),
            comment = c(ORCID = "0000-0002-8144-4273"))
   )
-Description: This package conducts a crosswalk between two cognitive measures. Funded by the National Insitute on Aging (R00AG073454).
+Description: This package conducts a crosswalk between two cognitive measures. Funded by the National Insitute on Aging (R00AG073454 and P01AG082653).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

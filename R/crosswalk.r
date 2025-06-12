@@ -23,24 +23,39 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
     stop("The argument to `data` must be a data.frame, data.table, or matrix.")
   }
 
-  tmp <- make_splits(cdvar = condition_by,
-                     cdloop = condition_loop,
-                     data = as.data.table(data),
-                     niter = niter)
+  data_dt <- as.data.table(data)
 
-  ## calculate the mean difference in the cognitive measures by split
-  diffs <- tmp[, .(cog1 = mean(m1[split_id == 1]) - mean(m1[split_id == 2]),
-                   cog2 = mean(m2[split_id == 1]) - mean(m2[split_id == 2])),
-               keyby = iteration,
-               env = list(m1 = cog1, m2 = cog2)]
-  setnames(diffs, old = c("cog1", "cog2"), new = c(cog1, cog2))
+  ## Use the unconditional iteration method if `niter` is provided
+  if (!is.null(niter) || !is.null(condition_by)) {
 
-  ## estimate correlation between the cognitive measure differences
-  fit <- diffs[, lm(cog2 ~ cog1 - 1), env = list(cog1 = cog1, cog2 = cog2)]
-  condition_var <- ifelse(!is.null(condition_by), condition_by, "")
+    tmp <- make_splits(cdvar = condition_by,
+                       cdloop = condition_loop,
+                       data = data_dt,
+                       niter = niter)
+
+    ## calculate the mean difference in the cognitive measures by split
+    diffs <- tmp[, .(cog1 = mean(m1[split_id == 1]) - mean(m1[split_id == 2]),
+                     cog2 = mean(m2[split_id == 1]) - mean(m2[split_id == 2])),
+                 keyby = iteration,
+                 env = list(m1 = cog1, m2 = cog2)]
+    setnames(diffs, old = c("cog1", "cog2"), new = c(cog1, cog2))
+
+    ##  estimate correlation between the cognitive measure differences
+    fit <- diffs[, lm(cog2 ~ cog1 - 1), env = list(cog1 = cog1, cog2 = cog2)]
+
+  } else if (is.null(niter) && is.null(condition_by)) {
+
+    fit <- data_dt[, lm(cog2 ~ cog1), env = list(cog1 = cog1, cog2 = cog2)]
+    diffs <- NULL
+
+  }
 
   ## store model fit and mean differences
-  out <- list(fit = fit, diffs = diffs, condition_var = condition_var)
+  out <- list(cog1 = cog1,
+              cog2 = cog2,
+              fit = fit,
+              diffs = diffs,
+              condition_var = condition_by)
 
   if (!missing("control")) {
     arglist <- as.list(match.call())[-1]
@@ -67,7 +82,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "normal")) {
   out <- list(
     fml = deparse(cx$fit$call$formula),
-    sample_est = unname(coef(cx$fit)),
+    sample_est = unname(coef(cx$fit)[length(coef(cx$fit))]),
     condition_var = ifelse(cx$condition_var == "", "none", cx$condition_var),
     niter = nrow(cx$diffs)
   )
@@ -95,6 +110,7 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
       "Crosswalk Summary", hr,
       "Formula:         ", x$fml, "\n",
       "Coefficient:     ", fd(x$sample_est), "\n\n",
+      ## FIXME: [2025-06--12] : This needs to be aware of whether the confidence limits exist
       paste0((1 - x$ci$alpha) * 100, "% confidence limits:"), "\n",
       sep = "")
 
@@ -199,16 +215,26 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
 #'   [cw()] calculates the coefficient based on summary statistics from the input
 #'   data: cov(cog1, cog2) / var(cog1).
 #'
-#' @inheritParams crosswalk
+#' @param method Either 'lm' (recommended) or 'manual'. The former will fit a linear
+#'   regression model and return the fit object, while the latter will return a table
+#'   containing the covariance between the cognitive measures (`cov`), the variance of
+#'   the measure input as cog1 (`var`), and the estimated sloped (`coef`).
 #'
 #' @import data.table
 #' @rdname crosswalk
 #' @export
-cw <- function(cog1, cog2, cogsim) {
-  out <- cogsim[, list(
-    cov = cov(m1, m2),
-    var = var(m1),
-    coef = cov(m1, m2) / var(m1)
-  ), env = list(m1 = cog1, m2 = cog2)]
+est_cw_coef <- function(cog1, cog2, data, method = "lm") {
+  if (method == "lm") {
+    out <- data[, lm(m2 ~ m1, data), env = list(m1 = cog1, m2 = cog2)]
+  } else if (method == "manual") {
+    out <- data[, list(
+      cov = cov(m1, m2),
+      var = var(m1),
+      coef = cov(m1, m2) / var(m1)
+    ), env = list(m1 = cog1, m2 = cog2)]
+  ## TODO: [2025-06-11]: add test
+  } else {
+    stop("`method` must be one of 'lm' or 'manual'")
+  }
   out
 }

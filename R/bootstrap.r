@@ -38,7 +38,7 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
     cwargs <- list(...)
     cwargs$data <- datarep
     tmp <- do.call("crosswalk", cwargs)
-    coef(tmp$fit)
+    coef(tmp$fit)[cwargs$cog1]
   }
 
   plan(sequential) # closes the workers opened by plan(multisession)
@@ -60,7 +60,7 @@ bootstrap_ci <- function(cx, alpha = 0.05, type = "percentile") {
   out$alpha <- alpha
   out$se <- sd(cx$boot$dist)
   if ("normal" %in% type) {
-    COEF <- unname(coef(cx$fit))
+    COEF <- unname(coef(cx$fit)[cx$cog1])
     ZQT <- qnorm(alpha / 2, lower.tail = FALSE)
     out$normal <- list(ll = COEF - ZQT * out$se,
                        ul = COEF + ZQT * out$se)

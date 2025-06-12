@@ -2,7 +2,7 @@
 % Please edit documentation in R/crosswalk.r
 \name{crosswalk}
 \alias{crosswalk}
-\alias{cw}
+\alias{est_cw_coef}
 \title{Crosswalk cognitive measures}
 \usage{
 crosswalk(
@@ -15,7 +15,7 @@ crosswalk(
   control = list(...)
 )
 
-cw(cog1, cog2, cogsim)
+est_cw_coef(cog1, cog2, data, method = "lm")
 }
 \arguments{
 \item{cog1}{The name of the first cognitive measure column}
@@ -36,6 +36,11 @@ for \code{\link[=make_conditional_splits]{make_conditional_splits()}} for detail
 
 \item{control}{A list of settings passed to \code{\link[=bootstrap_crosswalk]{bootstrap_crosswalk()}}. See
 \code{\link[=boot_control]{boot_control()}} for more information.}
+
+\item{method}{Either 'lm' (recommended) or 'manual'. The former will fit a linear
+regression model and return the fit object, while the latter will return a table
+containing the covariance between the cognitive measures (\code{cov}), the variance of
+the measure input as cog1 (\code{var}), and the estimated sloped (\code{coef}).}
 }
 \description{
 Crosswalk cognitive measures

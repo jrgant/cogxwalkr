@@ -171,12 +171,22 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
                            ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2) {
   COEF <- coef(cx$fit)
 
-  par(mfrow = layout)
+  if ("slope" %in% types && is.null(cx$diffs)) {
+    message("The crosswalk() object does not contain differences, most likely because ",
+            "the slope was calculated using the manual method and not unconditional ",
+            "splits. The scatterplot has been omitted.")
+    par(mfrow = c(1, 1))
+  } else {
+    par(mfrow = layout)
+  }
   if ("boot" %in% types) {
     ## TODO: [2025-06-05] : write test
-    if (is.null(cx$boot)) {
-      stop("No bootstrap data provided. To see only the scatterplot of differences and",
+    if (is.null(cx$boot) && !is.null(cx$diffs)) {
+      stop("No bootstrap data provided. To see only the scatterplot of differences and ",
            "the slope estimated in the sample, set `types` to 'slope'.")
+    }
+    if (is.null(cx$boot) && is.null(cx$diffs)) {
+      stop("No bootstrap data provided.")
     }
     hist(cx$boot$dist, breaks = breaks,
          xlab = sprintf("Bootstrap distribution of the %s coefficient", names(COEF)),
@@ -191,7 +201,7 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
            bty = "n")
   }
 
-  if ("slope" %in% types) {
+  if ("slope" %in% types && !is.null(cx$diffs)) {
     fdat <- as.data.table(cx$fit$model)
     plot(fdat$moca ~ fdat$mmse,
          cex = ptsize,
@@ -208,7 +218,6 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
       do.call("abline", args = c(list(a = 0, b = cxsum$ci[[citype]]$ul), clargs))
     }
   }
-
 }
 
 

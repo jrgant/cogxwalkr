@@ -110,20 +110,21 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
       "Crosswalk Summary", hr,
       "Formula:         ", x$fml, "\n",
       "Coefficient:     ", fd(x$sample_est), "\n\n",
-      ## FIXME: [2025-06--12] : This needs to be aware of whether the confidence limits exist
-      paste0((1 - x$ci$alpha) * 100, "% confidence limits:"), "\n",
       sep = "")
 
-  ci_types <- names(x$ci)[!names(x$ci) %in% c("alpha", "se")]
-  sapply(ci_types, \(.x) {
-    tmp <- x[["ci"]][[.x]]
-    cat(indent, paste0("(", fd(tmp$ll), ", ", fd(tmp$ul), ")"), " - ", .x, "\n", sep = "")
-  })
-  cat("\n")
-  cat(indent, "Based on ", x$nboot, " bootstrap replicates\n",
-      indent, "SE = ", fd(x$ci$se),
-      sep = "")
-
+  if (!is.null(x$ci)) {
+    cat(paste0((1 - x$ci$alpha) * 100, "% confidence limits:\n"))
+    ci_types <- names(x$ci)[!names(x$ci) %in% c("alpha", "se")]
+    sapply(ci_types, \(.x) {
+      tmp <- x[["ci"]][[.x]]
+      cat(indent, paste0("(", fd(tmp$ll), ", ", fd(tmp$ul), ")"), " - ", .x, "\n",
+          sep = "")
+    })
+    cat("\n")
+    cat(indent, "Based on ", x$nboot, " bootstrap replicates\n",
+        indent, "SE = ", fd(x$ci$se),
+        sep = "")
+  }
   cat(hr,
       "Number of iterations: ", x$niter, "\n",
       "Conditioning variable: ", x$condition_var, "\n\n",

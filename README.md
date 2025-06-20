@@ -1,6 +1,7 @@
 # cogxwalkr
 
 ![Static Badge](https://img.shields.io/badge/Status-In_development-FF0000?style=for-the-badge)
+
 [![R-CMD-check](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml)
 
 [![Codecov test coverage](https://codecov.io/gh/jrgant/cogxwalkr/graph/badge.svg)](https://app.codecov.io/gh/jrgant/cogxwalkr)

@@ -20,7 +20,9 @@ RoxygenNote: 7.3.2
 Imports:
     data.table (>= 1.17.0),
     foreach (>= 1.5.2),
-    doFuture (>= 1.1.0)
+    doFuture (>= 1.1.0),
+    future (>= 1.58.0),
+    parallelly (>= 1.45.0)
 Depends:
     R (>= 4.1)
 Suggests:

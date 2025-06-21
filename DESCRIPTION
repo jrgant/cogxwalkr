@@ -21,7 +21,8 @@ Imports:
     foreach (>= 1.5.2),
     doFuture (>= 1.1.0),
     future (>= 1.58.0),
-    parallelly (>= 1.45.0)
+    parallelly (>= 1.45.0),
+    scales (>= 1.4.0)
 Depends:
     R (>= 4.1)
 Suggests:

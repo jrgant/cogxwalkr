@@ -1,3 +1,4 @@
 ^data-raw$
 ^\.github$
 ^LICENSE\.md$
+^\.lintr

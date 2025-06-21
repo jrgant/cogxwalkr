@@ -160,6 +160,7 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 #' @inheritParams summary.cogxwalkr
 #'
 #' @import data.table
+#' @importFrom scales alpha
 #' @export
 plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
                            breaks = "FD", citype = "percentile",

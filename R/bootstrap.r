@@ -5,7 +5,6 @@
 #' @param ncores Number of cores to use in parallel processing. If set to 999,
 #'   [parallelly::availableCores()] will use the maximum available
 #' @param seed Seed used by doRNG to generate reproducible parallel computations
-#' @param alpha Alpha level for bootstrap confidence intervals
 #'
 #' @import data.table
 #' @import foreach

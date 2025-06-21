@@ -15,8 +15,6 @@ bootstrap_crosswalk(..., nboot, ncores = 1L, seed)
 \code{\link[parallelly:availableCores]{parallelly::availableCores()}} will use the maximum available}
 
 \item{seed}{Seed used by doRNG to generate reproducible parallel computations}
-
-\item{alpha}{Alpha level for bootstrap confidence intervals}
 }
 \description{
 Bootstrap a split routine

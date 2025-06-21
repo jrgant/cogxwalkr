@@ -4,8 +4,6 @@
 
 [![R-CMD-check](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml)
 
-[![Codecov test coverage](https://codecov.io/gh/jrgant/cogxwalkr/graph/badge.svg)](https://app.codecov.io/gh/jrgant/cogxwalkr)
-
 R package for crosswalking measures of cognition.
 
 Methods described in:

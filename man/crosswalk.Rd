@@ -47,6 +47,6 @@ Crosswalk cognitive measures
 }
 \details{
 Unlike \code{\link[=crosswalk]{crosswalk()}}, which uses splitting to estimate the sample coefficient,
-\code{\link[=cw]{cw()}} calculates the coefficient based on summary statistics from the input
+\code{\link[=est_cw_coef]{est_cw_coef()}} calculates the coefficient based on summary statistics from the input
 data: cov(cog1, cog2) / var(cog1).
 }

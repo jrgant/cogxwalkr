@@ -222,7 +222,7 @@ plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
 
 
 #' @details Unlike [crosswalk()], which uses splitting to estimate the sample coefficient,
-#'   [cw()] calculates the coefficient based on summary statistics from the input
+#'   [est_cw_coef()] calculates the coefficient based on summary statistics from the input
 #'   data: cov(cog1, cog2) / var(cog1).
 #'
 #' @param method Either 'lm' (recommended) or 'manual'. The former will fit a linear

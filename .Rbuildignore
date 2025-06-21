@@ -2,3 +2,5 @@
 ^\.github$
 ^LICENSE\.md$
 ^\.lintr
+^scratch$
+^internal$

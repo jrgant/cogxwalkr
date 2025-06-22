@@ -11,7 +11,7 @@ Authors@R: c(
            role = c("aut"),
            comment = c(ORCID = "0000-0002-8144-4273"))
   )
-Description: This package conducts a crosswalk between two cognitive measures. Funded by the National Insitute on Aging (R00AG073454 and P01AG082653).
+Description: Conduct data splitting and estimation to crosswalk between two cognitive measures. Based on methods described in Ackley SF, et al (2025) <doi.org/10.1002/alz.14597>. Funded by the National Insitute on Aging (R00AG073454 and P01AG082653).
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

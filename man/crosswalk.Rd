@@ -12,7 +12,7 @@ crosswalk(
   niter = NULL,
   condition_by = NULL,
   condition_loop = FALSE,
-  control = list(...)
+  control = NULL
 )
 
 est_cw_coef(cog1, cog2, data, method = "lm")

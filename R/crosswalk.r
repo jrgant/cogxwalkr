@@ -16,8 +16,7 @@
 #' @import data.table
 #' @export
 crosswalk <- function(cog1, cog2, data, niter = NULL,
-                      condition_by = NULL, condition_loop = FALSE,
-                      control = list(...)) {
+                      condition_by = NULL, condition_loop = FALSE, control = NULL) {
 
   if (is.data.frame(data) == FALSE && is.matrix(data) && is.list(data) == FALSE) {
     stop("The argument to `data` must be a data.frame, data.table, or matrix.")
@@ -57,7 +56,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
               diffs = diffs,
               condition_var = condition_by)
 
-  if (!missing("control")) {
+  if (!is.null(control)) {
     arglist <- as.list(match.call())[-1]
     control <- do.call("boot_control", control)
     # drop control so that we don't re-enter this loop during the bootstraps

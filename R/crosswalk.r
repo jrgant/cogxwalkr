@@ -196,7 +196,6 @@ plot.cogxwalkr <- function(x, ...,
   }
 
   if ("boot" %in% types) {
-    ## TODO: [2025-06-05] : write test
     if (is.null(x$boot) && !is.null(x$diffs)) {
       dev.off()
       stop("No bootstrap data provided. To see only the scatterplot of differences and ",
@@ -227,7 +226,7 @@ plot.cogxwalkr <- function(x, ...,
          col = scales::alpha(ptcol, ptalpha),
          main = deparse(x$fit$call$formula))
     do.call("abline", args = c(list(a = 0, b = COEF), slargs))
-    ## TODO: [2025-06-06] : write test for detection of cxsum and citype
+
     if (!is.null(cxsum)) {
       if (length(citype) > 1) {
         dev.off()

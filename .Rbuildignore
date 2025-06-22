@@ -5,3 +5,6 @@
 ^scratch$
 ^internal$
 ^\.Rprofile
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

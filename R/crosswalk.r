@@ -182,6 +182,10 @@ plot.cogxwalkr <- function(x, ...,
                            ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2) {
   COEF <- coef(x$fit)
 
+  if (!all(types %in% c("boot", "slope"))) {
+    stop("invalid types argument provided")
+  }
+
   if ("slope" %in% types && is.null(x$diffs)) {
     message("The crosswalk() object does not contain differences, most likely because ",
             "the slope was calculated using the manual method and not unconditional ",
@@ -190,6 +194,7 @@ plot.cogxwalkr <- function(x, ...,
   } else {
     par(mfrow = layout)
   }
+
   if ("boot" %in% types) {
     ## TODO: [2025-06-05] : write test
     if (is.null(x$boot) && !is.null(x$diffs)) {

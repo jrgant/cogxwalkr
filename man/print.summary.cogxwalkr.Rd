@@ -4,9 +4,14 @@
 \alias{print.summary.cogxwalkr}
 \title{Print a cogxwalkr summary}
 \usage{
-\method{print}{summary.cogxwalkr}(x, digits = 3L)
+\method{print}{summary.cogxwalkr}(x, ..., digits = 3L)
 }
 \arguments{
+\item{x}{An object of class "summary.cogxwalkr", i.e., as returned by
+\code{\link[=summary.cogxwalkr]{summary.cogxwalkr()}}.}
+
+\item{...}{Unused}
+
 \item{digits}{Number of digits to print. Passed to \code{\link[base:Round]{base::round()}}.}
 }
 \description{

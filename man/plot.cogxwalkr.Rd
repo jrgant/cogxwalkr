@@ -5,7 +5,8 @@
 \title{Plot information about the bootstrap distribution}
 \usage{
 \method{plot}{cogxwalkr}(
-  cx,
+  x,
+  ...,
   cxsum = NULL,
   types = c("boot", "slope"),
   breaks = "FD",
@@ -22,7 +23,9 @@
 )
 }
 \arguments{
-\item{cx}{An object of class "cogxwalkr", i.e., an object returned by \code{\link[=crosswalk]{crosswalk()}}.}
+\item{x}{An object of class "cogxwalkr", i.e., as returned by \code{\link[=crosswalk]{crosswalk()}}.}
+
+\item{...}{Unused}
 
 \item{cxsum}{The output of \code{summary(cx)}}
 

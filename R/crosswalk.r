@@ -73,13 +73,15 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 
 #' Summarize a cogxwalkr list
 #'
-#' @param cx An object of class "cogxwalkr", i.e., an object returned by [crosswalk()].
+#' @param object An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
+#' @param ... Unused
 #' @param alpha Alpha to use for confidence interval calculation. Defaults to 0.05.
 #' @param bci_type Type of bootstrapped confidence interval to calculate. Currently
 #'   accepts "percentile" (or "perc") and/or "normal." Both are included by default.
 #'
 #' @export
-summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "normal")) {
+summary.cogxwalkr <- function(object, ...,
+                              alpha = 0.05, bci_type = c("percentile", "normal")) {
   out <- list(
     fml = deparse(cx$fit$call$formula),
     sample_est = unname(coef(cx$fit)[length(coef(cx$fit))]),
@@ -95,13 +97,14 @@ summary.cogxwalkr <- function(cx, alpha = 0.05, bci_type = c("percentile", "norm
   out
 }
 
-
 #' Print a cogxwalkr summary
 #'
+#' @param x An object of class "summary.cogxwalkr", i.e., as returned by
+#'   [summary.cogxwalkr()].
+#' @param ... Unused
 #' @param digits Number of digits to print. Passed to [base::round()].
-#'
 #' @export
-print.summary.cogxwalkr <- function(x, digits = 3L) {
+print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
   fd <- function(num) round(num, digits = digits)
   indent <- paste(rep(" ", 2), collapse = "")
   hr <- paste0("\n", paste(rep("-", 50), collapse = ""), "\n")
@@ -134,6 +137,7 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 
 #' Plot information about the bootstrap distribution
 #'
+#' @param x An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
 #' @param cxsum The output of `summary(cx)`
 #' @param types The types of crosswalk plots to produce. By default, both a plot of the
 #'   bootstrap distribution of coefficients and a plot of the data with the estimated
@@ -157,12 +161,16 @@ print.summary.cogxwalkr <- function(x, digits = 3L) {
 #' @param ptcol Color of points in crosswalk scatterplot (passed to [base::plot()])
 #' @param ptalpha Alpha (transparency) of points in crosswalk scatterplot
 #'   (passed to [base::plot()])
-#' @inheritParams summary.cogxwalkr
+#'
+#' @inheritParams print.summary.cogxwalkr
 #'
 #' @import data.table
+#' @import stats
+#' @import graphics
 #' @importFrom scales alpha
 #' @export
-plot.cogxwalkr <- function(cx, cxsum = NULL, types = c("boot", "slope"),
+plot.cogxwalkr <- function(x, ...,
+                           cxsum = NULL, types = c("boot", "slope"),
                            breaks = "FD", citype = "percentile",
                            layout = c(1, length(types)),
                            sargs = list(col = "black", lty = 1, lwd = 2),
@@ -243,7 +251,7 @@ est_cw_coef <- function(cog1, cog2, data, method = "lm") {
       var = var(m1),
       coef = cov(m1, m2) / var(m1)
     ), env = list(m1 = cog1, m2 = cog2)]
-  ## TODO: [2025-06-11]: add test
+    ## TODO: [2025-06-11]: add test
   } else {
     stop("`method` must be one of 'lm' or 'manual'")
   }

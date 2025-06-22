@@ -33,8 +33,8 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
                        niter = niter)
 
     ## calculate the mean difference in the cognitive measures by split
-    diffs <- tmp[, .(cog1 = mean(m1[split_id == 1]) - mean(m1[split_id == 2]),
-                     cog2 = mean(m2[split_id == 1]) - mean(m2[split_id == 2])),
+    diffs <- tmp[, list(cog1 = mean(m1[split_id == 1]) - mean(m1[split_id == 2]),
+                        cog2 = mean(m2[split_id == 1]) - mean(m2[split_id == 2])),
                  keyby = iteration,
                  env = list(m1 = cog1, m2 = cog2)]
     setnames(diffs, old = c("cog1", "cog2"), new = c(cog1, cog2))
@@ -68,6 +68,9 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
   class(out) <- c("cogxwalkr", "list")
   out
 }
+
+# Avoid R CMD CHECK notes related to non-standard evaluation in data.table
+utils::globalVariables(c("m1", "m2", "split_id", "iteration"))
 
 
 #' Summarize a cogxwalkr list

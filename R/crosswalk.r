@@ -82,15 +82,15 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 summary.cogxwalkr <- function(object, ...,
                               alpha = 0.05, bci_type = c("percentile", "normal")) {
   out <- list(
-    fml = deparse(cx$fit$call$formula),
-    sample_est = unname(coef(cx$fit)[length(coef(cx$fit))]),
-    condition_var = ifelse(cx$condition_var == "", "none", cx$condition_var),
-    niter = nrow(cx$diffs)
+    fml = deparse(object$fit$call$formula),
+    sample_est = unname(coef(object$fit)[length(coef(object$fit))]),
+    condition_var = ifelse(object$condition_var == "", "none", object$condition_var),
+    niter = nrow(object$diffs)
   )
-  if (!is.null(cx$boot)) {
-    out$nboot <- length(cx$boot$dist)
-    out$boot_est  <-  mean(cx$boot$dist)
-    out$ci <- bootstrap_ci(cx, alpha, type = bci_type)
+  if (!is.null(object$boot)) {
+    out$nboot <- length(object$boot$dist)
+    out$boot_est  <-  mean(object$boot$dist)
+    out$ci <- bootstrap_ci(object, alpha, type = bci_type)
   }
   class(out) <- c("summary.cogxwalkr", "list")
   out
@@ -177,9 +177,9 @@ plot.cogxwalkr <- function(x, ...,
                            slargs = list(col = "red", lwd = 2),
                            clargs = list(col = "red", lty = 2),
                            ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2) {
-  COEF <- coef(cx$fit)
+  COEF <- coef(x$fit)
 
-  if ("slope" %in% types && is.null(cx$diffs)) {
+  if ("slope" %in% types && is.null(x$diffs)) {
     message("The crosswalk() object does not contain differences, most likely because ",
             "the slope was calculated using the manual method and not unconditional ",
             "splits. The scatterplot has been omitted.")
@@ -189,18 +189,18 @@ plot.cogxwalkr <- function(x, ...,
   }
   if ("boot" %in% types) {
     ## TODO: [2025-06-05] : write test
-    if (is.null(cx$boot) && !is.null(cx$diffs)) {
+    if (is.null(x$boot) && !is.null(x$diffs)) {
       stop("No bootstrap data provided. To see only the scatterplot of differences and ",
            "the slope estimated in the sample, set `types` to 'slope'.")
     }
-    if (is.null(cx$boot) && is.null(cx$diffs)) {
+    if (is.null(x$boot) && is.null(x$diffs)) {
       stop("No bootstrap data provided.")
     }
-    hist(cx$boot$dist, breaks = breaks,
+    hist(x$boot$dist, breaks = breaks,
          xlab = sprintf("Bootstrap distribution of the %s coefficient", names(COEF)),
-         main = sprintf("R = %d", length(cx$boot$dist)))
+         main = sprintf("R = %d", length(x$boot$dist)))
     do.call("abline", args = c(list(v = COEF), sargs))
-    do.call("abline", args = c(list(v = mean(cx$boot$dist)), bargs))
+    do.call("abline", args = c(list(v = mean(x$boot$dist)), bargs))
     legend("topright",
            legend = c("Sample coef.", "Bootstrap coef."),
            col = c(sargs$col, bargs$col),
@@ -209,13 +209,13 @@ plot.cogxwalkr <- function(x, ...,
            bty = "n")
   }
 
-  if ("slope" %in% types && !is.null(cx$diffs)) {
-    fdat <- as.data.table(cx$fit$model)
+  if ("slope" %in% types && !is.null(x$diffs)) {
+    fdat <- as.data.table(x$fit$model)
     plot(fdat$moca ~ fdat$mmse,
          cex = ptsize,
          pch = ptshape,
          col = scales::alpha(ptcol, ptalpha),
-         main = deparse(cx$fit$call$formula))
+         main = deparse(x$fit$call$formula))
     do.call("abline", args = c(list(a = 0, b = COEF), slargs))
     ## TODO: [2025-06-06] : write test for detection of cxsum and citype
     if (!is.null(cxsum)) {

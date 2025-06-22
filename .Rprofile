@@ -4,3 +4,5 @@ message(
   "If making changes to bootstrap routines, reinstall the package using ",
   "devtools::install in order to test the updates.\n"
 )
+
+options(usethis.protocol = "ssh")

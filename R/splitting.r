@@ -88,7 +88,7 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   tmp[]
 }
 
-# Avoid R CMD CHECK notes related to non-standard evaluation in data.table
+# Avoid R CMD check notes related to non-standard evaluation in data.table
 utils::globalVariables(c("sl_10_size", "sl_11_size", "i", "dementia"))
 
 #' Make a split dataset

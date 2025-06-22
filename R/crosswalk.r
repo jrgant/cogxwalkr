@@ -69,7 +69,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
   out
 }
 
-# Avoid R CMD CHECK notes related to non-standard evaluation in data.table
+# Avoid R CMD check notes related to non-standard evaluation in data.table
 utils::globalVariables(c("m1", "m2", "split_id", "iteration"))
 
 

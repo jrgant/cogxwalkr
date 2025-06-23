@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://jrgant.github.io/cogxwalkr"><img src="https://github.com/jrgant/cogxwalkr/blob/dev/logo.png" style="width:200px;"/></a>
+<a href="https://jrgant.github.io/cogxwalkr"><img src="https://github.com/jrgant/cogxwalkr/blob/dev/logo.png?raw=true" style="width:200px;"/></a>
 
 <!-- badges: start -->
 ![Static Badge](https://img.shields.io/badge/Status-In_development-FF0000) &nbsp;

@@ -46,13 +46,11 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
 
   data <- as.data.table(data)
 
-  ## TODO: [2025-04-25] : add test
   if (length(unique(data[[cdvar]])) != 2) {
     stop("Conditioning variable must be binary.")
   }
   CLEVELS <- sort(unique(data[[cdvar]]))
 
-  ## TODO: [2025-04-25] : add tests for conditional splitting routines
   NUM_DATA <- nrow(data)
   SPLIT1_SIZE <- floor(NUM_DATA / 2)
   L1_SIZE <- data[, sum(var == CLEVELS[2]), env = list(var = cdvar)]

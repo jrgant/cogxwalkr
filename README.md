@@ -1,8 +1,15 @@
-# cogxwalkr
+<div align="center">
 
+<a href="https://jrgant.github.io/cogxwalkr"><img src="https://github.com/jrgant/cogxwalkr/blob/dev/logo.png" style="width:200px;"/></a>
+
+<!-- badges: start -->
 ![Static Badge](https://img.shields.io/badge/Status-In_development-FF0000) &nbsp;
 [![R-CMD-check](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml) &nbsp;
 [![Codecov test coverage](https://codecov.io/gh/jrgant/cogxwalkr/graph/badge.svg)](https://app.codecov.io/gh/jrgant/cogxwalkr)
+<!-- badges: end -->
+</div>
+
+<hr>
 
 R package for crosswalking measures of cognition.
 

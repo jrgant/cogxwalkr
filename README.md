@@ -1,6 +1,6 @@
 # cogxwalkr
 
-![Static Badge](https://img.shields.io/badge/Status-In_development-FF0000)
+![Static Badge](https://img.shields.io/badge/Status-In_development-FF0000) &nbsp;
 [![R-CMD-check](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jrgant/cogxwalkr/actions/workflows/R-CMD-check.yaml)
 
 R package for crosswalking measures of cognition.

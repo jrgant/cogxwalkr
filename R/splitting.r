@@ -47,10 +47,10 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   data <- as.data.table(data)
 
   ## TODO: [2025-04-25] : add test
-  CLEVELS <- sort(unique(data[, var, env = list(var = cdvar)]))
-  if (length(CLEVELS) != 2) {
+  if (length(unique(data[[cdvar]])) != 2) {
     stop("Conditioning variable must be binary.")
   }
+  CLEVELS <- sort(unique(data[[cdvar]]))
 
   ## TODO: [2025-04-25] : add tests for conditional splitting routines
   NUM_DATA <- nrow(data)
@@ -66,9 +66,9 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
     spec[, sl_10_size := SPLIT1_SIZE - sl_11_size]
     tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
       shuffle <- spec[i, {
-        lrows1 <- data[var == CLEVELS[2]][sample(seq_len(.N)), env = list(var = cdvar)]
+        lrows1 <- data[var == CLEVELS[2], env = list(var = cdvar)][sample(seq_len(.N))]
         lrows1[, split_id := rep(c(1, 2), times = c(sl_11_size, .N - sl_11_size))]
-        lrows0 <- data[cdvar == CLEVELS[1]][sample(seq_len(.N)), env = list(var = cdvar)]
+        lrows0 <- data[var == CLEVELS[1], env = list(var = cdvar)][sample(seq_len(.N))]
         lrows0[, split_id := rep(c(1, 2), times = c(sl_10_size, .N - sl_10_size))]
         rbind(lrows1, lrows0)[, iteration := i][]
       }]
@@ -85,6 +85,8 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
     }))]
   }
 
+  setcolorder(tmp, c("iteration", cdvar, "split_id"))
+  setkeyv(tmp, c("iteration", cdvar, "split_id"))
   tmp[]
 }
 

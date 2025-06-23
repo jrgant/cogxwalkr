@@ -39,3 +39,8 @@ test_that("make_conditional_splits() returns the expected object", {
     split_loop[, .N, keyby = .(iteration, dementia, split_id)]
   )
 })
+
+
+test_that("make_splits() warns about non-null niter when conditional split requested", {
+  expect_warning(make_splits("dementia", cogsim, niter = 1000))
+})

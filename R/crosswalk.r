@@ -262,7 +262,6 @@ est_cw_coef <- function(cog1, cog2, data, method = "lm") {
       var = var(m1),
       coef = cov(m1, m2) / var(m1)
     ), env = list(m1 = cog1, m2 = cog2)]
-    ## TODO: [2025-06-11]: add test
   } else {
     stop("`method` must be one of 'lm' or 'manual'")
   }

@@ -18,7 +18,9 @@
 crosswalk <- function(cog1, cog2, data, niter = NULL,
                       condition_by = NULL, condition_loop = FALSE, control = NULL) {
 
-  if (is.data.frame(data) == FALSE && is.matrix(data) && is.list(data) == FALSE) {
+  if (is.data.frame(data) == FALSE &&
+        is.matrix(data) == FALSE &&
+        is.list(data) == FALSE) {
     stop("The argument to `data` must be a data.frame, data.table, or matrix.")
   }
 

@@ -5,7 +5,7 @@
 #' @rdname splitting_functions
 #' @import data.table
 #' @export
-make_unconditional_splits <- function(data, niter) {
+make_unconditional_splits <- function(data, niter = NULL) {
   if (is.null(niter)) {
     stop("The parameter `niter` must be set in order to do unconditional splits.")
   }

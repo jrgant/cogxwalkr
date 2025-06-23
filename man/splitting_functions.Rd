@@ -6,7 +6,7 @@
 \alias{make_splits}
 \title{Make an unconditional split dataset}
 \usage{
-make_unconditional_splits(data, niter)
+make_unconditional_splits(data, niter = NULL)
 
 make_conditional_splits(cdvar = NULL, data, loop = FALSE)
 

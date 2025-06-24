@@ -6,11 +6,12 @@
 #' @import data.table
 #' @export
 make_unconditional_splits <- function(data, niter = NULL) {
+
   if (is.null(niter)) {
     stop("The parameter `niter` must be set in order to do unconditional splits.")
   }
 
-  data <- as.data.table(data)
+  data <- ingest_data(data)
   N_INPUT <- nrow(data)
   SPLIT_POINT <- floor(N_INPUT / 2)
 
@@ -40,11 +41,12 @@ make_unconditional_splits <- function(data, niter = NULL) {
 #' @import foreach
 #' @export
 make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
+
   if (is.null(cdvar)) {
     stop("To conduct conditional splitting, a conditioning variable must be specified.")
   }
 
-  data <- as.data.table(data)
+  data <- ingest_data(data)
 
   if (length(unique(data[[cdvar]])) != 2) {
     stop("Conditioning variable must be binary.")
@@ -102,7 +104,9 @@ utils::globalVariables(c("sl_10_size", "sl_11_size", "i", "dementia"))
 #' @rdname splitting_functions
 #' @export
 make_splits <- function(cdvar = NULL, data, cdloop = FALSE, niter = NULL) {
-  data <- as.data.table(data)
+
+  data <- ingest_data(data)
+
   if (is.null(cdvar)) {
     tmpout <- make_unconditional_splits(data = data, niter = niter)
   } else {

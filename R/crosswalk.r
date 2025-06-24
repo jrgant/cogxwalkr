@@ -18,20 +18,12 @@
 crosswalk <- function(cog1, cog2, data, niter = NULL,
                       condition_by = NULL, condition_loop = FALSE, control = NULL) {
 
-  if (is.data.frame(data) == FALSE &&
-        is.matrix(data) == FALSE &&
-        is.list(data) == FALSE) {
-    stop("The argument to `data` must be a data.frame, data.table, or matrix.")
-  }
-
-  data_dt <- as.data.table(data)
-
   ## Use the unconditional iteration method if `niter` is provided
   if (!is.null(niter) || !is.null(condition_by)) {
 
     tmp <- make_splits(cdvar = condition_by,
                        cdloop = condition_loop,
-                       data = data_dt,
+                       data = data,
                        niter = niter)
 
     ## calculate the mean difference in the cognitive measures by split
@@ -45,6 +37,8 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
     fit <- diffs[, lm(cog2 ~ cog1 - 1), env = list(cog1 = cog1, cog2 = cog2)]
 
   } else if (is.null(niter) && is.null(condition_by)) {
+
+    data_dt <- ingest_data(data)
 
     fit <- data_dt[, lm(cog2 ~ cog1), env = list(cog1 = cog1, cog2 = cog2)]
     diffs <- NULL

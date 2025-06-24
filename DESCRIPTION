@@ -28,6 +28,7 @@ Imports:
 Depends:
     R (>= 4.1)
 Suggests:
+    dplyr (>= 1.1.4),
     nnet (>= 7.3.20),
     rms (>= 8.0.0),
     testthat (>= 3.0.0),

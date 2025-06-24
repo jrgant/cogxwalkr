@@ -166,6 +166,7 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
 #' @import stats
 #' @import graphics
 #' @importFrom scales alpha
+#' @importFrom grDevices dev.off
 #' @export
 plot.cogxwalkr <- function(x, ...,
                            cxsum = NULL, types = c("boot", "slope"),

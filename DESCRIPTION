@@ -23,8 +23,8 @@ Imports:
     future (>= 1.58.0),
     parallelly (>= 1.45.0),
     scales (>= 1.4.0),
-    graphics (>= 4.5.1),
-    stats (>= 4.5.1)
+    graphics (>= 4.1),
+    stats (>= 4.1)
 Depends:
     R (>= 4.1)
 Suggests:

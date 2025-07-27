@@ -1,5 +1,4 @@
 test_that("crosswalk() disallows bad inputs", {
-
   # missing/incorrect variable name
   expect_error(crosswalk("mmse_1", "moca", cogsim))
 })

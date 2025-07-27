@@ -82,13 +82,16 @@ bootstrap_ci <- function(cx, alpha = 0.05, type = "percentile") {
 #' @param ncores  Number of cores to use in parallel processing. Defaults to 1.
 #'
 #' @export
-# TODO [2025-06-05] : add test
 boot_control <- function(nboot = NULL, seed = NULL, ncores = 1L) {
   if (is.null(nboot) || !is.numeric(nboot)) {
-    stop("`nboot` cannot be NULL and must be > 0")
+    stop("`nboot` cannot be NULL and must be a numeric value > 0")
   }
   if (is.null(seed) || !is.numeric(seed)) {
-    stop("`seed` cannot be NULL")
+    stop("`seed` cannot be NULL and must be numeric")
+  }
+  if (is.null(ncores) || !is.numeric(ncores)) {
+    stop("`ncores` cannot be NULL and must be a numeric value. To use a single core",
+         " for processing, set `ncores = 1`.")
   }
   list(nboot = nboot, seed = seed, ncores = ncores)
 }

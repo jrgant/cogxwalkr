@@ -31,6 +31,7 @@ Suggests:
     dplyr (>= 1.1.4),
     nnet (>= 7.3.20),
     rms (>= 8.0.0),
+    stringr (>= 1.5.1),
     testthat (>= 3.0.0),
     usethis (>= 3.1.0)
 LazyData: true

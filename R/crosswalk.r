@@ -285,6 +285,9 @@ do_crosswalk <- function(object,
                          est_alpha = 0.05, alpha = 0.05,
                          est_indep = NULL, est_outcome = NULL) {
 
+  # Helper function to get the critical value based on alpha
+  get_crit <- function(x) qnorm(x / 2, lower.tail = FALSE)
+
   # Slope from a crosswalk estimation
   coefs <- summary(object$fit)$coefficients
   SLOPE <- coefs[dim(coefs)[1], "Estimate"]
@@ -306,7 +309,9 @@ do_crosswalk <- function(object,
     if (length(est_ci) != 2) {
       stop("length of `est_ci` must be 2")
     }
-    EST_SE <- sqrt(sum(est_ci)^2) / 2 / qnorm(est_alpha / 2, lower.tail = FALSE)
+    EST_SE <- {
+      as.vector(dist(est_ci, method = "euclidean")) / 2 / get_crit(est_alpha)
+    }
   } else {
     stop("must provide either `est_se` or `est_ci`")
   }
@@ -317,13 +322,16 @@ do_crosswalk <- function(object,
   CW_SE <- sqrt(CW_EST^2 * ((SLOPE_SE / SLOPE)^2 + (EST_SE / EST_MEAN)^2))
   CW_CI <- sapply(
     c(`-`, `+`),
-    \(f) f(CW_EST, qnorm(alpha / 2, lower.tail = FALSE) * CW_SE)
+    \(f) f(CW_EST, get_crit(alpha) * CW_SE)
   )
 
   out <- list()
-  out$estimate <- list(mean = EST_MEAN, se = EST_SE,
-                       outcome = est_outcome, predictor = est_indep)
-  out$cxest <- list(slope = SLOPE, se = SLOPE_SE,
+  out$estimate <- list(mean = EST_MEAN,
+                       se = EST_SE,
+                       outcome = est_outcome,
+                       predictor = est_indep)
+  out$cxest <- list(slope = SLOPE,
+                    se = SLOPE_SE,
                     model = deparse(object$fit$call$formula))
   out$crosswalk <- list(mean = CW_EST,
                         se = CW_SE,

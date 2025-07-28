@@ -316,7 +316,7 @@ do_crosswalk <- function(object,
   CW_EST <- SLOPE * EST_MEAN
   CW_SE <- sqrt(CW_EST^2 * ((SLOPE_SE / SLOPE)^2 + (EST_SE / EST_MEAN)^2))
   CW_CI <- sapply(
-    c(`+`, `-`),
+    c(`-`, `+`),
     \(f) f(CW_EST, qnorm(alpha / 2, lower.tail = FALSE) * CW_SE)
   )
 

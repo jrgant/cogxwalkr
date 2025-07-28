@@ -3,7 +3,7 @@
 \name{crosswalk}
 \alias{crosswalk}
 \alias{est_cw_coef}
-\title{Crosswalk cognitive measures}
+\title{Estimate crosswalk between cognitive measures}
 \usage{
 crosswalk(
   cog1,
@@ -43,7 +43,7 @@ containing the covariance between the cognitive measures (\code{cov}), the varia
 the measure input as cog1 (\code{var}), and the estimated sloped (\code{coef}).}
 }
 \description{
-Crosswalk cognitive measures
+Estimate crosswalk between cognitive measures
 }
 \details{
 Unlike \code{\link[=crosswalk]{crosswalk()}}, which uses splitting to estimate the sample coefficient,

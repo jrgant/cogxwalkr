@@ -1,6 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://jrgant.github.io/cogxwalkr/404.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/LICENSE.html</loc></url>
+<url><loc>https://jrgant.github.io/cogxwalkr/articles/getting-started.html</loc></url>
+<url><loc>https://jrgant.github.io/cogxwalkr/articles/index.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/authors.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/index.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/boot_control.html</loc></url>
@@ -8,6 +10,7 @@
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/bootstrap_crosswalk.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/cogsim.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/crosswalk.html</loc></url>
+<url><loc>https://jrgant.github.io/cogxwalkr/reference/do_crosswalk.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/index.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/plot.cogxwalkr.html</loc></url>
 <url><loc>https://jrgant.github.io/cogxwalkr/reference/print.summary.cogxwalkr.html</loc></url>

@@ -1,22 +1,19 @@
 ---
 title: "Getting Started with cogxwalkr"
-format:
-  html:
-    toc: true
+output: rmarkdown::html_vignette
 bibliography: references.bib
-execute:
-  eval: false
 vignette: >
   %\VignetteIndexEntry{getting-started}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r}
-#| label: setup
-#| echo: false
-#| eval: true
-#| message: false
+```{r setup, echo=FALSE, eval=TRUE, message=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
 pkgload::load_all()
 library(DT)
 options(DT.options = list(pageLength = 10))
@@ -36,8 +33,7 @@ To install the package, you will first need to install and load the remotes pack
 
 To install the package:
 
-```{r}
-#| label: install
+```{r install}
 install.packages("remotes")
 remotes::install_github("jrgant/cogxwalkr")
 ```
@@ -48,8 +44,7 @@ As a motivating example, consider a study estimating the effect of APOE-ε4 carr
 
 To load the package: 
 
-```{r}
-#| label: load
+```{r load}
 library(cogxwalkr)
 ```
 
@@ -57,17 +52,13 @@ library(cogxwalkr)
 
 These crosswalk methods require individual-level data from an adjunct study: a study where both cognitive measures are performed for each participant. In this package, the built-in `cogsim` dataset represents the adjunct study data. The adjunct data is simulated data based on the [Alzheimer’s Disease Neuroimaging Initiative](https://adni.loni.usc.edu) (ADNI). This dataset includes an MMSE (mini-mental status exam) score and MoCA (Montreal cognitive assessment) score conditional on binary dementia status (0 for absent and 1 for present) for approximately 1500 study participants. Code used to fit and simulate these data can be found at [](github/jrgant/data-raw/cogsim.r).
 
-```{r}
-#| label: cogsim
-#| echo: false
-#| eval: true
+```{r cogsim, echo=FALSE, eval=TRUE}
 DT::datatable(cogsim, caption = "Simulated `cogsim` dataset available in the package.")
 ```
 
 To view the example adjunct study, `cogsim`, we can type either of the following into the R console:
 
-```{r}
-#| label: view-data
+```{r view-data}
 head(cogsim)
 View(cogsim)
 ```
@@ -131,7 +122,7 @@ print(cw)
 plot(cw)
 ```
 
-
+# References
 
 
 

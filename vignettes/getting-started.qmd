@@ -1,0 +1,138 @@
+---
+title: "Getting Started with cogxwalkr"
+format:
+  html:
+    toc: true
+bibliography: references.bib
+execute:
+  eval: false
+vignette: >
+  %\VignetteIndexEntry{getting-started}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| eval: true
+#| message: false
+pkgload::load_all()
+library(DT)
+options(DT.options = list(pageLength = 10))
+```
+
+# Introduction
+
+`cogxwalkr` is an R package designed to facilitate crosswalking—or translating effect estimates—between different cognitive outcome measures in studies of cognitive aging, exposures, and interventions. It enables researchers to compare results across studies that use different cognitive tests.
+
+This package implements methods described in [@Ackley2025-methods]. The manuscript authors developed two methods to crosswalk estimated treatment effects of cognitive outcomes that are flexible, broadly applicable, work when only summary statistics are available, and do not rely on strong distributional assumptions. This method requires access to a dataset that includes both the cognitive measure you wish to crosswalk from and the cognitive measure you wish to crosswalk to.
+
+The package was developed by Sarah Ackley and Jason Gantenberg. This vignette demonstrates how to use cogxwalkr in R.
+
+# Installing 
+
+To install the package, you will first need to install and load the remotes package, which you can do from the R console: 
+
+To install the package:
+
+```{r}
+#| label: install
+install.packages("remotes")
+remotes::install_github("jrgant/cogxwalkr")
+```
+
+# Usage
+
+As a motivating example, consider a study estimating the effect of APOE-ε4 carrier status on scores from the MMSE (Mini-Mental State Examination). If we wish to compare this effect to results from another study that used the MoCA (Montreal Cognitive Assessment), we need a conversion factor that allows us to convert a summary measure on the MMSE scale to the MoCA scale. `cogxwalkr` aids in estimating the conversion coefficient required to crosswalk from the MMSE to the MoCA. 
+
+To load the package: 
+
+```{r}
+#| label: load
+library(cogxwalkr)
+```
+
+## Adjunct Data
+
+These crosswalk methods require individual-level data from an adjunct study: a study where both cognitive measures are performed for each participant. In this package, the built-in `cogsim` dataset represents the adjunct study data. The adjunct data is simulated data based on the [Alzheimer’s Disease Neuroimaging Initiative](https://adni.loni.usc.edu) (ADNI). This dataset includes an MMSE (mini-mental status exam) score and MoCA (Montreal cognitive assessment) score conditional on binary dementia status (0 for absent and 1 for present) for approximately 1500 study participants. Code used to fit and simulate these data can be found at [](github/jrgant/data-raw/cogsim.r).
+
+```{r}
+#| label: cogsim
+#| echo: false
+#| eval: true
+DT::datatable(cogsim, caption = "Simulated `cogsim` dataset available in the package.")
+```
+
+To view the example adjunct study, `cogsim`, we can type either of the following into the R console:
+
+```{r}
+#| label: view-data
+head(cogsim)
+View(cogsim)
+```
+
+Additional information is available via `?cogsim`.
+
+We implement two methods to obtain crosswalk slopes: 1) unconditional method and 2) conditional method. The unconditional method requires only data on both cognitive measures for each individual, whereas the conditional method requires additional data on a third binary variable, here dementia status.
+
+## Unconditional Method
+
+To obtain an estimate of the crosswalk slope using the unconditional method we can use the crosswalk function, which is the workhorse of the package: 
+
+```{r}
+crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, num_iter = 500) 
+```
+
+This estimates a crosswalk slope from `cog1`, here the MMSE, to `cog2`, here the MoCA, using the built-in cogsim data as the adjunct data. `cog1` and `cog2` must be supplied as strings. `niter` gives the number of random splits used to obtain the crosswalk. The built-in `cogsim` dataset can be replaced with any other dataset containing the appropriate columns. Since this uses the adjunct data without any bootstrap resampling, no uncertainty on the crosswalked slope is presented. 
+
+```{r}
+crosswalk(cog1 = "mmse",
+          cog2 = "moca",
+          data = cogsim,
+          niter = 500,
+          control = list(nboot = 100, seed = 123))
+          
+crosswalk(cog1 = "mmse",
+          cog2 = "moca",
+          data = cogsim,
+          niter = 500,
+          control = list(nboot = 100, seed = 123456, ncores = 8))
+```
+
+### Unconditional Method Using Summary Statistics
+
+The unconditional method can also be used based only on summary statistics. (In many cases, it may be more statistically efficient to do so, as the number of unconditional split iterations must be chose with care.)
+
+The summary statistics approach is accessible directly via the `est_cw_coef()` function.
+
+```{r}
+est_cw_coef(cog1 = "mmse", cog2 = "moca", data = cogsim, method = "lm")
+```
+
+However, we recommend using `crosswalk()` because other functions in `cogxwalkr` are built to act upon its output, not that of `est_cw_coef()`.
+
+Omitting the `niter` argument when calling `crosswalk()` will result in the package using the "lm" method to estimate the crosswalk:
+
+```{r}
+crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim)
+```
+
+### Conditional Method
+
+To use the conditional method, we must specify an additional binary variable on which to perform the conditional splits. The optional `condition_by` input declares this input and, when present, will elicit the conditional method. Note that `crosswalk()` will ignore `niter` if `condition_by` is specified.
+
+```{r}
+cw <- crosswalk(cog1 = "mmse",
+                cog2 = "moca",
+                condition_by = "dementia",
+                data = cogsim)
+print(cw)
+plot(cw)
+```
+
+
+
+
+
+

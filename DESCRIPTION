@@ -30,6 +30,7 @@ Depends:
 Suggests:
     dplyr (>= 1.1.4),
     nnet (>= 7.3.20),
+    quarto,
     rms (>= 8.0.0),
     stringr (>= 1.5.1),
     testthat (>= 3.0.0),
@@ -39,3 +40,4 @@ URL: https://www.github.com/jrgant/cogxwalkr, https://jrgant.github.io/cogxwalkr
 BugReports: https://www.github.com/jrgant/cogxwalkr/issues
 Language: en-US
 Config/testthat/edition: 3
+VignetteBuilder: quarto

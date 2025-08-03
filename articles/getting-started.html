@@ -100,7 +100,7 @@ remotes package, which you can do from the R console:</p>
 <p>To install the package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jrgant/cogxwalkr"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jrgant/cogxwalkr"</span>, auth_token <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -149,7 +149,7 @@ here dementia status.</p>
 method we can use the crosswalk function, which is the workhorse of the
 package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/crosswalk.html">crosswalk</a></span><span class="op">(</span>cog1 <span class="op">=</span> <span class="st">"mmse"</span>, cog2 <span class="op">=</span> <span class="st">"moca"</span>, data <span class="op">=</span> <span class="va">cogsim</span>, niter <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/crosswalk.html">crosswalk</a></span><span class="op">(</span>cog1 <span class="op">=</span> <span class="st">"mmse"</span>, cog2 <span class="op">=</span> <span class="st">"moca"</span>, data <span class="op">=</span> <span class="va">cogsim</span>, niter <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></code></pre></div>
 <p>This estimates a crosswalk slope from <code>cog1</code>, here the
 MMSE, to <code>cog2</code>, here the MoCA, using the built-in cogsim
 data as the adjunct data. <code>cog1</code> and <code>cog2</code> must
@@ -165,7 +165,7 @@ presented.</p>
 <span>          data <span class="op">=</span> <span class="va">cogsim</span>,</span>
 <span>          niter <span class="op">=</span> <span class="fl">500</span>,</span>
 <span>          control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>nboot <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span><span class="op">)</span></span>
-<span>          </span>
+<span></span>
 <span><span class="fu"><a href="../reference/crosswalk.html">crosswalk</a></span><span class="op">(</span>cog1 <span class="op">=</span> <span class="st">"mmse"</span>,</span>
 <span>          cog2 <span class="op">=</span> <span class="st">"moca"</span>,</span>
 <span>          data <span class="op">=</span> <span class="va">cogsim</span>,</span>
@@ -191,9 +191,10 @@ method to estimate the crosswalk:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/crosswalk.html">crosswalk</a></span><span class="op">(</span>cog1 <span class="op">=</span> <span class="st">"mmse"</span>, cog2 <span class="op">=</span> <span class="st">"moca"</span>, data <span class="op">=</span> <span class="va">cogsim</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="conditional-method">Conditional Method<a class="anchor" aria-label="anchor" href="#conditional-method"></a>
-</h4>
+</div>
+<div class="section level3">
+<h3 id="conditional-method">Conditional Method<a class="anchor" aria-label="anchor" href="#conditional-method"></a>
+</h3>
 <p>To use the conditional method, we must specify an additional binary
 variable on which to perform the conditional splits. The optional
 <code>condition_by</code> input declares this input and, when present,
@@ -207,7 +208,6 @@ specified.</p>
 <span>                data <span class="op">=</span> <span class="va">cogsim</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">cw</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cw</span><span class="op">)</span></span></code></pre></div>
-</div>
 </div>
 </div>
 <div class="section level2">

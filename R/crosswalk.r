@@ -1,4 +1,4 @@
-#' Crosswalk cognitive measures
+#' Estimate crosswalk between cognitive measures
 #'
 #' @param cog1 The name of the first cognitive measure column
 #' @param cog2 The name of the second cognitive measure column
@@ -260,5 +260,85 @@ est_cw_coef <- function(cog1, cog2, data, method = "lm") {
   } else {
     stop("`method` must be one of 'lm' or 'manual'")
   }
+  out
+}
+
+
+#' Crosswalk an effect estimate
+#'
+#' @param object An object of class `cogxwalkr` or the result of [est_cw_coef()]
+#' @param est_mean Point estimate (beta) to be crosswalked to the alternative outcome
+#'   measure
+#' @param est_se The standard error of `est_mean`
+#' @param est_ci The lower (1-alpha)% confidence interval of `est_mean`
+#' @param est_indep The independent variable to which `est_mean` applies
+#' @param est_outcome The outcome measure in the original study (e.g., "MOCA", "MMSE")
+#' @param est_alpha The alpha level for the confidence interval (if `est_se` is provided)
+#'   or the alpha level that will be used to back-calculate the standard error from
+#'   `est_ci`. Defaults to 0.05.
+#' @param alpha The alpha level for the confidence interval of the crosswalked estimate.
+#'   Defaults to 0.05.
+#'
+#' @export
+do_crosswalk <- function(object,
+                         est_mean = NULL, est_se = NULL, est_ci = NULL,
+                         est_alpha = 0.05, alpha = 0.05,
+                         est_indep = NULL, est_outcome = NULL) {
+
+  # Helper function to get the critical value based on alpha
+  get_crit <- function(x) qnorm(x / 2, lower.tail = FALSE)
+
+  # Slope from a crosswalk estimation
+  coefs <- summary(object$fit)$coefficients
+  SLOPE <- coefs[dim(coefs)[1], "Estimate"]
+  SLOPE_SE <- coefs[dim(coefs)[1], "Std. Error"]
+
+  ## TODO: [2025-07-27] : add tests
+  if (is.null(est_mean)) {
+    stop("`est_mean` cannot be NULL")
+  } else {
+    EST_MEAN <- unname(est_mean)
+  }
+  # Retrieve or calculate standard error from study estimate
+  if (!is.null(est_se)) {
+    if (!is.null(est_ci)) {
+      warning("both `est_se` and `est_ci` provided... ignoring `est_ci`.")
+    }
+    EST_SE <- est_se
+  } else if (!is.null(est_ci)) {
+    if (length(est_ci) != 2) {
+      stop("length of `est_ci` must be 2")
+    }
+    EST_SE <- {
+      as.vector(dist(est_ci, method = "euclidean")) / 2 / get_crit(est_alpha)
+    }
+  } else {
+    stop("must provide either `est_se` or `est_ci`")
+  }
+
+  # Crosswalked estimate
+  # TODO: [2025-07-28]: refer to issue #9 for updates on building out this section
+  CW_EST <- SLOPE * EST_MEAN
+  CW_SE <- sqrt(CW_EST^2 * ((SLOPE_SE / SLOPE)^2 + (EST_SE / EST_MEAN)^2))
+  CW_CI <- sapply(
+    c(`-`, `+`),
+    \(f) f(CW_EST, get_crit(alpha) * CW_SE)
+  )
+
+  out <- list()
+  out$estimate <- list(mean = EST_MEAN,
+                       se = EST_SE,
+                       outcome = est_outcome,
+                       predictor = est_indep)
+  out$cxest <- list(slope = SLOPE,
+                    se = SLOPE_SE,
+                    model = deparse(object$fit$call$formula))
+  out$crosswalk <- list(mean = CW_EST,
+                        se = CW_SE,
+                        ll = CW_CI[which.min(CW_CI)],
+                        ul = CW_CI[which.max(CW_CI)],
+                        alpha = alpha)
+
+  class(out) <- c("cogxwalkr.crosswalk", "list")
   out
 }

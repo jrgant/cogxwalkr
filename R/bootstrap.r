@@ -12,7 +12,6 @@
 #' @import doFuture
 #' @importFrom parallelly availableCores
 #' @export
-
 bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
   dcopy <- as.data.table(eval(match.call()$data))
   if (ncores == 1) {

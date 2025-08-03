@@ -29,7 +29,11 @@ Depends:
     R (>= 4.1)
 Suggests:
     dplyr (>= 1.1.4),
+    DT (>= 0.33),
+    knitr,
     nnet (>= 7.3.20),
+    quarto (>= 1.4.4),
+    rmarkdown,
     rms (>= 8.0.0),
     stringr (>= 1.5.1),
     testthat (>= 3.0.0),
@@ -39,3 +43,4 @@ URL: https://www.github.com/jrgant/cogxwalkr, https://jrgant.github.io/cogxwalkr
 BugReports: https://www.github.com/jrgant/cogxwalkr/issues
 Language: en-US
 Config/testthat/edition: 3
+VignetteBuilder: knitr

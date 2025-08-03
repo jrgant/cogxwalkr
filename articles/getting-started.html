@@ -149,7 +149,7 @@ here dementia status.</p>
 method we can use the crosswalk function, which is the workhorse of the
 package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/crosswalk.html">crosswalk</a></span><span class="op">(</span>cog1 <span class="op">=</span> <span class="st">"mmse"</span>, cog2 <span class="op">=</span> <span class="st">"moca"</span>, data <span class="op">=</span> <span class="va">cogsim</span>, num_iter <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/crosswalk.html">crosswalk</a></span><span class="op">(</span>cog1 <span class="op">=</span> <span class="st">"mmse"</span>, cog2 <span class="op">=</span> <span class="st">"moca"</span>, data <span class="op">=</span> <span class="va">cogsim</span>, niter <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> </span></code></pre></div>
 <p>This estimates a crosswalk slope from <code>cog1</code>, here the
 MMSE, to <code>cog2</code>, here the MoCA, using the built-in cogsim
 data as the adjunct data. <code>cog1</code> and <code>cog2</code> must
@@ -176,7 +176,7 @@ presented.</p>
 </h4>
 <p>The unconditional method can also be used based only on summary
 statistics. (In many cases, it may be more statistically efficient to do
-so, as the number of unconditional split iterations must be chose with
+so, as the number of unconditional split iterations must be chosen with
 care.)</p>
 <p>The summary statistics approach is accessible directly via the
 <code><a href="../reference/crosswalk.html">est_cw_coef()</a></code> function.</p>

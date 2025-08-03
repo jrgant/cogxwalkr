@@ -27,22 +27,22 @@ This package implements methods described in [@Ackley2025-methods]. The manuscri
 
 The package was developed by Sarah Ackley and Jason Gantenberg. This vignette demonstrates how to use cogxwalkr in R.
 
-# Installing 
+# Installing
 
-To install the package, you will first need to install and load the remotes package, which you can do from the R console: 
+To install the package, you will first need to install and load the remotes package, which you can do from the R console:
 
 To install the package:
 
 ```{r install}
 install.packages("remotes")
-remotes::install_github("jrgant/cogxwalkr")
+remotes::install_github("jrgant/cogxwalkr", auth_token = NULL)
 ```
 
 # Usage
 
-As a motivating example, consider a study estimating the effect of APOE-ε4 carrier status on scores from the MMSE (Mini-Mental State Examination). If we wish to compare this effect to results from another study that used the MoCA (Montreal Cognitive Assessment), we need a conversion factor that allows us to convert a summary measure on the MMSE scale to the MoCA scale. `cogxwalkr` aids in estimating the conversion coefficient required to crosswalk from the MMSE to the MoCA. 
+As a motivating example, consider a study estimating the effect of APOE-ε4 carrier status on scores from the MMSE (Mini-Mental State Examination). If we wish to compare this effect to results from another study that used the MoCA (Montreal Cognitive Assessment), we need a conversion factor that allows us to convert a summary measure on the MMSE scale to the MoCA scale. `cogxwalkr` aids in estimating the conversion coefficient required to crosswalk from the MMSE to the MoCA.
 
-To load the package: 
+To load the package:
 
 ```{r load}
 library(cogxwalkr)
@@ -69,13 +69,13 @@ We implement two methods to obtain crosswalk slopes: 1) unconditional method and
 
 ## Unconditional Method
 
-To obtain an estimate of the crosswalk slope using the unconditional method we can use the crosswalk function, which is the workhorse of the package: 
+To obtain an estimate of the crosswalk slope using the unconditional method we can use the crosswalk function, which is the workhorse of the package:
 
 ```{r}
-crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500) 
+crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500)
 ```
 
-This estimates a crosswalk slope from `cog1`, here the MMSE, to `cog2`, here the MoCA, using the built-in cogsim data as the adjunct data. `cog1` and `cog2` must be supplied as strings. `niter` gives the number of random splits used to obtain the crosswalk. The built-in `cogsim` dataset can be replaced with any other dataset containing the appropriate columns. Since this uses the adjunct data without any bootstrap resampling, no uncertainty on the crosswalked slope is presented. 
+This estimates a crosswalk slope from `cog1`, here the MMSE, to `cog2`, here the MoCA, using the built-in cogsim data as the adjunct data. `cog1` and `cog2` must be supplied as strings. `niter` gives the number of random splits used to obtain the crosswalk. The built-in `cogsim` dataset can be replaced with any other dataset containing the appropriate columns. Since this uses the adjunct data without any bootstrap resampling, no uncertainty on the crosswalked slope is presented.
 
 ```{r}
 crosswalk(cog1 = "mmse",
@@ -83,7 +83,7 @@ crosswalk(cog1 = "mmse",
           data = cogsim,
           niter = 500,
           control = list(nboot = 100, seed = 123))
-          
+
 crosswalk(cog1 = "mmse",
           cog2 = "moca",
           data = cogsim,
@@ -109,7 +109,7 @@ Omitting the `niter` argument when calling `crosswalk()` will result in the pack
 crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim)
 ```
 
-### Conditional Method
+## Conditional Method
 
 To use the conditional method, we must specify an additional binary variable on which to perform the conditional splits. The optional `condition_by` input declares this input and, when present, will elicit the conditional method. Note that `crosswalk()` will ignore `niter` if `condition_by` is specified.
 

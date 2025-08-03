@@ -72,7 +72,7 @@ We implement two methods to obtain crosswalk slopes: 1) unconditional method and
 To obtain an estimate of the crosswalk slope using the unconditional method we can use the crosswalk function, which is the workhorse of the package: 
 
 ```{r}
-crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, num_iter = 500) 
+crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500) 
 ```
 
 This estimates a crosswalk slope from `cog1`, here the MMSE, to `cog2`, here the MoCA, using the built-in cogsim data as the adjunct data. `cog1` and `cog2` must be supplied as strings. `niter` gives the number of random splits used to obtain the crosswalk. The built-in `cogsim` dataset can be replaced with any other dataset containing the appropriate columns. Since this uses the adjunct data without any bootstrap resampling, no uncertainty on the crosswalked slope is presented. 
@@ -93,7 +93,7 @@ crosswalk(cog1 = "mmse",
 
 ### Unconditional Method Using Summary Statistics
 
-The unconditional method can also be used based only on summary statistics. (In many cases, it may be more statistically efficient to do so, as the number of unconditional split iterations must be chose with care.)
+The unconditional method can also be used based only on summary statistics. (In many cases, it may be more statistically efficient to do so, as the number of unconditional split iterations must be chosen with care.)
 
 The summary statistics approach is accessible directly via the `est_cw_coef()` function.
 

@@ -147,7 +147,3 @@ plot(cw)
 ```
 
 # References
-
-
-
-

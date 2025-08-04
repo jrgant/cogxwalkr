@@ -35,8 +35,32 @@ To install the package:
 
 ```{r install}
 install.packages("remotes")
-remotes::install_github("jrgant/cogxwalkr", auth_token = NULL)
+remotes::install_github("jrgant/cogxwalkr")
 ```
+
+## Installation Errors
+
+You may get an error message that reads:
+
+```
+Using GitHub PAT from the git credential store.
+Error: Failed to install 'remotes' from GitHub:
+  HTTP error 401.
+  Bad credentials
+```
+
+The most likely cause is that `remotes` detects a bad Github token in your credential store. Run `gitcreds::gitcreds_delete()`, select option `2` to remove the bad credential from the store, and rerun the `remotes::install_github()` command above.
+
+Alternatively, you may get a similar error message that reads:
+
+```
+Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.
+Error: Failed to install 'cogxwalkr' from GitHub:
+  HTTP error 401.
+  Bad credentials
+```
+
+In this case, run `Sys.setenv(GITHUB_PAT = "")` and then rerun the `remotes::install_github()` command above.
 
 # Usage
 

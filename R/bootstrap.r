@@ -20,7 +20,6 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
             "maximum available.")
   }
 
-  ## TODO: [2025-06-05] : Need to devise some tests for doFuture
   if (ncores < availableCores()) {
     message(sprintf("Running bootstraps over %d cores ...", ncores))
     plan(multisession, workers = ncores)

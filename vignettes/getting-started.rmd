@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
 )
 pkgload::load_all()
 library(DT)
-options(DT.options = list(pageLength = 10))
+options(DT.options = list(pageLength = 10),
+        rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 # Introduction

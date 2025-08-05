@@ -63,9 +63,33 @@ Error: Failed to install 'cogxwalkr' from GitHub:
 
 In this case, run `Sys.setenv(GITHUB_PAT = "")` and then rerun the `remotes::install_github()` command above.
 
-# Usage
+# Motivation
 
-As a motivating example, consider a study estimating the effect of APOE-ε4 carrier status on scores from the MMSE (Mini-Mental State Examination). If we wish to compare this effect to results from another study that used the MoCA (Montreal Cognitive Assessment), we need a conversion factor that allows us to convert a summary measure on the MMSE scale to the MoCA scale. `cogxwalkr` aids in estimating the conversion coefficient required to crosswalk from the MMSE to the MoCA.
+As a motivating example, consider a study estimating the effect of APOE-ε4 carrier status on scores from the MMSE (Mini-Mental State Examination). If we wish to compare this effect to results from another study that used the MoCA (Montreal Cognitive Assessment), we need a conversion factor that allows us to convert a summary measure on the MMSE scale to the MoCA scale. `cogxwalkr` aids in estimating the conversion coefficient required to crosswalk from the MMSE to the MoCA under the following general assumptions regarding two cognitive measures [@Ackley2025-methods]:
+
+- they measure the same underlying construct (_e.g._, executive function, global cognition, etc.)
+- they are correlated only through their measurement of this common construct.
+
+<style type="text/css">
+  .figcaption {
+    color: #3e3b3b;
+    font-size: 0.8em;
+  }
+  .float {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1em; 
+  }
+  .float img {
+    display: block;
+    margin: 0 auto;
+  }
+</style>
+
+![Directed acyclic graph reflecting the assumptions required to crosswalk measure _A_ to measure _B_, both of which measure aspects of the underlying construct _U_.](dag.svg){#fig:dag-assumptions}
+
+# Usage
 
 To load the package:
 

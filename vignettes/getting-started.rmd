@@ -212,4 +212,32 @@ The outputs of `summary()` can be stored as objects (lists). To view the raw for
 
 See the documentation for `summary.cogxwalkr()` for information on options concerning the $\alpha$ level and method used to estimate bootstrapped confidence intervals.
 
+### Plotting
+
+In general, we leave plotting the output, results, etc., up to the user. The package does provide simple plot output to allow users to review interim results quickly.
+
+We will use the `cwu` object we saved in the prior section as an example. This object contains the results of a crosswalk estimation that used the unconditional split method, along with bootstrapping to estimate 95% confidence intervals. The `cxsum` argument takes a summary output and overlays these confidence intervals.
+
+```{r plot-cwu-boot, out.width="100%", fig.width=8, fig.height=4, dpi=300}
+#| eval: true
+plot(cwu, cxsum = summary(cwu))
+```
+
+Alternatively, if we used the summary statistics method (`cws` above), we will see something a bit different.^[Note that there is currently a bug in the plotting method for a crosswalk based on summary statistics. The x-axis label should omit the line referring to the "Intercept".] We no longer have a plot of the split differences.
+
+```{r plot-cws-boot, out.width="50%", fig.width=4.2, fig.height=4, dpi=300, fig.align="center"}
+#| eval: true
+plot(cws)
+```
+
+Finally, if we conducted a splitting method without bootstrapping, we can suppress the bootstrap plot panel as follows. 
+
+```{r plot-cw-no-boot, out.width="50%", fig.width=4, fig.height=4, dpi=300, fig.align="center"}
+#| eval: true
+cwu_noboot <- crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500)
+plot(cwu_noboot, types = "slope")
+```
+
+As with, `summary.cogxwalkr()`, additional options for plotting are available in the documentation for `plot.cogxwalkr()`.
+
 # References

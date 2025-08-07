@@ -15,10 +15,11 @@
 bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
   dcopy <- as.data.table(eval(match.call()$data))
   if (ncores == 1) {
-    message("`ncores` is set to 1. Parallel processing will not be used.")
+    message("`ncores` is set to 1 (default). To use parallel processing, set ",
+            "`ncores` to the desired number of cores or to 999 to use the ",
+            "maximum available.")
   }
 
-  ## TODO: [2025-06-05] : Need to devise some tests for doFuture
   if (ncores < availableCores()) {
     message(sprintf("Running bootstraps over %d cores ...", ncores))
     plan(multisession, workers = ncores)

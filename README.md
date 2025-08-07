@@ -19,3 +19,4 @@ Ackley SF, Wang J, Chen R, Hill-Jarrett TG, Rojas-Saunero LP, Stokes A, Shah SJ,
 
 Funded by grants from the National Institute on Aging (R00AG073454 and P01AG082653).
 
+`cogxwalkr` is under active development. Please submit bug reports and feature requests via [Issues](https://github.com/jrgant/cogxwalkr/issues).

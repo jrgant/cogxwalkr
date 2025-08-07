@@ -2,7 +2,3 @@ url: https://jrgant.github.io/cogxwalkr/
 template:
   bootstrap: 5
   light-switch: true
-
-navbar:
-  structure:
-    right: [search, github, lightswitch]

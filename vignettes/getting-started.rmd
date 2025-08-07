@@ -79,7 +79,7 @@ As a motivating example, consider a study estimating the effect of APOE-ε4 carr
     width: 50%;
     display: block;
     margin: 0 auto;
-    margin-bottom: 1em; 
+    margin-bottom: 1em;
   }
   .float img {
     display: block;

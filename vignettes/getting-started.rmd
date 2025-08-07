@@ -147,10 +147,14 @@ The unconditional method can also be used based only on summary statistics. (In 
 The summary statistics approach is accessible directly via the `est_cw_coef()` function.
 
 ```{r}
+# estimate slope using lm()
 est_cw_coef(cog1 = "mmse", cog2 = "moca", data = cogsim, method = "lm")
+
+# estimate slope using manual calculation
+est_cw_coef(cog1 == "mmse", cog2 = "moca", data = cogsim, method = "manual")
 ```
 
-However, we recommend using `crosswalk()` because other functions in `cogxwalkr` are built to act upon its output, not that of `est_cw_coef()`.
+However, we recommend using `crosswalk()` because other functions in `cogxwalkr` are built to act upon its output, not that of `est_cw_coef()`. 
 
 Omitting the `niter` argument when calling `crosswalk()` will result in the package using the "lm" method to estimate the crosswalk:
 

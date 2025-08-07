@@ -173,11 +173,41 @@ crosswalk(cog1 = "mmse",
           condition_by = "dementia")
 ```
 
+## Summary and Plotting Functions
+
+`crosswalk()` outputs a list containing the results of the estimation procedure, along with information about the specifications selected by the user. Similar to `glm()` and `lm()`, the `cogxwalkr` package comes with functions to help summarize results.^[Note that we set `niter` and `nboot` much too low here, for the sake of exposition and to reduce rendering time.]
+
+```{r crosswalk-summaries}
+#| eval: true
+boot_settings <- list(nboot = 100, seed = 999, ncores = 1)
+
+# summary statistics estimation
+cws <- crosswalk(cog1 = "mmse",
                 cog2 = "moca",
-                condition_by = "dementia",
-                data = cogsim)
-print(cw)
-plot(cw)
+                data = cogsim,
+                control = boot_settings)
+summary(cws)
+
+
+# unconditional split
+cwu <- crosswalk(cog1 = "mmse",
+                 cog2 = "moca",
+                 data = cogsim,
+                 niter = 500,
+                 control = boot_settings)
+summary(cwu)
+
+# conditional split
+cwc <- crosswalk(cog1 = "mmse",
+                 cog2 = "moca",
+                 data = cogsim,
+                 condition_by = "dementia",
+                 control = boot_settings)
+summary(cwc)
 ```
+
+The outputs of `summary()` can be stored as objects (lists). To view the raw form of such an object, use `print.AsIs()`.
+
+See the documentation for `summary.cogxwalkr()` for information on options concerning the $\alpha$ level and method used to estimate bootstrapped confidence intervals.
 
 # References

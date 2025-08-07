@@ -245,4 +245,32 @@ plot(cwu_noboot, types = "slope")
 
 As with, `summary.cogxwalkr()`, additional options for plotting are available in the documentation for `plot.cogxwalkr()`.
 
+# Crosswalking
+
+Let's say you have estimated a crosswalk from MMSE to MoCA in your adjunct data. We'll use `cwu` for this example. You come across summary data from another (fictional) study that describes the difference in MMSE for those with APOE-ε4 carrier status versus not (-2.4, SE = 0.064, 95% CL: [-2.52, -2.27]) and would like to know what the difference on the MoCA would be for this sample.
+
+In that case, you can use `do_crosswalk()` in one of two ways to obtain this estimate: using either the standard error from the summary data or the confidence interval.
+
+```{r}
+#| eval: true
+pub_outcome_label <- "mmse"
+pub_pred_label <- "apoe4"
+
+# using the standard error
+dcw_se <- do_crosswalk(cwu, est_mean = -2.4, est_se = 0.064,
+                       est_indep = pub_pred_label, est_outcome = pub_outcome_label)
+
+# using the confidence interval
+dcw_ci <- do_crosswalk(cwu, est_mean = -2.4, est_ci = c(-2.52, -2.27),
+                       est_indep = pub_pred_label, est_outcome = pub_outcome_label)
+
+# results will differ slightly due to rounding error
+dcw_se
+dcw_ci
+```
+
+The `crosswalk` element in the list returned contains an estimated mean, standard error, and ($1-\alpha$)% confidence interval (by default $\alpha=0.05$), accounting for uncertainty in both the crosswalk estimate and published summary.^[See [$f=AB$](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).] In this case, we see the estimated difference in MoCA comparing APOE-ε4 carriers to non-carriers is -2.87 (, SE = 0.140, 95% CI: [-3.15, -2.60]), based on the information is `dcw_se`.
+
+We are still working on building out this function and adding summary methods for more convenient review of the results, so the particulars may change. The help documentation for `do_crosswalk()` contains information on additional features of this function.
+
 # References

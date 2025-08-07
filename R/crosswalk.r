@@ -15,6 +15,19 @@
 #'
 #' @import data.table
 #' @export
+#' @examples
+#' # linear model estimate of slope (no splitting)
+#' crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim) # linear model
+#'
+#' # unconditional split method
+#' crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500)
+#'
+#' # conditional split method
+#' crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, condition_by = "dementia")
+#'
+#' # regardless of the method, request bootstrap via `control`
+#' crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim,
+#'           control = list(nboot = 1000, seed = 999, ncores = 4))
 crosswalk <- function(cog1, cog2, data, niter = NULL,
                       condition_by = NULL, condition_loop = FALSE, control = NULL) {
 

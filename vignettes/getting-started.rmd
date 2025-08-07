@@ -99,7 +99,7 @@ library(cogxwalkr)
 
 ## Adjunct Data
 
-These crosswalk methods require individual-level data from an adjunct study: a study where both cognitive measures are performed for each participant. In this package, the built-in `cogsim` dataset represents the adjunct study data. The adjunct data is simulated data based on the [Alzheimer’s Disease Neuroimaging Initiative](https://adni.loni.usc.edu) (ADNI). This dataset includes an MMSE (mini-mental status exam) score and MoCA (Montreal cognitive assessment) score conditional on binary dementia status (0 for absent and 1 for present) for approximately 1500 study participants. Code used to fit and simulate these data can be found at [](github/jrgant/data-raw/cogsim.r).
+These crosswalk methods require individual-level data from an adjunct study: a study where both cognitive measures are performed for each participant. In this package, the built-in `cogsim` dataset represents the adjunct study data. The adjunct data is simulated data based on the [Alzheimer’s Disease Neuroimaging Initiative](https://adni.loni.usc.edu) (ADNI). This dataset includes an MMSE score and MoCA score conditional on binary dementia status (0 for absent and 1 for present) for approximately 1500 study participants. Code used to fit and simulate these data can be found at [](github/jrgant/data-raw/cogsim.r).
 
 ```{r cogsim, echo=FALSE, eval=TRUE}
 DT::datatable(cogsim, caption = "Simulated `cogsim` dataset available in the package.")

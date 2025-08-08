@@ -121,7 +121,7 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
   hr <- paste0("\n", paste(rep("-", 50), collapse = ""), "\n")
 
   cat(hr,
-      "Crosswalk Summary", hr,
+      "Crosswalk Summary (Adjunct)", hr,
       "Formula:         ", x$fml, "\n",
       "Coefficient:     ", fd(x$sample_est), "\n\n",
       sep = "")

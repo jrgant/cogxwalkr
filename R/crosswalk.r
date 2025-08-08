@@ -113,10 +113,11 @@ summary.cogxwalkr <- function(object, ...,
 #' @param x An object of class "summary.cogxwalkr", i.e., as returned by
 #'   [summary.cogxwalkr()].
 #' @param ... Unused
-#' @param digits Number of digits to print. Passed to [base::round()].
+#' @param digits Number of digits to print. Passed to the `digits` and `nsmall` arguments
+#'   to [base::format()].
 #' @export
 print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
-  fd <- function(num) round(num, digits = digits)
+  fd <- function(num) format(num, digits = digits, nsmall = digits)
   indent <- paste(rep(" ", 2), collapse = "")
   hr <- paste0("\n", paste(rep("-", 50), collapse = ""), "\n")
 

@@ -88,7 +88,7 @@ As a motivating example, consider a study estimating the effect of APOE-ε4 carr
   
   pre {
     overflow-y: scroll;
-    max-height: 300px;
+    max-height: 500px;
   }
 </style>
 

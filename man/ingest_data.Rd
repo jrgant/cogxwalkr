@@ -6,6 +6,9 @@
 \usage{
 ingest_data(data)
 }
+\arguments{
+\item{data}{An input data object (data.table, data.frame, matrix)}
+}
 \description{
 Used by multiple functions to check the class of input data and to
 return the input as a data.table.

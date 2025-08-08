@@ -228,7 +228,7 @@ We will use the `cwu` object we saved in the prior section as an example. This o
 plot(cwu, cxsum = summary(cwu))
 ```
 
-Alternatively, if we used the summary statistics method (`cws` above), we will see something a bit different.^[Note that there is currently a bug in the plotting method for a crosswalk based on summary statistics. The x-axis label should omit the line referring to the "Intercept".] We no longer have a plot of the split differences.
+Alternatively, if we used the summary statistics method (`cws` above), we will see something a bit different. We no longer have a plot of the split differences.
 
 ```{r plot-cws-boot, out.width="50%", fig.width=4.2, fig.height=4, dpi=300, fig.align="center"}
 #| eval: true

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Getting Started with cogxwalkr • cogxwalkr</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -16,7 +16,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">cogxwalkr</a>
 
@@ -41,14 +41,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
-<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul>
-</li>
+<li class="nav-item"><a class="external-link nav-link" href="https://www.github.com/jrgant/cogxwalkr" aria-label="Github"><span class="fa fa-github"></span></a></li>
       </ul>
 </div>
 
@@ -174,7 +167,7 @@ assumptions required to crosswalk measure <em>A</em> to measure
 </h2>
 <p>To load the package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.github.com/jrgant/cogxwalkr" class="external-link">cogxwalkr</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jrgant.github.io/cogxwalkr/">cogxwalkr</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="adjunct-data">Adjunct Data<a class="anchor" aria-label="anchor" href="#adjunct-data"></a>
 </h3>
@@ -295,17 +288,17 @@ reduce rendering time.&lt;/p&gt;"><sup>2</sup></a></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cws</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
-<span><span class="co">#&gt; Crosswalk Summary</span></span>
+<span><span class="co">#&gt; Crosswalk Summary (Adjunct)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="co">#&gt; Formula:         moca ~ mmse</span></span>
 <span><span class="co">#&gt; Coefficient:     1.247</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; 95% confidence limits:</span></span>
-<span><span class="co">#&gt;   (1.17, 1.323) - normal</span></span>
+<span><span class="co">#&gt;   (1.170, 1.323) - normal</span></span>
 <span><span class="co">#&gt;   (1.174, 1.317) - percentile</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Based on 100 bootstrap replicates</span></span>
-<span><span class="co">#&gt;   SE = 0.039</span></span>
+<span><span class="co">#&gt;   SE = 0.0391</span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="co">#&gt; Number of iterations: </span></span>
 <span><span class="co">#&gt; Conditioning variable:</span></span>
@@ -322,7 +315,7 @@ reduce rendering time.&lt;/p&gt;"><sup>2</sup></a></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cwu</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
-<span><span class="co">#&gt; Crosswalk Summary</span></span>
+<span><span class="co">#&gt; Crosswalk Summary (Adjunct)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="co">#&gt; Formula:         moca ~ mmse - 1</span></span>
 <span><span class="co">#&gt; Coefficient:     1.154</span></span>
@@ -332,7 +325,7 @@ reduce rendering time.&lt;/p&gt;"><sup>2</sup></a></p>
 <span><span class="co">#&gt;   (1.105, 1.375) - percentile</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Based on 100 bootstrap replicates</span></span>
-<span><span class="co">#&gt;   SE = 0.073</span></span>
+<span><span class="co">#&gt;   SE = 0.0725</span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="co">#&gt; Number of iterations: 500</span></span>
 <span><span class="co">#&gt; Conditioning variable:</span></span>
@@ -348,17 +341,17 @@ reduce rendering time.&lt;/p&gt;"><sup>2</sup></a></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cwc</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
-<span><span class="co">#&gt; Crosswalk Summary</span></span>
+<span><span class="co">#&gt; Crosswalk Summary (Adjunct)</span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="co">#&gt; Formula:         moca ~ mmse - 1</span></span>
 <span><span class="co">#&gt; Coefficient:     1.389</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; 95% confidence limits:</span></span>
-<span><span class="co">#&gt;   (1.29, 1.489) - normal</span></span>
+<span><span class="co">#&gt;   (1.290, 1.489) - normal</span></span>
 <span><span class="co">#&gt;   (1.299, 1.496) - percentile</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Based on 100 bootstrap replicates</span></span>
-<span><span class="co">#&gt;   SE = 0.051</span></span>
+<span><span class="co">#&gt;   SE = 0.0506</span></span>
 <span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="co">#&gt; Number of iterations: 204</span></span>
 <span><span class="co">#&gt; Conditioning variable: dementia</span></span></code></pre></div>
@@ -432,95 +425,39 @@ summary data or the confidence interval.</p>
 <span></span>
 <span><span class="co"># results will differ slightly due to rounding error</span></span>
 <span><span class="va">dcw_se</span></span>
-<span><span class="co">#&gt; $estimate</span></span>
-<span><span class="co">#&gt; $estimate$mean</span></span>
-<span><span class="co">#&gt; [1] -2.4</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $estimate$se</span></span>
-<span><span class="co">#&gt; [1] 0.064</span></span>
+<span><span class="co">#&gt; --------------------------------------------------</span></span>
+<span><span class="co">#&gt; Crosswalk Summary</span></span>
+<span><span class="co">#&gt; --------------------------------------------------</span></span>
+<span><span class="co">#&gt; Adjunct Estimate:</span></span>
+<span><span class="co">#&gt;     1.154, SE: 0.0537</span></span>
+<span><span class="co">#&gt;     moca ~ mmse - 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $estimate$outcome</span></span>
-<span><span class="co">#&gt; [1] "mmse"</span></span>
+<span><span class="co">#&gt; Study Estimate:</span></span>
+<span><span class="co">#&gt;     -2.400, SE: 0.064</span></span>
+<span><span class="co">#&gt;     mmse ~ apoe4</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $estimate$predictor</span></span>
-<span><span class="co">#&gt; [1] "apoe4"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $cxest</span></span>
-<span><span class="co">#&gt; $cxest$slope</span></span>
-<span><span class="co">#&gt; [1] 1.153878</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $cxest$se</span></span>
-<span><span class="co">#&gt; [1] 0.05369689</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $cxest$model</span></span>
-<span><span class="co">#&gt; [1] "moca ~ mmse - 1"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk</span></span>
-<span><span class="co">#&gt; $crosswalk$mean</span></span>
-<span><span class="co">#&gt; [1] -2.769308</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$se</span></span>
-<span><span class="co">#&gt; [1] 0.1485318</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$ll</span></span>
-<span><span class="co">#&gt; [1] -3.060425</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$ul</span></span>
-<span><span class="co">#&gt; [1] -2.478191</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$alpha</span></span>
-<span><span class="co">#&gt; [1] 0.05</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "cogxwalkr.crosswalk" "list"</span></span>
+<span><span class="co">#&gt; Crosswalked Estimate:</span></span>
+<span><span class="co">#&gt;     -2.769, SE: 0.149</span></span>
+<span><span class="co">#&gt;     95% confidence limits: (-3.060, -2.478)</span></span>
+<span><span class="co">#&gt; --------------------------------------------------</span></span>
 <span><span class="va">dcw_ci</span></span>
-<span><span class="co">#&gt; $estimate</span></span>
-<span><span class="co">#&gt; $estimate$mean</span></span>
-<span><span class="co">#&gt; [1] -2.4</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $estimate$se</span></span>
-<span><span class="co">#&gt; [1] 0.06377668</span></span>
+<span><span class="co">#&gt; --------------------------------------------------</span></span>
+<span><span class="co">#&gt; Crosswalk Summary</span></span>
+<span><span class="co">#&gt; --------------------------------------------------</span></span>
+<span><span class="co">#&gt; Adjunct Estimate:</span></span>
+<span><span class="co">#&gt;     1.154, SE: 0.0537</span></span>
+<span><span class="co">#&gt;     moca ~ mmse - 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $estimate$outcome</span></span>
-<span><span class="co">#&gt; [1] "mmse"</span></span>
+<span><span class="co">#&gt; Study Estimate:</span></span>
+<span><span class="co">#&gt;     -2.400, SE: 0.0638</span></span>
+<span><span class="co">#&gt;     mmse ~ apoe4</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $estimate$predictor</span></span>
-<span><span class="co">#&gt; [1] "apoe4"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $cxest</span></span>
-<span><span class="co">#&gt; $cxest$slope</span></span>
-<span><span class="co">#&gt; [1] 1.153878</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $cxest$se</span></span>
-<span><span class="co">#&gt; [1] 0.05369689</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $cxest$model</span></span>
-<span><span class="co">#&gt; [1] "moca ~ mmse - 1"</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk</span></span>
-<span><span class="co">#&gt; $crosswalk$mean</span></span>
-<span><span class="co">#&gt; [1] -2.769308</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$se</span></span>
-<span><span class="co">#&gt; [1] 0.1484038</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$ll</span></span>
-<span><span class="co">#&gt; [1] -3.060174</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$ul</span></span>
-<span><span class="co">#&gt; [1] -2.478442</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; $crosswalk$alpha</span></span>
-<span><span class="co">#&gt; [1] 0.05</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; attr(,"class")</span></span>
-<span><span class="co">#&gt; [1] "cogxwalkr.crosswalk" "list"</span></span></code></pre></div>
+<span><span class="co">#&gt; Crosswalked Estimate:</span></span>
+<span><span class="co">#&gt;     -2.769, SE: 0.148</span></span>
+<span><span class="co">#&gt;     95% confidence limits: (-3.060, -2.478)</span></span>
+<span><span class="co">#&gt; --------------------------------------------------</span></span></code></pre></div>
 <p>The <code>crosswalk</code> element in the list returned contains an
 estimated mean, standard error, and
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>−</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">1-\alpha</annotation></semantics></math>)%
@@ -531,10 +468,6 @@ summary.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-co
 In this case, we see the estimated difference in MoCA comparing APOE-ε4
 carriers to non-carriers is -2.87 (, SE = 0.140, 95% CI: [-3.15,
 -2.60]), based on the information is <code>dcw_se</code>.</p>
-<p>We are still working on building out this function and adding summary
-methods for more convenient review of the results, so the particulars
-may change. The help documentation for <code><a href="../reference/do_crosswalk.html">do_crosswalk()</a></code>
-contains information on additional features of this function.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

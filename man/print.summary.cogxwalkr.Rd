@@ -12,7 +12,8 @@
 
 \item{...}{Unused}
 
-\item{digits}{Number of digits to print. Passed to \code{\link[base:Round]{base::round()}}.}
+\item{digits}{Number of digits to print. Passed to the \code{digits} and \code{nsmall} arguments
+to \code{\link[base:format]{base::format()}}.}
 }
 \description{
 Print a cogxwalkr summary

@@ -1,4 +1,13 @@
 url: https://jrgant.github.io/cogxwalkr/
+
 template:
   bootstrap: 5
-  light-switch: true
+
+navbar:
+  structure:
+    right: [search, github]
+  components:
+    github:
+      icon: fa-github
+      href: https://www.github.com/jrgant/cogxwalkr
+      aria-label: Github

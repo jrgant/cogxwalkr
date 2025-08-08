@@ -1,3 +1,9 @@
+#' Check input data
+#'
+#' Used by multiple functions to check the class of input data and to
+#' return the input as a data.table.
+#'
+#' @param data An input data object (data.table, data.frame, matrix)
 ingest_data <- function(data) {
 
   if (is.data.table(data)) {

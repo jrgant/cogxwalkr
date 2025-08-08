@@ -357,3 +357,29 @@ do_crosswalk <- function(object,
   class(out) <- c("cogxwalkr.crosswalk", "list")
   out
 }
+
+#' Print the results of a crosswalk
+#'
+#' @param x An object of class "cogxwalkr.crosswalk", i.e., as returned by
+#'   [do_crosswalk()]
+#' @inheritParams print.summary.cogxwalkr
+#' @export
+print.cogxwalkr.crosswalk <- function(x, ..., digits = 3L) {
+  fd <- function(num) format(num, digits = digits, nsmall = digits)
+  hr <- paste0("\n", paste(rep("-", 50), collapse = ""), "\n")
+  CLLAB <- (1 - x$crosswalk$alpha) * 100
+  cat(hr,
+      "Crosswalk Summary",
+      hr,
+      "Adjunct Estimate:\n",
+      "    ", fd(x$cxest$slope), ", SE: ", fd(x$cxest$se), "\n",
+      "    ", x$cxest$model, "\n\n",
+      "Study Estimate:\n",
+      "    ", fd(x$estimate$mean), ", SE: ", fd(x$estimate$se), "\n",
+      "    ", paste(x$estimate$outcome, "~", x$estimate$predictor), "\n\n",
+      "Crosswalked Estimate:\n",
+      "    ", fd(x$crosswalk$mean), ", SE: ", fd(x$crosswalk$se), "\n",
+      "    ", CLLAB, "% confidence limits: (",
+      fd(x$crosswalk$ll), ", ", fd(x$crosswalk$ul), ")",
+      hr, sep = "")
+}

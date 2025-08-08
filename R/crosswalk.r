@@ -342,6 +342,7 @@ do_crosswalk <- function(object,
   out <- list()
   out$estimate <- list(mean = EST_MEAN,
                        se = EST_SE,
+                       alpha = est_alpha,
                        outcome = est_outcome,
                        predictor = est_indep)
   out$cxest <- list(slope = SLOPE,

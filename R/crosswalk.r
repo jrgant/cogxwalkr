@@ -192,6 +192,7 @@ plot.cogxwalkr <- function(x, ...,
                            clargs = list(col = "red", lty = 2),
                            ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2) {
   COEF <- coef(x$fit)
+  COEF <- COEF[names(COEF) != "(Intercept)"]
 
   if (!all(types %in% c("boot", "slope"))) {
     stop("invalid types argument provided")

@@ -152,7 +152,7 @@ construct.</li>
   
   pre {
     overflow-y: scroll;
-    max-height: 300px;
+    max-height: 500px;
   }
 </style>
 <div class="float" id="fig:dag-assumptions">
@@ -379,9 +379,7 @@ confidence intervals.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cwu</span>, cxsum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cwu</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="getting-started_files/figure-html/plot-cwu-boot-1.png" width="100%"></p>
 <p>Alternatively, if we used the summary statistics method
-(<code>cws</code> above), we will see something a bit different.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Note that there is currently a bug in the plotting
-method for a crosswalk based on summary statistics. The x-axis label
-should omit the line referring to the “Intercept”.&lt;/p&gt;"><sup>3</sup></a> We no
+(<code>cws</code> above), we will see something a bit different. We no
 longer have a plot of the split differences.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cws</span><span class="op">)</span></span>
@@ -464,10 +462,10 @@ estimated mean, standard error, and
 confidence interval (by default
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.05</mn></mrow><annotation encoding="application/x-tex">\alpha=0.05</annotation></semantics></math>),
 accounting for uncertainty in both the crosswalk estimate and published
-summary.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;See &lt;a href="https://en.wikipedia.org/wiki/Propagation_of_uncertainty" class="external-link"&gt;&lt;math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mi&gt;B&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;f=AB&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/a&gt;.&lt;/p&gt;'><sup>4</sup></a>
+summary.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;See &lt;a href="https://en.wikipedia.org/wiki/Propagation_of_uncertainty" class="external-link"&gt;&lt;math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mi&gt;A&lt;/mi&gt;&lt;mi&gt;B&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding="application/x-tex"&gt;f=AB&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/a&gt;.&lt;/p&gt;'><sup>3</sup></a>
 In this case, we see the estimated difference in MoCA comparing APOE-ε4
-carriers to non-carriers is -2.87 (, SE = 0.140, 95% CI: [-3.15,
--2.60]), based on the information is <code>dcw_se</code>.</p>
+carriers to non-carriers is -2.87 (SE = 0.140, 95% CI: [-3.15, -2.60]),
+based on the information is <code>dcw_se</code>.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

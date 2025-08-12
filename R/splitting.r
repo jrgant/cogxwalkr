@@ -77,7 +77,9 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
   } else {
     tmp <- data[rep(seq_len(.N), L1_SIZE - 1)]
     tmp[, iteration := rep(seq_len(L1_SIZE - 1), each = NUM_DATA)]
-    tmp <- tmp[, .SD[sample(seq_len(.N))], keyby = list(iteration, dementia)]
+    tmp <- tmp[, .SD[sample(seq_len(.N))],
+               keyby = list(iteration, var),
+               env = list(var = cdvar)]
     tmp[, split_id := unlist(lapply(SL11_SIZES, \(i) {
       splits0 <- rep(c(1, 2), c(SL10_SIZES[i], L0_SIZE - SL10_SIZES[i]))
       splits1 <- rep(c(1, 2), c(SL11_SIZES[i], L1_SIZE - SL11_SIZES[i]))

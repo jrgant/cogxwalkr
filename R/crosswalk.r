@@ -232,11 +232,13 @@ plot.cogxwalkr <- function(x, ...,
 
   if ("slope" %in% types && !is.null(x$diffs)) {
     fdat <- as.data.table(x$fit$model)
-    plot(fdat$moca ~ fdat$mmse,
+    plot(fdat[[x$cog2]] ~ fdat[[x$cog1]],
          cex = ptsize,
          pch = ptshape,
          col = scales::alpha(ptcol, ptalpha),
-         main = deparse(x$fit$call$formula))
+         main = deparse(x$fit$call$formula),
+         xlab = x$cog1,
+         ylab = x$cog2)
     do.call("abline", args = c(list(a = 0, b = COEF), slargs))
 
     if (!is.null(cxsum)) {

@@ -43,8 +43,9 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# pkgdown site
+# pkgdown site and local folder
 docs/
+pkgdown/
 
 # translation temp files
 po/*~
@@ -55,3 +56,6 @@ docs
 inst/doc
 /doc/
 /Meta/
+
+# VSCode folder
+.vscode

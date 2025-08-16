@@ -40,7 +40,10 @@ or the alpha level that will be used to back-calculate the standard error from
 Defaults to 0.05.}
 }
 \description{
-Crosswalk an effect estimate
+Take a published effect estimate (e.g., the difference in Mini Mental State
+Exam score comparing APOE-ε4 carriers to non-carriers) and translate that effect
+estimate to an alternate scale (e.g., Montreal Cognitive Assessment). The translation
+uses a crosswalk estimated via \code{\link[=crosswalk]{crosswalk()}} in data where both measures are available.
 }
 \details{
 Parameters prefixed with \code{est_} refer to a summary estimate for which the user lacks

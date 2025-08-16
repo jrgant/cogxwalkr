@@ -281,7 +281,13 @@ est_cw_coef <- function(cog1, cog2, data, method = "lm") {
 }
 
 
-#' Crosswalk an effect estimate
+#' @title Crosswalk an effect estimate
+#'
+#' @description
+#' Take a published effect estimate (e.g., the difference in Mini Mental State
+#' Exam score comparing APOE-ε4 carriers to non-carriers) and translate that effect
+#' estimate to an alternate scale (e.g., Montreal Cognitive Assessment). The translation
+#' uses a crosswalk estimated via [crosswalk()] in data where both measures are available.
 #'
 #' @param object An object of class `cogxwalkr` or the result of [est_cw_coef()]
 #' @param est_mean Point estimate (beta) to be crosswalked to the alternative outcome

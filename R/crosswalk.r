@@ -334,7 +334,6 @@ do_crosswalk <- function(object,
   }
 
   # Crosswalked estimate
-  # TODO: [2025-07-28]: refer to issue #9 for updates on building out this section
   CW_EST <- SLOPE * EST_MEAN
   CW_SE <- sqrt(CW_EST^2 * ((SLOPE_SE / SLOPE)^2 + (EST_SE / EST_MEAN)^2))
   CW_CI <- sapply(

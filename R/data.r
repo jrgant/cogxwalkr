@@ -1,5 +1,6 @@
-#' Simulated cognitive data
+#' @title Simulated cognitive data
 #'
+#' @description
 #' A simulated dataset based on a subset of the ADNIMERGE dataset from the
 #' Alzheimer's Disease Neuroimaging Initiative (ADNI)
 #'

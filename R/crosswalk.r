@@ -1,4 +1,4 @@
-#' Estimate crosswalk between cognitive measures
+#' @title Estimate crosswalk between cognitive measures
 #'
 #' @param cog1 The name of the first cognitive measure column
 #' @param cog2 The name of the second cognitive measure column
@@ -82,7 +82,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 utils::globalVariables(c("m1", "m2", "split_id", "iteration"))
 
 
-#' Summarize a cogxwalkr list
+#' @title Summarize a cogxwalkr list
 #'
 #' @param object An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
 #' @param ... Unused
@@ -108,7 +108,7 @@ summary.cogxwalkr <- function(object, ...,
   out
 }
 
-#' Print a cogxwalkr summary
+#' @title Print a cogxwalkr summary
 #'
 #' @param x An object of class "summary.cogxwalkr", i.e., as returned by
 #'   [summary.cogxwalkr()].
@@ -147,7 +147,7 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
 }
 
 
-#' Plot information about the bootstrap distribution
+#' @title Plot information about the bootstrap distribution
 #'
 #' @param x An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
 #' @param cxsum The output of `summary(cx)`

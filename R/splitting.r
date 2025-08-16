@@ -1,4 +1,16 @@
-#' Make an unconditional split dataset
+#' @title Splitting methods
+#'
+#' @description
+#' These functions handle split routines used in the estimation of crosswalks. In general,
+#' we recommend using these functions via [crosswalk()], but they are made available to
+#' the user who wishes to call them directly.
+#'   - [make_unconditional_splits()] : implements the unconditional split routine
+#'   - [make_conditional_splits()] : implements the conditional split routine, in which
+#'     splits in the data are defined by a binary variable (e.g., dementia) correlated
+#'     with given cognitive measures (e.g., MMSE and MoCA) because the underlying
+#'     cognitive construct is a common cause of all three
+#'   - [make_splits()] : a handler that checks the input dataset and passes
+#'     it on to the appropriate split function with relevant arguments specified
 #'
 #' @inheritParams crosswalk
 #'
@@ -29,8 +41,6 @@ make_unconditional_splits <- function(data, niter = NULL) {
   tmp[]
 }
 
-#' Make a conditional split dataset
-#'
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
 #' @param loop Boolean declaring whether to use a for loop. The default FALSE will
 #'   generate splits and operate on an expanded data.table in-memory. If your machine has
@@ -95,8 +105,7 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
 # Avoid R CMD check notes related to non-standard evaluation in data.table
 utils::globalVariables(c("sl_10_size", "sl_11_size", "i", "dementia"))
 
-#' Make a split dataset
-# '
+
 #' @param cdvar Character string naming auxiliary variable by which to condition splits
 #' @param cdloop Boolean passed to `loop` argument of `make_conditional_splits()`. Ignored
 #'   when conducting unconditional splits.

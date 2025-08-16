@@ -4,7 +4,7 @@
 \alias{make_unconditional_splits}
 \alias{make_conditional_splits}
 \alias{make_splits}
-\title{Make an unconditional split dataset}
+\title{Splitting methods}
 \usage{
 make_unconditional_splits(data, niter = NULL)
 
@@ -29,9 +29,16 @@ The default option should be much faster.}
 when conducting unconditional splits.}
 }
 \description{
-Make an unconditional split dataset
-
-Make a conditional split dataset
-
-Make a split dataset
+These functions handle split routines used in the estimation of crosswalks. In general,
+we recommend using these functions via \code{\link[=crosswalk]{crosswalk()}}, but they are made available to
+the user who wishes to call them directly.
+\itemize{
+\item \code{\link[=make_unconditional_splits]{make_unconditional_splits()}} : implements the unconditional split routine
+\item \code{\link[=make_conditional_splits]{make_conditional_splits()}} : implements the conditional split routine, in which
+splits in the data are defined by a binary variable (e.g., dementia) correlated
+with given cognitive measures (e.g., MMSE and MoCA) because the underlying
+cognitive construct is a common cause of all three
+\item \code{\link[=make_splits]{make_splits()}} : a handler that checks the input dataset and passes
+it on to the appropriate split function with relevant arguments specified
+}
 }

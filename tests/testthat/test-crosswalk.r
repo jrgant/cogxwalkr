@@ -15,3 +15,47 @@ test_that("est_cw_coef() returns output of expected class", {
   out_dt <- est_cw_coef("mmse", "moca", cogsim, method = "manual")
   expect_s3_class(out_dt, "data.table")
 })
+
+test_that("do_crosswalk() handles inputs correctly", {
+  cw <- crosswalk("mmse", "moca", cogsim)
+
+  # est_mean cannot be NULL
+  expect_error(do_crosswalk(cw))
+
+  # warn if both `est_se` and `est_ci` are specified
+  expect_warning(do_crosswalk(cw, est_mean = 5, est_se = 1.53, est_ci = c(2, 8)))
+
+  # `est_ci` must be of length 2
+  expect_error(do_crosswalk(cw, est_mean = 5, est_ci = 2))
+
+  # must provide one of `est_se`, `est_ci`, or `est_pval`
+  expect_error(do_crosswalk(cw, est_mean = 5))
+})
+
+test_that("do_crosswalk() calculates stats correctly and returns expected class", {
+  cw <- crosswalk("mmse", "moca", cogsim)
+  dcw1 <- do_crosswalk(cw, est_mean = 5, est_se = 1.53064)
+  dcw2 <- do_crosswalk(cw, est_mean = 5, est_ci = c(2, 8))
+  dcw3 <- do_crosswalk(cw, est_mean = 5, est_pval = 0.00109)
+
+  TOL <- 0.01
+
+  # manually entered and back-calculated SEs agree
+  expect_equal(dcw1$estimate$se, dcw2$estimate$se, tolerance = TOL)
+  expect_equal(dcw2$estimate$se, dcw3$estimate$se, tolerance = TOL)
+
+  # crosswalked SEs agree
+  expect_equal(dcw1$crosswalk$se, dcw2$crosswalk$se, tolerance = TOL)
+  expect_equal(dcw2$crosswalk$se, dcw3$crosswalk$se, tolerance = TOL)
+
+  # crosswalked CIs agree
+  expect_equal(dcw1$crosswalk$ll, dcw2$crosswalk$ll, tolerance = TOL)
+  expect_equal(dcw2$crosswalk$ll, dcw3$crosswalk$ll, tolerance = TOL)
+  expect_equal(dcw1$crosswalk$ul, dcw2$crosswalk$ul, tolerance = TOL)
+  expect_equal(dcw2$crosswalk$ul, dcw3$crosswalk$ul, tolerance = TOL)
+
+  # check class
+  expect_s3_class(dcw1, "cogxwalkr.crosswalk")
+  expect_s3_class(dcw2, "cogxwalkr.crosswalk")
+  expect_s3_class(dcw3, "cogxwalkr.crosswalk")
+})

@@ -1,4 +1,4 @@
-#' Estimate crosswalk between cognitive measures
+#' @title Estimate crosswalk between cognitive measures
 #'
 #' @param cog1 The name of the first cognitive measure column
 #' @param cog2 The name of the second cognitive measure column
@@ -82,7 +82,7 @@ crosswalk <- function(cog1, cog2, data, niter = NULL,
 utils::globalVariables(c("m1", "m2", "split_id", "iteration"))
 
 
-#' Summarize a cogxwalkr list
+#' @title Summarize a cogxwalkr list
 #'
 #' @param object An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
 #' @param ... Unused
@@ -108,7 +108,7 @@ summary.cogxwalkr <- function(object, ...,
   out
 }
 
-#' Print a cogxwalkr summary
+#' @title Print a cogxwalkr summary
 #'
 #' @param x An object of class "summary.cogxwalkr", i.e., as returned by
 #'   [summary.cogxwalkr()].
@@ -147,7 +147,7 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
 }
 
 
-#' Plot information about the bootstrap distribution
+#' @title Plot information about the bootstrap distribution
 #'
 #' @param x An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
 #' @param cxsum The output of `summary(cx)`
@@ -232,11 +232,13 @@ plot.cogxwalkr <- function(x, ...,
 
   if ("slope" %in% types && !is.null(x$diffs)) {
     fdat <- as.data.table(x$fit$model)
-    plot(fdat$moca ~ fdat$mmse,
+    plot(fdat[[x$cog2]] ~ fdat[[x$cog1]],
          cex = ptsize,
          pch = ptshape,
          col = scales::alpha(ptcol, ptalpha),
-         main = deparse(x$fit$call$formula))
+         main = deparse(x$fit$call$formula),
+         xlab = x$cog1,
+         ylab = x$cog2)
     do.call("abline", args = c(list(a = 0, b = COEF), slargs))
 
     if (!is.null(cxsum)) {
@@ -279,13 +281,20 @@ est_cw_coef <- function(cog1, cog2, data, method = "lm") {
 }
 
 
-#' Crosswalk an effect estimate
+#' @title Crosswalk an effect estimate
+#'
+#' @description
+#' Take a published effect estimate (e.g., the difference in Mini Mental State
+#' Exam score comparing APOE-ε4 carriers to non-carriers) and translate that effect
+#' estimate to an alternate scale (e.g., Montreal Cognitive Assessment). The translation
+#' uses a crosswalk estimated via [crosswalk()] in data where both measures are available.
 #'
 #' @param object An object of class `cogxwalkr` or the result of [est_cw_coef()]
 #' @param est_mean Point estimate (beta) to be crosswalked to the alternative outcome
 #'   measure
 #' @param est_se The standard error of `est_mean`
 #' @param est_ci The lower (1-alpha)% confidence interval of `est_mean`
+#' @param est_pval The p-value corresponding to `est_mean`
 #' @param est_indep The independent variable to which `est_mean` applies
 #' @param est_outcome The outcome measure in the original study (e.g., "MOCA", "MMSE")
 #' @param est_alpha The alpha level for the confidence interval (if `est_se` is provided)
@@ -294,11 +303,27 @@ est_cw_coef <- function(cog1, cog2, data, method = "lm") {
 #' @param alpha The alpha level for the confidence interval of the crosswalked estimate.
 #'   Defaults to 0.05.
 #'
+#' @details
+#' Parameters prefixed with `est_` refer to a summary estimate for which the user lacks
+#' access to the underlying data but wishes to translate the estimate to another
+#' cognitive measure's scale. The user must supply `est_mean` and one of `est_se`,
+#' `est_ci`, or `est_pval`. [do_crosswalk()] will back-calculate the standard error if
+#' necessary, as follows:
+#'   - `est_ci` : `(confidence interval width) / 2 / (critical value)`, where "critical
+#'      value" refers to the Z-value of the standard normal distribution assuming a
+#'      two-sided `est_alpha`
+#'   - `est_pval` : `est_mean / (critical value)`, where "critical value" in this case
+#'     is calculated assuming a two-sided p-value
+#'
+#' As in the [Cochrane Handbook](https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-06#section-6-3-1) summary of these calculations, the function assumes that statistical estimates
+#' for difference measures were calculated using the standard normal distribution rather
+#' than a t-distribution.
 #' @export
 do_crosswalk <- function(object,
                          est_mean = NULL, est_se = NULL, est_ci = NULL,
-                         est_alpha = 0.05, alpha = 0.05,
-                         est_indep = NULL, est_outcome = NULL) {
+                         est_pval = NULL, est_alpha = 0.05,
+                         est_indep = NULL, est_outcome = NULL,
+                         alpha = 0.05) {
 
   # Helper function to get the critical value based on alpha
   get_crit <- function(x) qnorm(x / 2, lower.tail = FALSE)
@@ -316,23 +341,30 @@ do_crosswalk <- function(object,
   }
   # Retrieve or calculate standard error from study estimate
   if (!is.null(est_se)) {
+
     if (!is.null(est_ci)) {
       warning("both `est_se` and `est_ci` provided... ignoring `est_ci`.")
     }
     EST_SE <- est_se
+
   } else if (!is.null(est_ci)) {
+
     if (length(est_ci) != 2) {
       stop("length of `est_ci` must be 2")
     }
-    EST_SE <- {
-      as.vector(dist(est_ci, method = "euclidean")) / 2 / get_crit(est_alpha)
-    }
+    EST_SE <- as.vector(dist(est_ci, method = "euclidean")) / 2 / get_crit(est_alpha)
+
+  } else if (!is.null(est_pval)) {
+
+    # https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-06
+    # Section 6.3.1
+    EST_SE <- est_mean / qnorm(est_pval / 2, lower.tail = FALSE)
+
   } else {
-    stop("must provide either `est_se` or `est_ci`")
+    stop("must provide `est_se`, `est_ci`, or `est_pval`")
   }
 
   # Crosswalked estimate
-  # TODO: [2025-07-28]: refer to issue #9 for updates on building out this section
   CW_EST <- SLOPE * EST_MEAN
   CW_SE <- sqrt(CW_EST^2 * ((SLOPE_SE / SLOPE)^2 + (EST_SE / EST_MEAN)^2))
   CW_CI <- sapply(

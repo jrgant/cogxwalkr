@@ -9,10 +9,11 @@ do_crosswalk(
   est_mean = NULL,
   est_se = NULL,
   est_ci = NULL,
+  est_pval = NULL,
   est_alpha = 0.05,
-  alpha = 0.05,
   est_indep = NULL,
-  est_outcome = NULL
+  est_outcome = NULL,
+  alpha = 0.05
 )
 }
 \arguments{
@@ -25,17 +26,40 @@ measure}
 
 \item{est_ci}{The lower (1-alpha)\% confidence interval of \code{est_mean}}
 
+\item{est_pval}{The p-value corresponding to \code{est_mean}}
+
 \item{est_alpha}{The alpha level for the confidence interval (if \code{est_se} is provided)
 or the alpha level that will be used to back-calculate the standard error from
 \code{est_ci}. Defaults to 0.05.}
 
-\item{alpha}{The alpha level for the confidence interval of the crosswalked estimate.
-Defaults to 0.05.}
-
 \item{est_indep}{The independent variable to which \code{est_mean} applies}
 
 \item{est_outcome}{The outcome measure in the original study (e.g., "MOCA", "MMSE")}
+
+\item{alpha}{The alpha level for the confidence interval of the crosswalked estimate.
+Defaults to 0.05.}
 }
 \description{
-Crosswalk an effect estimate
+Take a published effect estimate (e.g., the difference in Mini Mental State
+Exam score comparing APOE-ε4 carriers to non-carriers) and translate that effect
+estimate to an alternate scale (e.g., Montreal Cognitive Assessment). The translation
+uses a crosswalk estimated via \code{\link[=crosswalk]{crosswalk()}} in data where both measures are available.
+}
+\details{
+Parameters prefixed with \code{est_} refer to a summary estimate for which the user lacks
+access to the underlying data but wishes to translate the estimate to another
+cognitive measure's scale. The user must supply \code{est_mean} and one of \code{est_se},
+\code{est_ci}, or \code{est_pval}. \code{\link[=do_crosswalk]{do_crosswalk()}} will back-calculate the standard error if
+necessary, as follows:
+\itemize{
+\item \code{est_ci} : \verb{(confidence interval width) / 2 / (critical value)}, where "critical
+value" refers to the Z-value of the standard normal distribution assuming a
+two-sided \code{est_alpha}
+\item \code{est_pval} : \verb{est_mean / (critical value)}, where "critical value" in this case
+is calculated assuming a two-sided p-value
+}
+
+As in the \href{https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-06#section-6-3-1}{Cochrane Handbook} summary of these calculations, the function assumes that statistical estimates
+for difference measures were calculated using the standard normal distribution rather
+than a t-distribution.
 }

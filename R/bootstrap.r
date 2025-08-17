@@ -1,4 +1,4 @@
-#' Bootstrap a split routine
+#' @title Bootstrap a split routine
 #'
 #' @param ... Pass arguments to [crosswalk()]
 #' @param nboot Number of bootstrap replicates to generate
@@ -46,7 +46,7 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
 }
 
 
-#' Calculate bootstrapped confidence limits
+#' @title Calculate bootstrapped confidence limits
 #'
 #' @param cx An object of class "cogxwalkr", i.e., an object returned by [crosswalk()].
 #' @param alpha Alpha level to use for confidence interval calculation
@@ -72,7 +72,7 @@ bootstrap_ci <- function(cx, alpha = 0.05, type = "percentile") {
 }
 
 
-#' Bootstrap control list
+#' @title Bootstrap control list
 #'
 #' @details Can be used as an argument to the `control` argument in [crosswalk()],
 #'   but intended primarily to validate the list provided by that argument.

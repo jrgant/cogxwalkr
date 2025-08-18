@@ -7,13 +7,13 @@ test_that("crosswalk() returns expected outputs", {
   base_outnames <- c("cog1", "cog2", "fit", "diffs", "condition_var")
 
   cw1 <- crosswalk("mmse", "moca", cogsim)
-  expect_true(is.null(cw1$condition_var))
-  expect_true(is.null(cw1$diffs))
+  expect_null(cw1$condition_var)
+  expect_null(cw1$diffs)
   expect_s3_class(cw1$fit, "lm")
   expect_identical(names(cw1), base_outnames)
 
   cw2 <- crosswalk("mmse", "moca", cogsim, niter = 500)
-  expect_true(is.null(cw2$condition_var))
+  expect_null(cw2$condition_var)
   expect_equal(nrow(cw2$diffs), 500)
   expect_identical(names(cw2), base_outnames)
 

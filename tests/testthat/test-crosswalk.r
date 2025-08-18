@@ -18,16 +18,12 @@ test_that("est_cw_coef() returns output of expected class", {
 
 test_that("do_crosswalk() handles inputs correctly", {
   cw <- crosswalk("mmse", "moca", cogsim)
-
   # est_mean cannot be NULL
   expect_error(do_crosswalk(cw))
-
   # warn if both `est_se` and `est_ci` are specified
   expect_warning(do_crosswalk(cw, est_mean = 5, est_se = 1.53, est_ci = c(2, 8)))
-
   # `est_ci` must be of length 2
   expect_error(do_crosswalk(cw, est_mean = 5, est_ci = 2))
-
   # must provide one of `est_se`, `est_ci`, or `est_pval`
   expect_error(do_crosswalk(cw, est_mean = 5))
 })

@@ -3,6 +3,39 @@ test_that("crosswalk() disallows bad inputs", {
   expect_error(crosswalk("mmse_1", "moca", cogsim))
 })
 
+test_that("crosswalk() returns expected outputs", {
+  base_outnames <- c("cog1", "cog2", "fit", "diffs", "condition_var")
+
+  cw1 <- crosswalk("mmse", "moca", cogsim)
+  expect_true(is.null(cw1$condition_var))
+  expect_true(is.null(cw1$diffs))
+  expect_s3_class(cw1$fit, "lm")
+  expect_identical(names(cw1), base_outnames)
+
+  cw2 <- crosswalk("mmse", "moca", cogsim, niter = 500)
+  expect_true(is.null(cw2$condition_var))
+  expect_equal(nrow(cw2$diffs), 500)
+  expect_identical(names(cw2), base_outnames)
+
+  cw3 <- crosswalk("mmse", "moca", cogsim, condition_by = "dementia")
+  expect_equal(cw3$condition_var, "dementia")
+  expect_equal(nrow(cw3$diffs), sum(cogsim$dementia) - 1)
+  expect_identical(names(cw3), base_outnames)
+
+  cw4 <- crosswalk("mmse", "moca", cogsim, control = list(nboot = 100, seed = 1))
+  expect_length(cw4$boot$dist, 100)
+  expect_identical(names(cw4), c(base_outnames, "boot"))
+
+  cw5 <- crosswalk("mmse", "moca", cogsim, condition_by = "dementia",
+                   control = list(nboot = 100, seed = 1))
+  expect_identical(names(cw5), c(base_outnames, "boot"))
+
+  cwlist <- ls(pattern = "cw[0-9]")
+  sapply(cwlist, \(.x) expect_equal(get(.x)[["cog1"]], "mmse"))
+  sapply(cwlist, \(.x) expect_equal(get(.x)[["cog2"]], "moca"))
+  sapply(cwlist, \(.x) expect_s3_class(get(.x)[["fit"]], "lm"))
+})
+
 test_that("est_cw_coef() disallows bad inputs", {
   # methods allowed: lm, manual
   expect_error(est_cw_coef("mmse", "moca", cogsim, method = "glm"))

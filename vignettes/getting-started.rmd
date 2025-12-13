@@ -197,6 +197,7 @@ summary(cws)
 
 
 # unconditional split
+set.seed(5474587)
 cwu <- crosswalk(cog1 = "mmse",
                  cog2 = "moca",
                  data = cogsim,
@@ -269,6 +270,6 @@ dcw_se
 dcw_ci
 ```
 
-The `crosswalk` element in the list returned contains an estimated mean, standard error, and ($1-\alpha$)% confidence interval (by default $\alpha=0.05$), accounting for uncertainty in both the crosswalk estimate and published summary.^[See [$f=AB$](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).] In this case, we see the estimated difference in MoCA comparing APOE-ε4 carriers to non-carriers is -2.87 (SE = 0.140, 95% CI: [-3.15, -2.60]), based on the information is `dcw_se`.
+The `crosswalk` element in the list returned contains an estimated mean, standard error, and ($1-\alpha$)% confidence interval (by default $\alpha=0.05$), accounting for uncertainty in both the crosswalk estimate and published summary.^[See [$f=AB$](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).] In this case, we see the estimated difference in MoCA comparing APOE-ε4 carriers to non-carriers is `r round(dcw_se$crosswalk$mean, digits = 2)` (SE = `r round(dcw_se$crosswalk$se, digits = 3)`, 95% CI: [`r with(dcw_se$crosswalk, paste0(round(ll, 2), ", ", round(ul, 2)))`]), based on the information in `dcw_se`.
 
 # References

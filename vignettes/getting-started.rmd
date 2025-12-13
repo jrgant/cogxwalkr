@@ -197,7 +197,6 @@ summary(cws)
 
 
 # unconditional split
-set.seed(5474587)
 cwu <- crosswalk(cog1 = "mmse",
                  cog2 = "moca",
                  data = cogsim,
@@ -224,21 +223,21 @@ In general, we leave plotting the output, results, etc., up to the user. The pac
 
 We will use the `cwu` object we saved in the prior section as an example. This object contains the results of a crosswalk estimation that used the unconditional split method, along with bootstrapping to estimate 95% confidence intervals. The `cxsum` argument takes a summary output and overlays these confidence intervals.
 
-```{r plot-cwu-boot, out.width="100%", fig.width=8, fig.height=4, dpi=300}
+```{r plot-cwu-boot, out.width="100%", fig.width = 8, fig.asp = 0.5}
 #| eval: true
-plot(cwu, cxsum = summary(cwu))
+plot(cwu, cxsum = summary(cwu), lcex = 0.7)
 ```
 
 Alternatively, if we used the summary statistics method (`cws` above), we will see something a bit different. We no longer have a plot of the split differences.
 
-```{r plot-cws-boot, out.width="50%", fig.width=4.2, fig.height=4, dpi=300, fig.align="center"}
+```{r plot-cws-boot, out.width="50%", fig.width=4.2, fig.height=4, fig.align="center"}
 #| eval: true
-plot(cws)
+plot(cws, lcex = 0.7)
 ```
 
 Finally, if we conducted a splitting method without bootstrapping, we can suppress the bootstrap plot panel as follows. 
 
-```{r plot-cw-no-boot, out.width="50%", fig.width=4, fig.height=4, dpi=300, fig.align="center"}
+```{r plot-cw-no-boot, out.width="50%", fig.width=4, fig.height=4, fig.align="center"}
 #| eval: true
 cwu_noboot <- crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500)
 plot(cwu_noboot, types = "slope")

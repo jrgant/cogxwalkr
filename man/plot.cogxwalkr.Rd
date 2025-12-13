@@ -31,7 +31,7 @@
 
 \item{types}{The types of crosswalk plots to produce. By default, both a plot of the
 bootstrap distribution of coefficients and a plot of the data with the estimated
-slope. For the plotted sloped, (1-alpha)\% confidence intervals will appear if the
+slope. For the plotted slope, (1-alpha)\% confidence intervals will appear if the
 user provides the output of \code{\link[=summary.cogxwalkr]{summary.cogxwalkr()}}.}
 
 \item{breaks}{Passed to \code{\link[graphics:hist]{graphics::hist()}}, overriding the default method with "FD"

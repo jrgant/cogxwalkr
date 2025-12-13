@@ -153,7 +153,7 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
 #' @param cxsum The output of `summary(cx)`
 #' @param types The types of crosswalk plots to produce. By default, both a plot of the
 #'   bootstrap distribution of coefficients and a plot of the data with the estimated
-#'   slope. For the plotted sloped, (1-alpha)% confidence intervals will appear if the
+#'   slope. For the plotted slope, (1-alpha)% confidence intervals will appear if the
 #'   user provides the output of [summary.cogxwalkr()].
 #' @param breaks Passed to [graphics::hist()], overriding the default method with "FD"
 #'   ([grDevices::nclass.FD()]).
@@ -260,7 +260,7 @@ plot.cogxwalkr <- function(x, ...,
 #' @param method Either 'lm' (recommended) or 'manual'. The former will fit a linear
 #'   regression model and return the fit object, while the latter will return a table
 #'   containing the covariance between the cognitive measures (`cov`), the variance of
-#'   the measure input as cog1 (`var`), and the estimated sloped (`coef`).
+#'   the measure input as cog1 (`var`), and the estimated slope (`coef`).
 #'
 #' @import data.table
 #' @rdname crosswalk

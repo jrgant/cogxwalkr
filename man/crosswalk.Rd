@@ -40,7 +40,7 @@ for \code{\link[=make_conditional_splits]{make_conditional_splits()}} for detail
 \item{method}{Either 'lm' (recommended) or 'manual'. The former will fit a linear
 regression model and return the fit object, while the latter will return a table
 containing the covariance between the cognitive measures (\code{cov}), the variance of
-the measure input as cog1 (\code{var}), and the estimated sloped (\code{coef}).}
+the measure input as cog1 (\code{var}), and the estimated slope (\code{coef}).}
 }
 \description{
 Estimate crosswalk between cognitive measures

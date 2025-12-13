@@ -19,13 +19,15 @@
   ptshape = 19,
   ptsize = 0.8,
   ptcol = "black",
-  ptalpha = 0.2
+  ptalpha = 0.2,
+  lcex = 1
 )
 }
 \arguments{
 \item{x}{An object of class "cogxwalkr", i.e., as returned by \code{\link[=crosswalk]{crosswalk()}}.}
 
-\item{...}{Unused}
+\item{...}{Pass arguments to \code{\link[=plot]{plot()}} and \code{\link[=hist]{hist()}}. Note that both of these functions
+will inherit the additional parameters.}
 
 \item{cxsum}{The output of \code{summary(cx)}}
 
@@ -62,6 +64,8 @@ the confidence limits for the slope.}
 
 \item{ptalpha}{Alpha (transparency) of points in crosswalk scatterplot
 (passed to \code{\link[base:plot]{base::plot()}})}
+
+\item{lcex}{Scale legend.}
 }
 \description{
 Plot information about the bootstrap distribution

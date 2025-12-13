@@ -150,6 +150,8 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
 #' @title Plot information about the bootstrap distribution
 #'
 #' @param x An object of class "cogxwalkr", i.e., as returned by [crosswalk()].
+#' @param ... Pass arguments to [plot()] and [hist()]. Note that both of these functions
+#'   will inherit the additional parameters.
 #' @param cxsum The output of `summary(cx)`
 #' @param types The types of crosswalk plots to produce. By default, both a plot of the
 #'   bootstrap distribution of coefficients and a plot of the data with the estimated
@@ -173,8 +175,7 @@ print.summary.cogxwalkr <- function(x, ..., digits = 3L) {
 #' @param ptcol Color of points in crosswalk scatterplot (passed to [base::plot()])
 #' @param ptalpha Alpha (transparency) of points in crosswalk scatterplot
 #'   (passed to [base::plot()])
-#'
-#' @inheritParams print.summary.cogxwalkr
+#' @param lcex Scale legend.
 #'
 #' @import data.table
 #' @import stats
@@ -190,7 +191,8 @@ plot.cogxwalkr <- function(x, ...,
                            bargs = list(col = "red", lty = 2, lwd = 2),
                            slargs = list(col = "red", lwd = 2),
                            clargs = list(col = "red", lty = 2),
-                           ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2) {
+                           ptshape = 19, ptsize = 0.8, ptcol = "black", ptalpha = 0.2,
+                           lcex = 1) {
   COEF <- coef(x$fit)
   COEF <- COEF[names(COEF) != "(Intercept)"]
 
@@ -219,7 +221,8 @@ plot.cogxwalkr <- function(x, ...,
     }
     hist(x$boot$dist, breaks = breaks,
          xlab = sprintf("Bootstrap distribution of the %s coefficient", names(COEF)),
-         main = sprintf("R = %d", length(x$boot$dist)))
+         main = sprintf("R = %d", length(x$boot$dist)),
+         ...)
     do.call("abline", args = c(list(v = COEF), sargs))
     do.call("abline", args = c(list(v = mean(x$boot$dist)), bargs))
     legend("topright",
@@ -227,7 +230,8 @@ plot.cogxwalkr <- function(x, ...,
            col = c(sargs$col, bargs$col),
            lty = c(sargs$lty, bargs$lty),
            lwd = c(sargs$lwd, bargs$lwd),
-           bty = "n")
+           bty = "n",
+           cex = lcex)
   }
 
   if ("slope" %in% types && !is.null(x$diffs)) {
@@ -238,7 +242,8 @@ plot.cogxwalkr <- function(x, ...,
          col = scales::alpha(ptcol, ptalpha),
          main = deparse(x$fit$call$formula),
          xlab = x$cog1,
-         ylab = x$cog2)
+         ylab = x$cog2,
+         ...)
     do.call("abline", args = c(list(a = 0, b = COEF), slargs))
 
     if (!is.null(cxsum)) {

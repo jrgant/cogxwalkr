@@ -15,7 +15,7 @@ Description: Conduct data splitting and estimation to crosswalk between two cogn
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Imports:
     data.table (>= 1.17.0),
     foreach (>= 1.5.2),

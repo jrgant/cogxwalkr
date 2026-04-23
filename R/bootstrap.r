@@ -22,10 +22,10 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
 
   if (ncores < availableCores()) {
     message(sprintf("Running bootstraps over %d cores ...", ncores))
-    plan(multisession, workers = ncores)
+    with(plan(multisession, workers = ncores), local = TRUE)
   } else {
     message(sprintf("Running bootstraps over %d cores ...", availableCores()))
-    plan(multisession)
+    with(plan(multisession), local = TRUE)
   }
   split_data <- foreach(
     i = seq_len(nboot),
@@ -39,8 +39,6 @@ bootstrap_crosswalk <- function(..., nboot, ncores = 1L, seed) {
     tmp <- do.call("crosswalk", cwargs)
     coef(tmp$fit)[cwargs$cog1]
   }
-
-  plan(sequential) # closes the workers opened by plan(multisession)
 
   split_data
 }

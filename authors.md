@@ -10,14 +10,14 @@
 
 ## Citation
 
-Ackley S, Gantenberg J (2025). *cogxwalkr: Crosswalk Cognitive
+Ackley S, Gantenberg J (2026). *cogxwalkr: Crosswalk Cognitive
 Measures*. R package version 0.0.0.9000,
 <https://jrgant.github.io/cogxwalkr/>.
 
     @Manual{,
       title = {cogxwalkr: Crosswalk Cognitive Measures},
       author = {Sarah Ackley and Jason Gantenberg},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.0.0.9000},
       url = {https://jrgant.github.io/cogxwalkr/},
     }

@@ -27,6 +27,7 @@ remotes package, which you can do from the R console:
 To install the package:
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("jrgant/cogxwalkr")
 ```
@@ -86,6 +87,7 @@ underlying construct *U*.
 To load the package:
 
 ``` r
+
 library(cogxwalkr)
 ```
 
@@ -106,6 +108,7 @@ To view the example adjunct study, `cogsim`, we can type either of the
 following into the R console:
 
 ``` r
+
 head(cogsim)
 View(cogsim)
 ```
@@ -126,6 +129,7 @@ method we can use the crosswalk function, which is the workhorse of the
 package:
 
 ``` r
+
 crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500)
 ```
 
@@ -139,6 +143,7 @@ bootstrap resampling, no uncertainty on the crosswalked slope is
 presented.
 
 ``` r
+
 crosswalk(cog1 = "mmse",
           cog2 = "moca",
           data = cogsim,
@@ -164,6 +169,7 @@ The summary statistics approach is accessible directly via the
 function.
 
 ``` r
+
 # estimate slope using lm()
 est_cw_coef(cog1 = "mmse", cog2 = "moca", data = cogsim, method = "lm")
 
@@ -183,6 +189,7 @@ will result in the package using the “lm” method to estimate the
 crosswalk:
 
 ``` r
+
 crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim)
 ```
 
@@ -196,6 +203,7 @@ the conditional method. Note that
 will ignore `niter` if `condition_by` is specified.
 
 ``` r
+
 crosswalk(cog1 = "mmse",
           cog2 = "moca",
           data = cogsim,
@@ -207,14 +215,14 @@ crosswalk(cog1 = "mmse",
 #### Summaries
 
 [`crosswalk()`](https://jrgant.github.io/cogxwalkr/reference/crosswalk.md)
-outputs a list containing the results of the estimation
-procedure,[¹](#fn1) along with information about the specifications
-selected by the user. Similar to
-[`glm()`](https://rdrr.io/r/stats/glm.html) and
+outputs a list containing the results of the estimation procedure,[^1]
+along with information about the specifications selected by the user.
+Similar to [`glm()`](https://rdrr.io/r/stats/glm.html) and
 [`lm()`](https://rdrr.io/r/stats/lm.html), the `cogxwalkr` package comes
-with functions to help summarize results.[²](#fn2)
+with functions to help summarize results.[^2]
 
 ``` r
+
 boot_settings <- list(nboot = 100, seed = 999, ncores = 1)
 
 # summary statistics estimation
@@ -302,8 +310,8 @@ stored as objects (lists). To view the raw form of such an object, use
 
 See the documentation for
 [`summary.cogxwalkr()`](https://jrgant.github.io/cogxwalkr/reference/summary.cogxwalkr.md)
-for information on options concerning the $\alpha$ level and method used
-to estimate bootstrapped confidence intervals.
+for information on options concerning the $`\alpha`$ level and method
+used to estimate bootstrapped confidence intervals.
 
 #### Plotting
 
@@ -318,6 +326,7 @@ estimate 95% confidence intervals. The `cxsum` argument takes a summary
 output and overlays these confidence intervals.
 
 ``` r
+
 plot(cwu, cxsum = summary(cwu), lcex = 0.7)
 ```
 
@@ -328,6 +337,7 @@ we will see something a bit different. We no longer have a plot of the
 split differences.
 
 ``` r
+
 plot(cws, lcex = 0.7)
 #> The crosswalk() object does not contain differences, most likely because the slope was calculated using the manual method and not unconditional splits. The scatterplot has been omitted.
 ```
@@ -338,6 +348,7 @@ Finally, if we conducted a splitting method without bootstrapping, we
 can suppress the bootstrap plot panel as follows.
 
 ``` r
+
 cwu_noboot <- crosswalk(cog1 = "mmse", cog2 = "moca", data = cogsim, niter = 500)
 plot(cwu_noboot, types = "slope")
 ```
@@ -364,6 +375,7 @@ in one of two ways to obtain this estimate: using either the standard
 error from the summary data or the confidence interval.
 
 ``` r
+
 pub_outcome_label <- "mmse"
 pub_pred_label <- "apoe4"
 
@@ -413,27 +425,24 @@ dcw_ci
 ```
 
 The `crosswalk` element in the list returned contains an estimated mean,
-standard error, and ($1 - \alpha$)% confidence interval (by default
-$\alpha = 0.05$), accounting for uncertainty in both the crosswalk
-estimate and published summary.[³](#fn3) In this case, we see the
-estimated difference in MoCA comparing APOE-ε4 carriers to non-carriers
-is -2.77 (SE = 0.149, 95% CI: \[-3.06, -2.48\]), based on the
-information in `dcw_se`.
+standard error, and ($`1-\alpha`$)% confidence interval (by default
+$`\alpha=0.05`$), accounting for uncertainty in both the crosswalk
+estimate and published summary.[^3] In this case, we see the estimated
+difference in MoCA comparing APOE-ε4 carriers to non-carriers is -2.77
+(SE = 0.149, 95% CI: \[-3.06, -2.48\]), based on the information in
+`dcw_se`.
 
 ## References
 
-Ackley, Sarah F., Jingxuan Wang, Ruijia Chen, Tanisha G. Hill‐Jarrett,
-L. Paloma Rojas‐Saunero, Andrew Stokes, Sachin J. Shah, and M. Maria
-Glymour. 2025. “Methods to Crosswalk Between Cognitive Test Scores Using
-Data from the Alzheimer’s Disease Neuroimaging Cohort.” *Alzheimer’s &
-Dementia* 21 (2). <https://doi.org/10.1002/alz.14597>.
+Ackley, Sarah F., Jingxuan Wang, Ruijia Chen, et al. 2025. “Methods to
+Crosswalk Between Cognitive Test Scores Using Data from the Alzheimer’s
+Disease Neuroimaging Cohort.” *Alzheimer’s & Dementia* 21 (2).
+<https://doi.org/10.1002/alz.14597>.
 
-------------------------------------------------------------------------
+[^1]: These lists have the class `cogxwalkr`.
 
-1.  These lists have the class `cogxwalkr`.
+[^2]: Note that we set `niter` and `nboot` much too low here, for the
+    sake of exposition and to reduce rendering time.
 
-2.  Note that we set `niter` and `nboot` much too low here, for the sake
-    of exposition and to reduce rendering time.
-
-3.  See
-    [$f = AB$](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).
+[^3]: See
+    [$`f=AB`$](https://en.wikipedia.org/wiki/Propagation_of_uncertainty).

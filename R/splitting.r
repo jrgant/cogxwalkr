@@ -77,9 +77,13 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
     tmp <- foreach(i = seq_len(nrow(spec)), .combine = rbind) %do% {
       shuffle <- spec[i, {
         lrows1 <- data[var == CLEVELS[2], env = list(var = cdvar)][sample(seq_len(.N))]
-        lrows1[, split_id := rep(c(1, 2), times = c(sl_11_size, .N - sl_11_size))]
+        lrows1[, split_id := {
+          rep(c(1L, 2L), times = c(sl_11_size, .N - sl_11_size))
+        }]
         lrows0 <- data[var == CLEVELS[1], env = list(var = cdvar)][sample(seq_len(.N))]
-        lrows0[, split_id := rep(c(1, 2), times = c(sl_10_size, .N - sl_10_size))]
+        lrows0[, split_id := {
+          rep(c(1L, 2L), times = c(sl_10_size, .N - sl_10_size))
+        }]
         rbind(lrows1, lrows0)[, iteration := i][]
       }]
       shuffle
@@ -91,8 +95,8 @@ make_conditional_splits <- function(cdvar = NULL, data, loop = FALSE) {
                keyby = list(iteration, var),
                env = list(var = cdvar)]
     tmp[, split_id := unlist(lapply(SL11_SIZES, \(i) {
-      splits0 <- rep(c(1, 2), c(SL10_SIZES[i], L0_SIZE - SL10_SIZES[i]))
-      splits1 <- rep(c(1, 2), c(SL11_SIZES[i], L1_SIZE - SL11_SIZES[i]))
+      splits0 <- rep(c(1L, 2L), c(SL10_SIZES[i], L0_SIZE - SL10_SIZES[i]))
+      splits1 <- rep(c(1L, 2L), c(SL11_SIZES[i], L1_SIZE - SL11_SIZES[i]))
       c(splits0, splits1)
     }))]
   }

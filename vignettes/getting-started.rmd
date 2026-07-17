@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
-pkgload::load_all()
+library(cogxwalkr)
 library(DT)
 options(DT.options = list(pageLength = 10),
         rmarkdown.html_vignette.check_title = FALSE)
